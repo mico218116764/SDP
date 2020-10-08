@@ -1,4 +1,4 @@
-@extends('home')
+@extends('page/home')
 @section('content')
     <style>
         .container {

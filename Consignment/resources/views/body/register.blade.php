@@ -1,107 +1,91 @@
-<!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Reteem Consignment - Register</title>
-    <meta name="description" content="Reteem Consignment - Register">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<div class="login-form">
+    <form method="POST" action="{{url('/doRegister')}}">
+        @csrf
+        <div class="container" style="padding: 20px">
+            <div class="form-group">
+                <label>Nama</label>
+                <input type="text" class="form-control" name="USERPB_NAME" placeholder="Masukkan Nama">
+            </div>
+            @error('USERPB_NAME')
+                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
 
-    <link rel="apple-touch-icon" href="apple-icon.png">
-    <link rel="shortcut icon" href="favicon.ico">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control" name="USERPB_EMAIL" placeholder="Masukkan Email">
+            </div>
+            @error('USERPB_EMAIL')
+                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
 
-    <link rel="stylesheet" href="assets/css/normalize.css">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/themify-icons.css">
-    <link rel="stylesheet" href="assets/css/flag-icon.min.css">
-    <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
-    <!-- <link rel="stylesheet" href="assets/css/bootstrap-select.less"> -->
-    <link rel="stylesheet" href="public/style/assets/scss/style.css">
+            <div class="form-group">
+                <label>No Telp</label>
+                <input type="text" class="form-control" name="USERPB_PHONE_NUMBER" placeholder="Masukkan Nomor Telephone">
+            </div>
+            @error('USERPB_PHONE_NUMBER')
+                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
 
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+            <div class="form-group">
+                <label>Address</label>
+                <input type="text" class="form-control" name="USERPB_ADDRESS" placeholder="Masukkan Alamat">
+            </div>
+            @error('USERPB_ADDRESS')
+                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
 
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" name="USERPB_PASSWORD" placeholder="Masukkan Password">
+            </div>
+            @error('USERPB_PASSWORD')
+                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
 
-</head>
-<body class="bg-dark">
-    <div class="sufee-login d-flex align-content-center flex-wrap">
-        <div class="container">
-            <div class="login-content">
-                <div class="login-logo">
-                    <a href="index.html">
-                        <img class="align-content" src="images/logo.png" alt="">
-                    </a>
-                </div>
-                <div class="login-form">
-                    <form method="POST" action="/post_register">  
-                        @csrf
-                        <div class="form-group">
-                            <label>Username</label>
-                            <input type="text" class="form-control" name="txtusername" placeholder="Masukkan Username">
-                        </div>
-                        <div class="form-group">
-                            <label>Nama</label>
-                            <input type="text" class="form-control" name="txtnama" placeholder="Masukkan Nama">
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" name="txtemail" placeholder="Masukkan Email">
-                        </div>
-                        <div class="form-group">
-                            <label>Alamat</label>
-                            <input type="text" class="form-control" name="txtalamat" placeholder="Masukkan Alamat">
-                        </div>
-                        <div class="form-group">
-                            <label>Nomor Hp</label>
-                            <input type="text" class="form-control" name="txtnohp" placeholder="Masukkan Nomor Hp">
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" class="form-control" name="txtpass" placeholder="Masukkan Password">
-                        </div>
-                        <div class="form-group">
-                            <label>Confirm Password</label>
-                            <input type="password" class="form-control" name="txtconfpass" placeholder="Masukkan ConfirmPassword">
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name='txtagree'> Agree the terms and policy
-                            </label>
-                        </div>
-                        <button type="submit" name="btnRegis" class="btn btn-primary btn-flat m-b-30 m-t-30">Register</button>
-                        <div class="social-login-content">
-                            <div class="social-button">
-                                <button type="button" class="btn social facebook btn-flat btn-addon mb-3"><i class="ti-facebook"></i>Register with facebook</button>
-                                <button type="button" class="btn social twitter btn-flat btn-addon mt-2"><i class="ti-twitter"></i>Register with twitter</button>
-                            </div>
-                        </div>
-                        <div class="register-link m-t-15 text-center">
-                            <p>Already have account ? <a href="/login">Sign in</a></p>
-                        </div>
-                    </form>
-                </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" class="form-control" name="USERPB_PASSWORD_confirmation" placeholder="Masukkan ConfirmPassword">
+            </div>
+            @error('USERPB_PASSWORD_confirmation')
+                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
+
+            <div class="form-group">
+                <label>Link Foto KTP</label>
+                <input type="text" class="form-control" name="USERPB_IDENTITY" placeholder="Masukkan Link KTP">
+            </div>
+            @error('USERPB_IDENTITY')
+                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
+
+            <div class="form-group">
+                <label>Nama Bank</label>
+                <input type="text" class="form-control" name="USERPB_NMBANK" placeholder="Masukkan Nama Bank">
+            </div>
+            @error('USERPB_NMBANK')
+                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
+
+            <div class="form-group">
+                <label>Nomor Rekening</label>
+                <input type="text" class="form-control" name="USERPB_NOREK" placeholder="Masukkan Nomor Rekening">
+            </div>
+            @error('USERPB_NOREK')
+                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
+
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name='txtagree'> Agree the terms and policy
+                </label>
+            </div>
+            <button type="submit" name="btnRegis" class="btn btn-primary btn-flat m-b-30 m-t-30">Register</button>
+
+            <div class="register-link m-t-15 text-center">
+                <p>Already have account ? <a href="/login">Sign in</a></p>
             </div>
         </div>
-    </div>
 
-    <script src="assets/js/vendor/jquery-2.1.4.min.js"></script>
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/plugins.js"></script>
-    <script src="assets/js/main.js"></script>
-
-</body>
-</html>
-
-@if($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-        </ul>
-    </div>
-@endif
+    </form>
+</div>
