@@ -68,7 +68,7 @@ class ControllerHalaman extends Controller
     public function doRegister(Request $request)
     {
         $userpembelis = new userpembelis();
-        $jumUser = $userpembelis->count();
+        $jumUser = $userpembelis::all()->count();
 
         $request->validate(
             [
@@ -78,9 +78,9 @@ class ControllerHalaman extends Controller
                 "USERPB_ADDRESS" => ["required"],
                 "USERPB_PASSWORD" => ["required", "confirmed"],
                 "USERPB_PASSWORD_confirmation" => ["required"],
-                "USERPB_IDENTITY" => ["required", "url"],
-                "USERPB_NMBANK" => ["required"],
-                "USERPB_NOREK" => ["required"],
+                // "USERPB_IDENTITY" => ["required", "url"],
+                // "USERPB_NMBANK" => ["required"],
+                // "USERPB_NOREK" => ["required"],
                 "txtagree" => ["accepted"]
             ],
             [
@@ -98,24 +98,34 @@ class ControllerHalaman extends Controller
                 "USERPB_ADDRESS" => "Alamat",
                 "USERPB_PASSWORD" => "Password",
                 "USERPB_PASSWORD_confirmation" => "Confirm Password",
-                "USERPB_IDENTITY" => "URL KTP",
-                "USERPB_NMBANK" => "Nama Bank",
-                "USERPB_NOREK" => "Nomor Rekening",
+                // "USERPB_IDENTITY" => "URL KTP",
+                // "USERPB_NMBANK" => "Nama Bank",
+                // "USERPB_NOREK" => "Nomor Rekening",
                 "txtagree" => "Agree"
             ]
         );
 
-        // $userpembelis
-        DB::table('userpembelis')->insert(
-            [
-                "USERPB_ID" => $jumUser,
-                "USERPB_NAME" => $request->USERPB_NAME,
-                "USERPB_EMAIL" => $request->USERPB_EMAIL,
-                "USERPB_PHONE_NUMBER" => $request->USERPB_PHONE_NUMBER,
-                "USERPB_ADDRESS" => $request->USERPB_ADDRESS,
-                "USERPB_PASSWORD" => $request->USERPB_PASSWORD,
-            ]
-        );
+        $userpembelis = new userpembelis();
+
+        $userpembelis->USERPB_ID = $jumUser;
+        $userpembelis->USERPB_NAME = $request->USERPB_NAME;
+        $userpembelis->USERPB_EMAIL = $request->USERPB_EMAIL;
+        $userpembelis->USERPB_PHONE_NUMBER = $request->USERPB_PHONE_NUMBER;
+        $userpembelis->USERPB_ADDRESS = $request->USERPB_ADDRESS;
+        $userpembelis->USERPB_PASSWORD = $request->USERPB_PASSWORD;
+
+        $userpembelis->save();
+
+        // DB::table('userpembelis')->insert(
+        //     [
+        //         "USERPB_ID" => $jumUser,
+        //         "USERPB_NAME" => $request->USERPB_NAME,
+        //         "USERPB_EMAIL" => $request->USERPB_EMAIL,
+        //         "USERPB_PHONE_NUMBER" => $request->USERPB_PHONE_NUMBER,
+        //         "USERPB_ADDRESS" => $request->USERPB_ADDRESS,
+        //         "USERPB_PASSWORD" => $request->USERPB_PASSWORD,
+        //     ]
+        // );
 
         return redirect('/register');
     }

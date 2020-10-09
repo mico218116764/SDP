@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\userpembelis;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
@@ -26,15 +27,9 @@ class checkEmail implements Rule
      */
     public function passes($attribute, $value)
     {
-        $daftarUser = DB::table('userpembeli')
-                    ->where("USERPB_EMAIL","=",$value)
-                    ->count();
-        if($daftarUser == 1){
-            return false;
-        }else{
-            return true;
-        }
+        $daftarUser = userpembelis::where("USERPB_EMAIL", $value)->first();
 
+        return $daftarUser == null;
     }
 
     /**
