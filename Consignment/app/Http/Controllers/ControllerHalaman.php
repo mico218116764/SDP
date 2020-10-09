@@ -153,15 +153,17 @@ class ControllerHalaman extends Controller
                 "WARNA_BARANGP"=>"Warna Barang"
             ]);
             $id = "PNG".DB::table('pengajuan')->count();
+
+            // dd($request->merkBarang);
             DB::table('pengajuan')->insert(
                 [
                     "ADMINP_ID"=>"0",
-                    "MERK_ID"=>"MERK1",
+                    "MERK_ID"=>$request->merkBarang,
                     "KONDISI_ID"=>"KOND0",
                     "PENGAJUAN_ID"=>$id,
                     "USERPB_ID"=>$dataUserNow[0]->USERPB_ID,
                     "TRANSAKSI_ID"=>"0",
-                    "JENIS_ID"=>"JEN1",
+                    "JENIS_ID"=>$request->jenisBarang,
                     "NAMA_BARANG"=>$request->NAMA_BARANG,
                     "TGL_PENGAJUAN"=>$now->now,
                     "WARNA_BARANGP"=>$request->WARNA_BARANGP,

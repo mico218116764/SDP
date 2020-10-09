@@ -21,7 +21,7 @@
             </div>
             <div class="form-group">
                 <label>Merk Barang</label><BR>
-                <select class="form-control" style="font-size: 12pt;" name="jenisBarang" id="">
+                <select class="form-control" style="font-size: 12pt;" name="merkBarang" id="">
                     @foreach ($daftarMerk as $merk)
                         <option value="{{$merk->MERK_ID}}">{{$merk->NAMA_MERK2}}</option>
                     @endforeach
