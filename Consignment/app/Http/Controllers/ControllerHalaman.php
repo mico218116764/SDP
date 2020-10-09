@@ -57,13 +57,11 @@ class ControllerHalaman extends Controller
 
     public function register()
     {
-        Cookie::forget("userNow");
         return view('page.register');
     }
 
     public function login()
     {
-        Cookie::forget("userNow");
         return view('page.login');
     }
 
@@ -124,26 +122,28 @@ class ControllerHalaman extends Controller
 
     public function pengajuan(Request $request)
     {
-        if (Cookie::has('userNow') == false) {
+        if (Cookie::has('userNowT') == false) {
             return redirect('/login');
         } else {
-            $jsonLogin = $request->cookie('usernow');
-            $now = json_decode($jsonLogin);
-            if ($now == "admin") {
+            $user = $request->cookie('userNowT');
+            // dd($request->cookie('userNowT'));
+
+            if ($user == "user") {
+                $daftarJenis = new jenisbarangs();
+                $daftarMerk = new merkbarangs();
+                $daftarBank = new banks();
+
+                // dd($daftarJenis);
+
+                return view('page.pengajuan', [
+                    "daftarJenis" => $daftarJenis::all(),
+                    "daftarMerk" => $daftarMerk::all(),
+                    "daftarBank" => $daftarBank::all()
+                ]);
+            } else {
                 return redirect('/login');
             }
         }
-        $daftarJenis = new jenisbarangs();
-        $daftarMerk = new merkbarangs();
-        $daftarBank = new banks();
-
-        // dd($daftarJenis);
-
-        return view('page.pengajuan', [
-            "daftarJenis" => $daftarJenis::all(),
-            "daftarMerk" => $daftarMerk::all(),
-            "daftarBank" => $daftarBank::all()
-        ]);
     }
     public function doApply(Request $request)
     {
@@ -203,7 +203,7 @@ class ControllerHalaman extends Controller
         $pengajuans->MERK_ID = $request->merkBarang;
         $pengajuans->KONDISI_ID = "KOND0";
         $pengajuans->PENGAJUAN_ID = $id;
-        $pengajuans->USERPB_ID = $userNow;
+        $pengajuans->USERPB_ID = $dataUserNow[0]->USERPB_ID;
         $pengajuans->TRANSAKSI_ID = "0";
         $pengajuans->JENIS_ID = $request->jenisBarang;
         $pengajuans->NAMA_BARANG = $request->NAMA_BARANG;
@@ -255,13 +255,17 @@ class ControllerHalaman extends Controller
             ->where("USERPB_PASSWORD", $request->USERPB_PASSWORD)
             ->count();
         if ($cekUser == 1) {
-
+            $dataUserNow = DB::table('userpembelis')->get();
+            $dataUserNow = json_decode($dataUserNow);
+            //dd($dataUserNow[0]->USERPB_EMAIL);
             Cookie::forget("userNow");
-            Cookie::queue("userNow", "user", 60);
+            Cookie::queue("userNow", json_encode($dataUserNow), 60);
+            Cookie::forget("userNowT");
+            Cookie::queue("userNowT", "user", 60);
             return redirect('/pengajuan');
         } else if ($cekAdmin == 1 && $request->USERPB_EMAIL == "admin@admin.admin") {
-            Cookie::forget("userNow");
-            Cookie::queue("userNow", "admin", 60);
+            Cookie::forget("userNowT");
+            Cookie::queue("userNowT", $request->USERPB_PASSWORD . "", 60);
             return redirect('/admin');
         }
         return redirect('/login');
@@ -269,21 +273,19 @@ class ControllerHalaman extends Controller
 
     public function admin(Request $request)
     {
-        if (Cookie::has('userNow') == false) {
+        if (Cookie::has('userNowT') == false) {
             return redirect('/login');
         } else {
-            $jsonLogin = $request->cookie('usernow');
-            $now = json_decode($jsonLogin);
-            if ($now == "user") {
+            $user = $request->cookie('userNowT');
+            // dd($request->cookie('userNowT'));
+            if ($user == "user") {
                 return redirect('/login');
+            } else {
+                return view('page.admin', [
+                    "items" => pengajuans::all()
+                ]);
             }
         }
-        if (Cookie::has('userNow') == false) {
-            return redirect('/login');
-        }
-        return view('page.admin', [
-            "items" => pengajuans::all()
-        ]);
     }
     public function doDelete($id)
     {
@@ -295,9 +297,17 @@ class ControllerHalaman extends Controller
     }
     public function doApprove(Request $req, $id)
     {
+
+        if (Cookie::has('userNowT') == false) {
+            return redirect('/login');
+        } else {
+            $user = $req->cookie('userNowT');
+            $id_admin = substr($user, 5, 1);
+        }
         $pengajuans = pengajuans::where('PENGAJUAN_ID', $id)->first();
         $pengajuans->status_pengajuan = 1;
         $pengajuans->harga_approve = $req->hargaApprove;
+        $pengajuans->ADMINP_ID = $id_admin;
         $pengajuans->save();
 
         return redirect('/admin');
