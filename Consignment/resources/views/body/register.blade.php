@@ -50,29 +50,7 @@
                 <div style="color:red; font-weight:bold"> {{$message}}</div><br>
             @enderror
 
-            <div class="form-group">
-                <label>Link Foto KTP</label>
-                <input type="text" class="form-control" name="USERPB_IDENTITY" placeholder="Masukkan Link KTP">
-            </div>
-            @error('USERPB_IDENTITY')
-                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
-            @enderror
 
-            <div class="form-group">
-                <label>Nama Bank</label>
-                <input type="text" class="form-control" name="USERPB_NMBANK" placeholder="Masukkan Nama Bank">
-            </div>
-            @error('USERPB_NMBANK')
-                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
-            @enderror
-
-            <div class="form-group">
-                <label>Nomor Rekening</label>
-                <input type="text" class="form-control" name="USERPB_NOREK" placeholder="Masukkan Nomor Rekening">
-            </div>
-            @error('USERPB_NOREK')
-                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
-            @enderror
 
 
             <div class="checkbox">

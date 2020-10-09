@@ -20,7 +20,12 @@ Route::get('/', 'ControllerHalaman@home');
 Route::get('/register', 'ControllerHalaman@register');
 Route::get('/login', 'ControllerHalaman@login');
 Route::get('/pengajuan', 'ControllerHalaman@pengajuan');
+Route::get('/admin', 'ControllerHalaman@admin');
+
 
 Route::post('/doRegister', 'ControllerHalaman@doRegister');
 Route::post('/doLogin', 'ControllerHalaman@doLogin');
 Route::post('/doApply', 'ControllerHalaman@doApply');
+
+Route::get('/doDelete/{id}', 'ControllerHalaman@doDelete');
+Route::get('/doApprove/{id}', 'ControllerHalaman@doApprove');
