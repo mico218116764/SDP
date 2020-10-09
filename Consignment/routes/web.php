@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // asd
-Route::get('/', function () {
-    return view('page/home');
-});
+Route::get('/', 'ControllerHalaman@home');
 
 //ini routing untuk pindah halaman. '/pindahHalaman disesuaikan dengan link pada komponen'
 //<a> pada view

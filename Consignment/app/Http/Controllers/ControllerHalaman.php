@@ -37,9 +37,12 @@ class ControllerHalaman extends Controller
         }
 
     }
-    public function home(Request $request){
-
-        return view('page.home');
+    public function home(){
+        $daftarKatalog = DB::select('select * from pengajuan where STATUS_PENGAJUAN = "1"  ');
+        // dd();
+        return view('page.home',[
+            "daftarKatalog"=>$daftarKatalog
+        ]);
     }
 
     public function register(){
@@ -101,15 +104,18 @@ class ControllerHalaman extends Controller
     }
 
     public function pengajuan(){
-        return view('page.pengajuan');
+        $daftarJenis = DB::select('select * from jenisbarang');
+        $daftarMerk = DB::select('select * from merkbarang');
+        return view('page.pengajuan',[
+            "daftarJenis" => $daftarJenis,
+            "daftarMerk" => $daftarMerk
+        ]);
     }
     public function doApply(Request $request){
         if(Cookie::has("userNow")){
             $jsonUserNow = $request->cookie("userNow");
             $dataUserNow = json_decode($jsonUserNow);
             $userNow = $dataUserNow[0]->USERPB_ID;
-        }else{
-
         }
         $now = DB::selectOne("SELECT NOW() AS now from dual");
         // dd();
@@ -118,8 +124,8 @@ class ControllerHalaman extends Controller
                 "NAMA_BARANG"=>["required"],
                 "FUNGSIONALITAS"=>["required"],
                 "DESKRIPSI_BARANG"=>["required"],
-                "HARGA_MIN"=>["required"],
-                "HARGA_MAX"=>["required"],
+                "HARGA_MIN"=>["required","numeric"],
+                "HARGA_MAX"=>["required","numeric"],
                 "FOTO_KIRI"=>["required","url"],
                 "FOTO_KANAN"=>["required","url"],
                 "FOTO_ATAS"=>["required","url"],
@@ -131,11 +137,8 @@ class ControllerHalaman extends Controller
                 "required" =>":attribute harus di isi!!",
                 "confirmed"=>"Harus sama!!",
                 "url"=>"Url Harus Benar",
+                "numeric"=>"Harus Angka",
             ],[
-                "ADMINP_ID"=>"0",
-                "MERK_ID"=>"MERK1",
-                "KONDISI_BARANG"=>"KOND0",
-                "USERPB_ID"=>$userNow,
                 "NAMA_BARANG"=>"Nama Barang",
                 "FUNGSIONALITAS"=>"Fungsionalitas",
                 "DESKRIPSI_BARANG"=>"Deskripsi Barang",
@@ -179,7 +182,7 @@ class ControllerHalaman extends Controller
                     "HARGA_JASA"=>0,
                 ]
             );
-        return redirect("/doApply");
+        return redirect("/pengajuan");
     }
 
     public function doLogin(Request $request) {

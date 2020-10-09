@@ -12,6 +12,22 @@
             @enderror
 
             <div class="form-group">
+                <label>Jenis Barang</label><BR>
+                <select class="form-control" style="font-size: 12pt;" name="jenisBarang" id="">
+                    @foreach ($daftarJenis as $jenis)
+                        <option value="{{$jenis->JENIS_ID}}">{{$jenis->NAMA_JENIS}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Merk Barang</label><BR>
+                <select class="form-control" style="font-size: 12pt;" name="jenisBarang" id="">
+                    @foreach ($daftarMerk as $merk)
+                        <option value="{{$merk->MERK_ID}}">{{$merk->NAMA_MERK2}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
                 <label>Fungsionalitas</label>
                 <input type="text" class="form-control" name="FUNGSIONALITAS" placeholder="Masukkan Fungsi barang apakah berfungsi dengan baik atau tidak">
             </div>
@@ -21,7 +37,7 @@
 
             <div class="form-group">
                 <label>Deskripsi Barang</label>
-                <input type="text" class="form-control" name="DESKRIPSI_BARANG" placeholder="Deskripsi barang">
+                <textarea id="w3review" class="form-control" name="DESKRIPSI_BARANG" placeholder="Deskripsi barang" rows="4" cols="50"></textarea>
             </div>
             @error('DESKRIPSI_BARANG')
                 <div style="color:red; font-weight:bold"> {{$message}}</div><br>
