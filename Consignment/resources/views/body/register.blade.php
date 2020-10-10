@@ -58,6 +58,9 @@
                     <input type="checkbox" name='txtagree'> Agree the terms and policy
                 </label>
             </div>
+            @error('txtagree')
+                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
             <button type="submit" name="btnRegis" class="btn btn-primary btn-flat m-b-30 m-t-30">Register</button>
 
             <div class="register-link m-t-15 text-center">
@@ -67,3 +70,8 @@
 
     </form>
 </div>
+@if (session('alert'))
+    <div class="alert alert-success">
+        {{ session('alert') }}
+    </div>
+@endif

@@ -74,13 +74,10 @@ class ControllerHalaman extends Controller
             [
                 "USERPB_NAME" => ["required"],
                 "USERPB_EMAIL" => ["required", "max:50", new checkEmail],
-                "USERPB_PHONE_NUMBER" => ["required", "numeric"], new checkPhone,
+                "USERPB_PHONE_NUMBER" => ["required", "numeric", new checkPhone],
                 "USERPB_ADDRESS" => ["required"],
                 "USERPB_PASSWORD" => ["required", "confirmed"],
                 "USERPB_PASSWORD_confirmation" => ["required"],
-                // "USERPB_IDENTITY" => ["required", "url"],
-                // "USERPB_NMBANK" => ["required"],
-                // "USERPB_NOREK" => ["required"],
                 "txtagree" => ["accepted"]
             ],
             [
@@ -98,9 +95,6 @@ class ControllerHalaman extends Controller
                 "USERPB_ADDRESS" => "Alamat",
                 "USERPB_PASSWORD" => "Password",
                 "USERPB_PASSWORD_confirmation" => "Confirm Password",
-                // "USERPB_IDENTITY" => "URL KTP",
-                // "USERPB_NMBANK" => "Nama Bank",
-                // "USERPB_NOREK" => "Nomor Rekening",
                 "txtagree" => "Agree"
             ]
         );
@@ -127,7 +121,7 @@ class ControllerHalaman extends Controller
         //     ]
         // );
 
-        return redirect('/register');
+        return redirect('/register')->with('alert','Success');
     }
 
     public function pengajuan(Request $request)
