@@ -17,7 +17,6 @@
             <li><a href="#">Contact Us</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
             <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         </ul>
         </div>

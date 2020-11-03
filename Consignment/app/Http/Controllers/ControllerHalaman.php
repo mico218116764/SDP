@@ -316,4 +316,32 @@ class ControllerHalaman extends Controller
 
         return redirect('/admin');
     }
+    public function daftaradmin()
+    {
+        return view('page.tambahadmin');
+    }
+    public function daftarbank()
+    {
+        return view('page.tambahbank');
+    }
+
+    public function statpengajuan()
+    {
+        return view('page.statpengajuan');
+    }
+    public function daftarjenis()
+    {
+        return view('page.daftarjenis');
+    }
+    public function katalog()
+    {
+        // $daftarKatalog = DB::select('select * from pengajuans where STATUS_PENGAJUAN = "1"  ');
+        $daftarKatalog = new pengajuans();
+        $daftarKatalog = $daftarKatalog::where('STATUS_PENGAJUAN', '1')->get();
+        // dd($daftarKatalog::where('status_pengajuan', '1'));
+
+        return view('page.katalog', [
+            "daftarKatalog" => $daftarKatalog
+        ]);
+    }
 }

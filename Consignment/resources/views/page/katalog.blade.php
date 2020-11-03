@@ -32,8 +32,8 @@
     <p><i>Serve you with trust</i></p>
   </div>
 </div>
-
     @include('includes.headerLoged')
-    @include('body.pengajuan')
+    @include('body.katalog')
+    @include('includes.footer')
 </body>
 </html>

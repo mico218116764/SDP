@@ -21,6 +21,11 @@ Route::get('/register', 'ControllerHalaman@register');
 Route::get('/login', 'ControllerHalaman@login');
 Route::get('/pengajuan', 'ControllerHalaman@pengajuan');
 Route::get('/admin', 'ControllerHalaman@admin');
+Route::get('/daftaradmin', 'ControllerHalaman@daftaradmin');
+Route::get('/daftarbank', 'ControllerHalaman@daftarbank');
+Route::get('/statpengajuan', 'ControllerHalaman@statpengajuan');
+Route::get('/daftarjenis', 'ControllerHalaman@daftarjenis');
+Route::get('/katalog', 'ControllerHalaman@katalog');
 
 
 Route::post('/doRegister', 'ControllerHalaman@doRegister');

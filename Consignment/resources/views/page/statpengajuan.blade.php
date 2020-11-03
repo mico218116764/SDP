@@ -36,7 +36,7 @@
     </div>
 
     @include('includes.headerAdmin')
-    @include('body.admin')
+    @include('body.statpengajuan')
 </body>
 
 </html>

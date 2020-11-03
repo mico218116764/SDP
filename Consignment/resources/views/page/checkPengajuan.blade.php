@@ -37,7 +37,6 @@
 
     @include('includes.headerAdmin')
     @include('body.checkPengajuan')
-    @include('includes.footer')
 </body>
 
 </html>

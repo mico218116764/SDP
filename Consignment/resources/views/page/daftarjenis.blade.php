@@ -33,7 +33,7 @@
   </div>
 </div>
 
-    @include('includes.headerLoged')
-    @include('body.pengajuan')
+    @include('includes.headeradmin')
+    @include('body.daftarjenis')
 </body>
 </html>
