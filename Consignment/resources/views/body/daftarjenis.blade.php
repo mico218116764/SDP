@@ -1,20 +1,13 @@
 <div class="addAdmin-form">
-    <form method="POST" action="{{url('/doRegister')}}">
+    <form method="POST" action="{{url('/addJenis')}}">
         @csrf
         <div class="container" style="padding: 20px">
-            <div class="form-group">
-                <label>Jenis ID</label>
-                <input type="text" class="form-control" name="USERPB_NAME" placeholder="Masukkan ID Admin">
-            </div>
-            @error('USERPB_NAME')
-                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
-            @enderror
 
             <div class="form-group">
                 <label>Nama Jenis</label>
-                <input type="text" class="form-control" name="USERPB_EMAIL" placeholder="Masukkan Nama Admin">
+                <input type="text" class="form-control" name="namaJ" placeholder="Masukkan Nama Jenis">
             </div>
-            @error('USERPB_NAME')
+            @error('namaJ')
                 <div style="color:red; font-weight:bold"> {{$message}}</div><br>
             @enderror
 
@@ -32,17 +25,21 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th style="text-align:center">ID</th>
-                        <th style="text-align:center">Nama Jenis</th>
-                        <th style="text-align:center">Action</th>
+                        <th style="text-align:center">Jenis ID</th>
+                        <th style="text-align:center">Jenis Bank</th>
                     </tr>
                 </thead>
-                    </tr>
-                </tbody>
+
+                    @foreach ($dataJenis as $jenis)
+                        <tbody>
+                            <th style="text-align:center">{{$jenis->JENIS_ID}}</th>
+                            <th style="text-align:center">{{$jenis->NAMA_JENIS}}</th>
+                        </tbody>
+                    @endforeach
             </table>
         </div>
     </div>
-    
+
 @if (session('alert'))
     <div class="alert alert-success">
         {{ session('alert') }}

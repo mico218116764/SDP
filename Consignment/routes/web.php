@@ -31,6 +31,13 @@ Route::get('/katalog', 'ControllerHalaman@katalog');
 Route::post('/doRegister', 'ControllerHalaman@doRegister');
 Route::post('/doLogin', 'ControllerHalaman@doLogin');
 Route::post('/doApply', 'ControllerHalaman@doApply');
+Route::get('/doLogout', 'ControllerHalaman@doLogout');
+Route::post('/addAdmin', 'ControllerHalaman@addAdmin');
+Route::post('/deleteAdmin', 'ControllerHalaman@deleteAdmin');
+Route::post('/addBank', 'ControllerHalaman@addBank');
+Route::post('/deleteBank', 'ControllerHalaman@deleteBank');
+Route::post('/addJenis', 'ControllerHalaman@addJenis');
+
 
 Route::get('/doDelete/{id}', 'ControllerHalaman@doDelete');
 Route::get('/doApprove/{id}', 'ControllerHalaman@doApprove');

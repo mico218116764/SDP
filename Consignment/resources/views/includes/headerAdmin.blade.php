@@ -16,7 +16,7 @@
                 <li><a href="{{url('/daftarjenis')}}">Daftar Jenis</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                <li><a href="/doLogout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
             </ul>
         </div>
     </div>

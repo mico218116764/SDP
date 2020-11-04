@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\DB;
 
 use App\Rules\CekEmail;
 use App\Rules\CekEmaillogin;
+use App\Rules\checkAdmin;
+use App\Rules\checkAdminP;
 use App\Rules\checkEmail;
 use App\Rules\checkPhone;
 use App\userpembelis;
@@ -60,8 +62,9 @@ class ControllerHalaman extends Controller
         return view('page.register');
     }
 
-    public function login()
+    public function login(Request $request)
     {
+        // dd($request->cookie('userNowT'));
         return view('page.login');
     }
 
@@ -201,7 +204,6 @@ class ControllerHalaman extends Controller
             ]
         );
         $id = "PNG" . DB::table('pengajuans')->count();
-
         $pengajuans = new pengajuans();
         $pengajuans->ADMINP_ID = "0";
         $pengajuans->MERK_ID = $request->merkBarang;
@@ -235,7 +237,11 @@ class ControllerHalaman extends Controller
 
         return redirect("/pengajuan");
     }
-
+    public function doLogout(Request $request)
+    {
+        Cookie::queue(Cookie::forget("userNowT"));
+        return redirect("/login");
+    }
     public function doLogin(Request $request)
     {
         $request->validate(
@@ -316,23 +322,118 @@ class ControllerHalaman extends Controller
 
         return redirect('/admin');
     }
-    public function daftaradmin()
+    public function daftaradmin(Request $req)
     {
-        return view('page.tambahadmin');
+        if (Cookie::has('userNowT') == false) {
+            return redirect('/login');
+        } else {
+            // dd($req->cookie('userNowT'));
+            $dataAdmin = admins::withTrashed()->get();
+            return view('page.tambahadmin',[
+                "dataAdmin"=>$dataAdmin
+            ]);
+        }
+
+    }
+    public function addAdmin(Request $request)
+    {
+        $request->validate([
+            "adminName"=>["required",new checkAdmin()],
+            "adminPass"=>["required",new checkAdminP()]
+        ],[
+            "required"=>":attribute Harus di isi!!!",
+        ],[
+            "adminName"=>"nama admin",
+            "adminPass"=>"Password"
+        ]);
+        $count = admins::withTrashed()->count();
+        $adminNew = new admins();
+        $adminNew->ADMINP_ID = $count;
+        $adminNew->NAMA_ADMINP = $request->adminName;
+        $adminNew->PASSWORD_ADMINP = $request->adminPass;
+        $adminNew->save();
+        return redirect("/daftaradmin");
+    }
+    public function deleteAdmin(Request $request)
+    {
+        $id = $request->butID;
+        $admin = admins::withTrashed()->find($id);
+        if($admin->trashed()){
+            $admin->restore();
+        }else{
+            $admin->delete();
+        }
+        return redirect("daftaradmin");
     }
     public function daftarbank()
     {
-        return view('page.tambahbank');
+        if (Cookie::has('userNowT') == false) {
+            return redirect('/login');
+        } else {
+            // dd($req->cookie('userNowT'));
+            $dataBank = banks::withTrashed()->get();
+            return view('page.tambahbank',[
+                "dataBank"=>$dataBank
+            ]);
+        }
     }
-
+    public function addBank(Request $request)
+    {
+        $request->validate([
+            "namaBank"=>["required"],
+        ],[
+            "required"=>":attribute Harus di isi!!!",
+        ],[
+            "namaBank"=>"nama bank",
+        ]);
+        $bankNew = new banks();
+        $bankNew->nama_bank = $request->namaBank;
+        $bankNew->save();
+        return redirect("/daftarbank");
+    }
+    public function deleteBank(Request $request)
+    {
+        $id = $request->butID;
+        $bank = banks::withTrashed()->find($id);
+        if($bank->trashed()){
+            $bank->restore();
+        }else{
+            $bank->delete();
+        }
+        return redirect("daftarbank");
+    }
     public function statpengajuan()
     {
         return view('page.statpengajuan');
     }
     public function daftarjenis()
     {
-        return view('page.daftarjenis');
+        if (Cookie::has('userNowT') == false) {
+            return redirect('/login');
+        } else {
+            $dataJenis = jenisbarangs::all();
+            return view('page.daftarjenis',[
+                "dataJenis"=>$dataJenis
+            ]);
+        }
     }
+    public function addJenis(Request $request)
+    {
+        $request->validate([
+            "namaJ"=>["required"],
+        ],[
+            "required"=>":attribute Harus di isi!!!",
+        ],[
+            "namaJ"=>"nama Jenis",
+        ]);
+        $count = jenisbarangs::all()->count();
+        $jenisNew = new jenisbarangs();
+        $jenisNew->JENIS_ID = $count+1;
+        $jenisNew->NAMA_JENIS = $request->namaJ;
+        $jenisNew->save();
+        return redirect("/daftarjenis");
+    }
+
     public function katalog()
     {
         // $daftarKatalog = DB::select('select * from pengajuans where STATUS_PENGAJUAN = "1"  ');
