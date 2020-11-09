@@ -26,6 +26,7 @@ Route::get('/daftarbank', 'ControllerHalaman@daftarbank');
 Route::get('/statpengajuan', 'ControllerHalaman@statpengajuan');
 Route::get('/daftarjenis', 'ControllerHalaman@daftarjenis');
 Route::get('/katalog', 'ControllerHalaman@katalog');
+Route::get('/detailsbarang', 'ControllerHalaman@detailsbarang');
 
 
 Route::post('/doRegister', 'ControllerHalaman@doRegister');
@@ -37,6 +38,8 @@ Route::post('/deleteAdmin', 'ControllerHalaman@deleteAdmin');
 Route::post('/addBank', 'ControllerHalaman@addBank');
 Route::post('/deleteBank', 'ControllerHalaman@deleteBank');
 Route::post('/addJenis', 'ControllerHalaman@addJenis');
+Route::post('/post_checkout', 'ControllerHalaman@checkout');
+Route::post('/bayar', 'ControllerHalaman@bayar');
 
 
 Route::get('/doDelete/{id}', 'ControllerHalaman@doDelete');

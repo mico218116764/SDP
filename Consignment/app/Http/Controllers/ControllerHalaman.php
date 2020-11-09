@@ -445,4 +445,18 @@ class ControllerHalaman extends Controller
             "daftarKatalog" => $daftarKatalog
         ]);
     }
+
+    public function detailsbarang()
+    {
+        return view('page.detailsbarang');
+    }
+
+    public function checkout()
+    {
+        return view('page.checkout');
+    }
+    public function bayar()
+    {
+        return view('page.bayar');
+    }
 }
