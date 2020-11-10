@@ -234,7 +234,7 @@ class ControllerHalaman extends Controller
         $pengajuans->bank_id = $request->USERPB_NMBANK;
         $pengajuans->USERPB_NOREK = $request->USERPB_NOREK;
         $pengajuans->save();
-
+        //ini pasti berubah otomatis
         return redirect("/pengajuan");
     }
     public function doLogout(Request $request)
