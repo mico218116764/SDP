@@ -402,10 +402,7 @@ class ControllerHalaman extends Controller
         }
         return redirect("daftarbank");
     }
-    public function statpengajuan()
-    {
-        return view('page.statpengajuan');
-    }
+    
     public function daftarjenis()
     {
         if (Cookie::has('userNowT') == false) {
@@ -459,4 +456,9 @@ class ControllerHalaman extends Controller
     {
         return view('page.bayar');
     }
+    public function detailpengajuan()
+    {
+        return view('page.detailpengajuan');
+    }
+    
 }

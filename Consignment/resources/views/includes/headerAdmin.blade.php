@@ -10,9 +10,10 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="{{url('/admin')}}">Pengajuan</a></li>
+                <li><a href="{{url('/detailpengajuan')}}">Detail Pengajuan</a></li>
                 <li><a href="{{url('/daftaradmin')}}">Daftar Admin</a></li>
                 <li><a href="{{url('/daftarbank')}}">Daftar Bank</a></li>
-                <li><a href="{{url('/statpengajuan')}}">Status Pengajuan</a></li>
+                <li><a href="{{url('/daftarretur')}}">Daftar Retur</a></li>
                 <li><a href="{{url('/daftarjenis')}}">Daftar Jenis</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

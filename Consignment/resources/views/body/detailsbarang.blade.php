@@ -16,11 +16,8 @@
                     @csrf
                     <br>
                     <h3><b>NAMA BARANG</b></h3>
+                    <h4>Deskripsi: </h4><br>
                     <h4>Price: </h4><br>
-                    <h3>Jumlah:</h3>
-                    <input type='submit' value='-' name='btncheckout' class='btn btn-primary'>
-                    <input type="number" name="txtjumlah" value='1' style="">
-                    <input type='submit' value='+' name='btncheckout' class='btn btn-primary'>
                     <div><br>
                     <input type='submit' value='Checkout' name='btncheckout' class='btn btn-primary'>
                     &nbsp;

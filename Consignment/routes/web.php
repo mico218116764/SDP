@@ -23,10 +23,10 @@ Route::get('/pengajuan', 'ControllerHalaman@pengajuan');
 Route::get('/admin', 'ControllerHalaman@admin');
 Route::get('/daftaradmin', 'ControllerHalaman@daftaradmin');
 Route::get('/daftarbank', 'ControllerHalaman@daftarbank');
-Route::get('/statpengajuan', 'ControllerHalaman@statpengajuan');
 Route::get('/daftarjenis', 'ControllerHalaman@daftarjenis');
 Route::get('/katalog', 'ControllerHalaman@katalog');
 Route::get('/detailsbarang', 'ControllerHalaman@detailsbarang');
+Route::get('/detailpengajuan', 'ControllerHalaman@detailpengajuan');
 
 
 Route::post('/doRegister', 'ControllerHalaman@doRegister');

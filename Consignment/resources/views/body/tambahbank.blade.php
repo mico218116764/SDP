@@ -28,6 +28,7 @@
                         <tr>
                             <th style="text-align:center">Bank ID</th>
                             <th style="text-align:center">Nama Bank</th>
+                            <th style="text-align:center">Nomor Rekening</th>
                             <th style="text-align:center">Action</th>
                         </tr>
                     </thead>
@@ -35,6 +36,7 @@
                         @foreach ($dataBank as $bank)
                             <tbody>
                                 <th style="text-align:center">{{$bank->bank_id}}</th>
+                                <th style="text-align:center">{{$bank->nama_bank}}</th>
                                 <th style="text-align:center">{{$bank->nama_bank}}</th>
                                 <th style="text-align:center">
                                     @if ($bank->trashed())

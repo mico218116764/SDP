@@ -37,14 +37,15 @@
                     <thead>
                         <tr>
                             <th style="text-align:center">Admin ID</th>
+                            <th style="text-align:center">Email Admin</th>
                             <th style="text-align:center">Nama Admin</th>
                             <th style="text-align:center">Action</th>
                         </tr>
                     </thead>
-
                         @foreach ($dataAdmin as $admin)
                             <tbody>
                                 <th style="text-align:center">{{$admin->ADMINP_ID}}</th>
+                                <th style="text-align:center">{{$admin->NAMA_ADMINP}}</th>
                                 <th style="text-align:center">{{$admin->NAMA_ADMINP}}</th>
                                 <th style="text-align:center">
                                     @if ($admin->trashed())
