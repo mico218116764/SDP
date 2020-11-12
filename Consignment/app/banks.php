@@ -14,6 +14,8 @@ class banks extends Model
 
     protected $fillable=[
         'bank_id',
-        'nama_bank'
+        'nama_bank',
+        'rekening',
+        'pemilik'
     ];
 }

@@ -10,6 +10,22 @@
                 <div style="color:red; font-weight:bold"> {{$message}}</div><br>
             @enderror
 
+            <div class="form-group">
+                <label>Nama Pemilik Rekening</label>
+                <input type="text" class="form-control" name="namaPemilik" placeholder="Masukkan Nama Pemilik Rekening">
+            </div>
+            @error('namaPemilik')
+                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
+
+            <div class="form-group">
+                <label>Nomor Rekening</label>
+                <input type="text" class="form-control" name="nomorRekening" placeholder="Masukkan Nomor Rekening">
+            </div>
+            @error('nomorRekening')
+                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
+
             <button type="submit" name="btnTambahBank" class="btn btn-primary btn-flat m-b-30 m-t-30">Tambah Bank</button>
 
     </form>
@@ -28,6 +44,7 @@
                         <tr>
                             <th style="text-align:center">Bank ID</th>
                             <th style="text-align:center">Nama Bank</th>
+                            <th style="text-align:center">Nama Pemilik</th>
                             <th style="text-align:center">Nomor Rekening</th>
                             <th style="text-align:center">Action</th>
                         </tr>
@@ -37,7 +54,8 @@
                             <tbody>
                                 <th style="text-align:center">{{$bank->bank_id}}</th>
                                 <th style="text-align:center">{{$bank->nama_bank}}</th>
-                                <th style="text-align:center">{{$bank->nama_bank}}</th>
+                                <th style="text-align:center">{{$bank->pemilik}}</th>
+                                <th style="text-align:center">{{$bank->rekening}}</th>
                                 <th style="text-align:center">
                                     @if ($bank->trashed())
                                         <button type="submit" name="butID" value="{{$bank->bank_id}}">Recover</button>

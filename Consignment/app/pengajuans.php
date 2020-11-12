@@ -3,12 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class pengajuans extends Model
 {
-    public $timestamps = false;
-
+    use SoftDeletes;
+    public $timestamps = true;
     protected $primaryKey = 'PENGAJUAN_ID';
-    public $incrementing = false;
-    protected $keyType = 'string';
+    public $incrementing = true;
 }

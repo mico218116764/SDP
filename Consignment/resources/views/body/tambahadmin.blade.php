@@ -13,6 +13,14 @@
             @enderror
 
             <div class="form-group">
+                <label>Email</label>
+                <input type="text" class="form-control" name="email" placeholder="Masukkan Nama Admin">
+            </div>
+            @error('email')
+                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
+
+            <div class="form-group">
                 <label>Password</label>
                 <input type="password" class="form-control" name="adminPass" placeholder="Masukkan Password">
             </div>
@@ -45,7 +53,7 @@
                         @foreach ($dataAdmin as $admin)
                             <tbody>
                                 <th style="text-align:center">{{$admin->ADMINP_ID}}</th>
-                                <th style="text-align:center">{{$admin->NAMA_ADMINP}}</th>
+                                <th style="text-align:center">{{$admin->email}}</th>
                                 <th style="text-align:center">{{$admin->NAMA_ADMINP}}</th>
                                 <th style="text-align:center">
                                     @if ($admin->trashed())
