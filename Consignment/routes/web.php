@@ -27,6 +27,10 @@ Route::get('/daftarjenis', 'ControllerHalaman@daftarjenis');
 Route::get('/katalog', 'ControllerHalaman@katalog');
 Route::get('/detailsbarang', 'ControllerHalaman@detailsbarang');
 Route::get('/detailpengajuan', 'ControllerHalaman@detailpengajuan');
+Route::get('/daftarmerk', 'ControllerHalaman@daftarmerk');
+Route::get('/daftarretur', 'ControllerHalaman@daftarretur');
+Route::get('/retur', 'ControllerHalaman@retur');
+
 
 
 Route::post('/doRegister', 'ControllerHalaman@doRegister');

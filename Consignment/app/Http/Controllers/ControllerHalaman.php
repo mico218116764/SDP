@@ -471,4 +471,19 @@ class ControllerHalaman extends Controller
         return view('page.detailpengajuan');
     }
 
+    public function daftarmerk()
+    {
+        return view('page.daftarmerk');
+    }
+    public function daftarretur()
+    {
+        return view('page.daftarretur');
+    }
+    public function retur()
+    {
+        return view('page.retur');
+    }
+
+    
+    
 }

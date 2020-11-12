@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2020 at 11:57 AM
+-- Generation Time: Nov 12, 2020 at 06:51 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.2.32
 
@@ -32,6 +32,7 @@ USE `sdp_consignment`;
 DROP TABLE IF EXISTS `admins`;
 CREATE TABLE `admins` (
   `ADMINP_ID` varchar(10) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `NAMA_ADMINP` char(50) DEFAULT NULL,
   `PASSWORD_ADMINP` varchar(100) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
@@ -43,10 +44,11 @@ CREATE TABLE `admins` (
 -- Dumping data for table `admins`
 --
 
-INSERT INTO `admins` (`ADMINP_ID`, `NAMA_ADMINP`, `PASSWORD_ADMINP`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('0', 'admin1', 'admin1', '2020-11-04', '2020-11-04', '2020-11-04'),
-('1', 'admin2', 'admin2', '2020-11-04', '2020-11-04', NULL),
-('2', 'admin3', 'admin3', '2020-11-04', '2020-11-04', NULL);
+INSERT INTO `admins` (`ADMINP_ID`, `email`, `NAMA_ADMINP`, `PASSWORD_ADMINP`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('0', 'admin1@admin.com', 'admin1', 'admin1', '2020-11-04', '2020-11-12', NULL),
+('1', 'admin2@admin.com', 'admin2', 'admin2', '2020-11-04', '2020-11-04', NULL),
+('2', 'admin3@admin.com', 'admin3', 'admin3', '2020-11-04', '2020-11-04', NULL),
+('3', 'admin4@admin.com', 'admin4', 'admin4', '2020-11-12', '2020-11-12', NULL);
 
 -- --------------------------------------------------------
 
@@ -58,6 +60,8 @@ DROP TABLE IF EXISTS `banks`;
 CREATE TABLE `banks` (
   `bank_id` int(11) NOT NULL,
   `nama_bank` varchar(30) DEFAULT NULL,
+  `rekening` varchar(20) NOT NULL,
+  `pemilik` varchar(100) NOT NULL,
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL,
   `deleted_at` date DEFAULT NULL
@@ -67,18 +71,19 @@ CREATE TABLE `banks` (
 -- Dumping data for table `banks`
 --
 
-INSERT INTO `banks` (`bank_id`, `nama_bank`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Bank Rakyat Indonesia', NULL, NULL, NULL),
-(2, 'Bank MandirI', NULL, NULL, NULL),
-(3, 'Bank Central Asia ', NULL, NULL, NULL),
-(4, 'Bank Negara Indonesia', NULL, NULL, NULL),
-(5, 'Bank Tabungan Negara', NULL, NULL, NULL),
-(6, 'Bank CIMB Niaga', NULL, NULL, NULL),
-(7, 'Bank BTPN', NULL, NULL, NULL),
-(8, 'Panin Bank', NULL, NULL, NULL),
-(9, 'Bank OCBC NISP', NULL, NULL, NULL),
-(10, 'Bank Maybank Indonesia', NULL, NULL, NULL),
-(11, 'Jenius', '2020-11-04', '2020-11-04', NULL);
+INSERT INTO `banks` (`bank_id`, `nama_bank`, `rekening`, `pemilik`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Bank Rakyat Indonesia', '5230001', 'Michael Louis Chandra', '2020-11-11', '2020-11-11', NULL),
+(2, 'Bank MandirI', '5230002', 'Michael Louis Chandra', '2020-11-11', '2020-11-11', NULL),
+(3, 'Bank Central Asia ', '5230003', 'Michael Louis Chandra', '2020-11-11', '2020-11-11', NULL),
+(4, 'Bank Negara Indonesia', '5230004', 'Michael Louis Chandra', '2020-11-11', '2020-11-11', NULL),
+(5, 'Bank Tabungan Negara', '5230005', 'Michael Louis Chandra', '2020-11-11', '2020-11-11', NULL),
+(6, 'Bank CIMB Niaga', '5230006', 'Michael Louis Chandra', '2020-11-11', '2020-11-11', NULL),
+(7, 'Bank BTPN', '5230007', 'Michael Louis Chandra', '2020-11-11', '2020-11-11', NULL),
+(8, 'Panin Bank', '5230008', 'Michael Louis Chandra', '2020-11-11', '2020-11-11', NULL),
+(9, 'Bank OCBC NISP', '5230009', 'Michael Louis Chandra', '2020-11-11', '2020-11-11', NULL),
+(10, 'Bank Maybank Indonesia', '5230010', 'Michael Louis Chandra', '2020-11-11', '2020-11-11', NULL),
+(11, 'Jenius', '5230011', 'Michael Louis Chandra', '2020-11-04', '2020-11-04', NULL),
+(12, 'Bank BRI Syariah', '52300112', 'Michael Louis Chandra', '2020-11-12', '2020-11-12', NULL);
 
 -- --------------------------------------------------------
 
@@ -157,7 +162,7 @@ CREATE TABLE `pengajuans` (
   `ADMINP_ID` varchar(10) DEFAULT NULL,
   `MERK_ID` varchar(5) DEFAULT NULL,
   `KONDISI_ID` varchar(5) DEFAULT NULL,
-  `PENGAJUAN_ID` varchar(5) NOT NULL,
+  `PENGAJUAN_ID` int(5) NOT NULL,
   `USERPB_ID` varchar(5) DEFAULT NULL,
   `TRANSAKSI_ID` varchar(5) DEFAULT NULL,
   `JENIS_ID` varchar(5) DEFAULT NULL,
@@ -181,15 +186,18 @@ CREATE TABLE `pengajuans` (
   `HARGA_JASA` int(11) DEFAULT NULL,
   `USERPB_IDENTITY` varchar(1000) DEFAULT NULL,
   `bank_id` varchar(5) DEFAULT NULL,
-  `USERPB_NOREK` varchar(20) DEFAULT NULL
+  `USERPB_NOREK` varchar(20) DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `updated_at` date DEFAULT NULL,
+  `deleted_at` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pengajuans`
 --
 
-INSERT INTO `pengajuans` (`ADMINP_ID`, `MERK_ID`, `KONDISI_ID`, `PENGAJUAN_ID`, `USERPB_ID`, `TRANSAKSI_ID`, `JENIS_ID`, `NAMA_BARANG`, `TGL_PENGAJUAN`, `WARNA_BARANGP`, `PERSENTASE_KUALITAS`, `FUNGSIONALITAS`, `DESKRIPSI_BARANG`, `STATUS_PENGAJUAN`, `STATUS_BARANG`, `FOTO_KIRI`, `FOTO_KANAN`, `FOTO_ATAS`, `FOTO_BAWAH`, `FOTO_DEPAN`, `FOTO_BELAKANG`, `HARGA_MIN`, `HARGA_MAX`, `HARGA_APPROVE`, `HARGA_JASA`, `USERPB_IDENTITY`, `bank_id`, `USERPB_NOREK`) VALUES
-('2', 'MERK1', 'KOND0', 'PNG0', '0', '0', '2', 'YA BARANG', '2020-11-04 17:56:35', '#000000', 0, 'cursor pada layar', 'yaaaaaa barang', '1', '0', 'https://mos.pcgamebenchmark.com/img/product/steelseries-siberia-v3-comfortable/steelseries-siberia-v3-comfortable-gaming-headset-review.jpg', 'https://mos.pcgamebenchmark.com/img/product/steelseries-siberia-v3-comfortable/steelseries-siberia-v3-comfortable-gaming-headset-review.jpg', 'https://mos.pcgamebenchmark.com/img/product/steelseries-siberia-v3-comfortable/steelseries-siberia-v3-comfortable-gaming-headset-review.jpg', 'https://mos.pcgamebenchmark.com/img/product/steelseries-siberia-v3-comfortable/steelseries-siberia-v3-comfortable-gaming-headset-review.jpg', 'https://mos.pcgamebenchmark.com/img/product/steelseries-siberia-v3-comfortable/steelseries-siberia-v3-comfortable-gaming-headset-review.jpg', 'https://mos.pcgamebenchmark.com/img/product/steelseries-siberia-v3-comfortable/steelseries-siberia-v3-comfortable-gaming-headset-review.jpg', 100000, 200000, 100000, 0, 'https://images.bisnis-cdn.com/posts/2019/02/27/894082/e-ktp-guohui-chen.jpg', '11', '22222222222222');
+INSERT INTO `pengajuans` (`ADMINP_ID`, `MERK_ID`, `KONDISI_ID`, `PENGAJUAN_ID`, `USERPB_ID`, `TRANSAKSI_ID`, `JENIS_ID`, `NAMA_BARANG`, `TGL_PENGAJUAN`, `WARNA_BARANGP`, `PERSENTASE_KUALITAS`, `FUNGSIONALITAS`, `DESKRIPSI_BARANG`, `STATUS_PENGAJUAN`, `STATUS_BARANG`, `FOTO_KIRI`, `FOTO_KANAN`, `FOTO_ATAS`, `FOTO_BAWAH`, `FOTO_DEPAN`, `FOTO_BELAKANG`, `HARGA_MIN`, `HARGA_MAX`, `HARGA_APPROVE`, `HARGA_JASA`, `USERPB_IDENTITY`, `bank_id`, `USERPB_NOREK`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('0', 'MERK1', 'KOND0', 1, '0', '0', '1', 'YA BARANG', '2020-11-13 00:25:15', '#ff0000', 0, 'Ngerungokno suara gendang', 'tung mbooo mu tung mbo mu', '0', '0', 'https://www.meijer.com/content/dam/meijer/product/0009/78/5508/05/0009785508059_1200.png', 'https://images-na.ssl-images-amazon.com/images/I/71-QPWNH%2BVL._AC_SX466_.jpg', 'https://mos.pcgamebenchmark.com/img/product/steelseries-siberia-v3-comfortable/steelseries-siberia-v3-comfortable-gaming-headset-review.jpg', 'https://images-na.ssl-images-amazon.com/images/I/71-QPWNH%2BVL._AC_SX466_.jpg', 'https://www.meijer.com/content/dam/meijer/product/0009/78/5508/05/0009785508059_1200.png', 'https://lh3.googleusercontent.com/proxy/NIIlc6fQTkpQt7qGlx1UzzjqT1P6zxIQXOEGTlA-n2gLiXpanEmeKCXw_VExH_t5gXmkjdhGhx2H7txFN6PABgs0Aeey9hL2Ejn_YCyhQDDCjaEk7ZE4cx7k_JGlXTD0b7kuzzz6wNYN0FKQrXw0IFUmmq-sQykbr4gNucZqY1vKiQ8jnDmFUr5VX4HVcsYJ_2Z2A1NeBTrKXpn_U2Z4kpaaoSG5MWqN', 1000000, 2000000, 0, 0, 'https://images.bisnis-cdn.com/posts/2019/02/27/894082/e-ktp-guohui-chen.jpg', '2', '123123123123', '2020-11-12', '2020-11-12', NULL);
 
 -- --------------------------------------------------------
 
@@ -386,7 +394,13 @@ ALTER TABLE `userpembelis`
 -- AUTO_INCREMENT for table `banks`
 --
 ALTER TABLE `banks`
-  MODIFY `bank_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `bank_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `pengajuans`
+--
+ALTER TABLE `pengajuans`
+  MODIFY `PENGAJUAN_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
