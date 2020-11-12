@@ -15,8 +15,12 @@ use Illuminate\Support\Facades\DB;
 use App\Rules\CekEmail;
 use App\Rules\CekEmaillogin;
 use App\Rules\checkAdmin;
+use App\Rules\checkAdminEmail;
 use App\Rules\checkAdminP;
 use App\Rules\checkEmail;
+use App\Rules\checkEmailAdmin;
+use App\Rules\checkJenis;
+use App\Rules\checkNamaBank;
 use App\Rules\checkPhone;
 use App\userpembelis;
 
@@ -203,12 +207,10 @@ class ControllerHalaman extends Controller
                 "USERPB_NOREK" => "Nomor Rekening",
             ]
         );
-        $id = "PNG" . DB::table('pengajuans')->count();
         $pengajuans = new pengajuans();
         $pengajuans->ADMINP_ID = "0";
         $pengajuans->MERK_ID = $request->merkBarang;
         $pengajuans->KONDISI_ID = "KOND0";
-        $pengajuans->PENGAJUAN_ID = $id;
         $pengajuans->USERPB_ID = $dataUserNow[0]->USERPB_ID;
         $pengajuans->TRANSAKSI_ID = "0";
         $pengajuans->JENIS_ID = $request->jenisBarang;
@@ -260,7 +262,9 @@ class ControllerHalaman extends Controller
         $userpembelis = new userpembelis();
         $admins = new admins();
 
-        $cekAdmin = $admins::where("PASSWORD_ADMINP", $request->USERPB_PASSWORD)->count();
+        $cekAdmin = $admins::where("email", $request->USERPB_EMAIL)
+                    ->where("PASSWORD_ADMINP", $request->USERPB_PASSWORD)
+                    ->count();
         $cekUser = $userpembelis::where("USERPB_EMAIL", $request->USERPB_EMAIL)
             ->where("USERPB_PASSWORD", $request->USERPB_PASSWORD)
             ->count();
@@ -273,7 +277,7 @@ class ControllerHalaman extends Controller
             Cookie::forget("userNowT");
             Cookie::queue("userNowT", "user", 60);
             return redirect('/pengajuan');
-        } else if ($cekAdmin == 1 && $request->USERPB_EMAIL == "admin@admin.admin") {
+        } else if ($cekAdmin == 1) {
             Cookie::forget("userNowT");
             Cookie::queue("userNowT", $request->USERPB_PASSWORD . "", 60);
             return redirect('/admin');
@@ -333,22 +337,24 @@ class ControllerHalaman extends Controller
                 "dataAdmin"=>$dataAdmin
             ]);
         }
-
     }
     public function addAdmin(Request $request)
     {
         $request->validate([
             "adminName"=>["required",new checkAdmin()],
-            "adminPass"=>["required",new checkAdminP()]
+            "adminPass"=>["required"],
+            "email"=>["required",new checkEmailAdmin()],
         ],[
             "required"=>":attribute Harus di isi!!!",
         ],[
             "adminName"=>"nama admin",
-            "adminPass"=>"Password"
+            "adminPass"=>"Password",
+            "email"=>"E-mail"
         ]);
         $count = admins::withTrashed()->count();
         $adminNew = new admins();
         $adminNew->ADMINP_ID = $count;
+        $adminNew->email = $request->email;
         $adminNew->NAMA_ADMINP = $request->adminName;
         $adminNew->PASSWORD_ADMINP = $request->adminPass;
         $adminNew->save();
@@ -380,7 +386,9 @@ class ControllerHalaman extends Controller
     public function addBank(Request $request)
     {
         $request->validate([
-            "namaBank"=>["required"],
+            "namaBank"=>["required",new checkNamaBank()],
+            "nomorRekening"=>["required"],
+            "namaPemilik"=>["required"],
         ],[
             "required"=>":attribute Harus di isi!!!",
         ],[
@@ -388,6 +396,8 @@ class ControllerHalaman extends Controller
         ]);
         $bankNew = new banks();
         $bankNew->nama_bank = $request->namaBank;
+        $bankNew->rekening = $request->nomorRekening;
+        $bankNew->pemilik = $request->namaPemilik;
         $bankNew->save();
         return redirect("/daftarbank");
     }
@@ -402,7 +412,7 @@ class ControllerHalaman extends Controller
         }
         return redirect("daftarbank");
     }
-    
+
     public function daftarjenis()
     {
         if (Cookie::has('userNowT') == false) {
@@ -417,7 +427,7 @@ class ControllerHalaman extends Controller
     public function addJenis(Request $request)
     {
         $request->validate([
-            "namaJ"=>["required"],
+            "namaJ"=>["required",new checkJenis()],
         ],[
             "required"=>":attribute Harus di isi!!!",
         ],[
@@ -460,5 +470,5 @@ class ControllerHalaman extends Controller
     {
         return view('page.detailpengajuan');
     }
-    
+
 }
