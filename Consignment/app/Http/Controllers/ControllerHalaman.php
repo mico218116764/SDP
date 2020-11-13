@@ -20,6 +20,7 @@ use App\Rules\checkAdminP;
 use App\Rules\checkEmail;
 use App\Rules\checkEmailAdmin;
 use App\Rules\checkJenis;
+use App\Rules\checkMerk;
 use App\Rules\checkNamaBank;
 use App\Rules\checkNominal;
 use App\Rules\checkPhone;
@@ -509,7 +510,30 @@ class ControllerHalaman extends Controller
 
     public function daftarmerk()
     {
-        return view('page.daftarmerk');
+        if (Cookie::has('userNowT') == false) {
+            return redirect('/login');
+        } else {
+            $dataMerk = merkbarangs::all();
+            return view('page.daftarmerk',[
+                "dataMerk"=>$dataMerk
+            ]);
+        }
+    }
+    public function addMerk(Request $request)
+    {
+        $request->validate([
+            "namaMerk"=>["required",new checkMerk()],
+        ],[
+            "required"=>":attribute Harus di isi!!!",
+        ],[
+            "namaMerk"=>"nama Merk",
+        ]);
+        $count = merkbarangs::all()->count();
+        $merkNew = new merkbarangs();
+        $merkNew->MERK_ID = $count+1;
+        $merkNew->NAMA_MERK2 = $request->namaMerk;
+        $merkNew->save();
+        return redirect("/daftarmerk");
     }
     public function daftarretur()
     {

@@ -42,6 +42,7 @@ Route::post('/deleteAdmin', 'ControllerHalaman@deleteAdmin');
 Route::post('/addBank', 'ControllerHalaman@addBank');
 Route::post('/deleteBank', 'ControllerHalaman@deleteBank');
 Route::post('/addJenis', 'ControllerHalaman@addJenis');
+Route::post('/addMerk', 'ControllerHalaman@addMerk');
 Route::post('/post_checkout', 'ControllerHalaman@checkout');
 Route::post('/bayar', 'ControllerHalaman@bayar');
 
