@@ -12,7 +12,6 @@
                     <th style="text-align:center">ID</th>
                     <th style="text-align:center">Nama Barang</th>
                     <th style="text-align:center">Harga Min - Harga Max</th>
-                    <th style="text-align:center">Harga Approve</th>
                     <th style="text-align:center">Action</th>
                 </tr>
             </thead>
@@ -29,20 +28,11 @@
                     <td>
                         {{$item->HARGA_MIN." - ".$item->HARGA_MAX}}
                     </td>
-                    <td>
-                        <form action="{{url('/doApprove/'.$item->PENGAJUAN_ID)}}" method="GET">
-                            @csrf
-                            <input type="text" name="hargaApprove" style="width:100%" placeholder='Harga Approve'
-                                class="form">
-                            <input name="butApprove" style="width:100%;font-size:13pt;" class="btn list-group-item"
-                                type="submit" value="Approve">
 
-                        </form>
-                    </td>
                     <td>
-                        <a style="width:100%;font-size:13pt;" href="/doDelete/{{ $item->PENGAJUAN_ID }}"
+                        <a style="width:100%;font-size:13pt;" href="/toDetail/{{ $item->PENGAJUAN_ID }}"
                             class="btn list-group-item">
-                            Delete
+                            Detail
                         </a>
                     </td>
                 </tr>

@@ -45,6 +45,7 @@ Route::post('/addJenis', 'ControllerHalaman@addJenis');
 Route::post('/post_checkout', 'ControllerHalaman@checkout');
 Route::post('/bayar', 'ControllerHalaman@bayar');
 
-
+Route::get('/toDetail/{id}', 'ControllerHalaman@toDetail');
+Route::get('/doApprove', 'ControllerHalaman@doApprove');
 Route::get('/doDelete/{id}', 'ControllerHalaman@doDelete');
-Route::get('/doApprove/{id}', 'ControllerHalaman@doApprove');
+// Route::get('/doApprove/{id}', 'ControllerHalaman@doApprove');

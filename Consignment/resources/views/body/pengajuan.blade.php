@@ -141,8 +141,40 @@
             @enderror
 
             <button type="submit" name="btnRegis" class="btn btn-primary btn-flat m-b-30 m-t-30">Ajukan</button>
-
+            <br>
+            <br>
+            <br>
+            Barang yang Direject:
+            <table class="table" style="">
+                <thead>
+                    <tr>
+                        <th style="text-align:center">ID</th>
+                        <th style="text-align:center">Nama Barang</th>
+                        <th style="text-align:center">Harga Approved</th>
+                    </tr>
+                </thead>
+                @foreach ($dataPengajuan as $item)
+                @if($item->email_penjual == $userEmail)
+                <tbody>
+                    <tr>
+                        <td style="text-align:center">
+                            {{$item->PENGAJUAN_ID}}
+                        </td>
+                        <td style="text-align:center">
+                            {{$item->NAMA_BARANG}}
+                        </td>
+                        <td style="text-align:center">
+                            {{$item->HARGA_APPROVE}}
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </tbody>
+                @endif
+                @endforeach
+            </table>
         </div>
-
     </form>
+
 </div>
+

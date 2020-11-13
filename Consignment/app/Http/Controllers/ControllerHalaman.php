@@ -21,6 +21,7 @@ use App\Rules\checkEmail;
 use App\Rules\checkEmailAdmin;
 use App\Rules\checkJenis;
 use App\Rules\checkNamaBank;
+use App\Rules\checkNominal;
 use App\Rules\checkPhone;
 use App\userpembelis;
 
@@ -137,19 +138,24 @@ class ControllerHalaman extends Controller
             return redirect('/login');
         } else {
             $user = $request->cookie('userNowT');
+            $userE = $request->cookie('userNowE');
             // dd($request->cookie('userNowT'));
 
             if ($user == "user") {
                 $daftarJenis = new jenisbarangs();
                 $daftarMerk = new merkbarangs();
                 $daftarBank = new banks();
-
+                $dataPengajuan = pengajuans::onlyTrashed()->get();
+                // dd($dataPengajuan);
+                // dd($userE);
                 // dd($daftarJenis);
 
                 return view('page.pengajuan', [
                     "daftarJenis" => $daftarJenis::all(),
                     "daftarMerk" => $daftarMerk::all(),
-                    "daftarBank" => $daftarBank::all()
+                    "daftarBank" => $daftarBank::all(),
+                    "dataPengajuan"=>$dataPengajuan,
+                    "userEmail"=>$userE,
                 ]);
             } else {
                 return redirect('/login');
@@ -276,6 +282,8 @@ class ControllerHalaman extends Controller
             Cookie::queue("userNow", json_encode($dataUserNow), 60);
             Cookie::forget("userNowT");
             Cookie::queue("userNowT", "user", 60);
+            Cookie::forget("userNowE");
+            Cookie::queue("userNowE", $request->USERPB_EMAIL, 60);
             return redirect('/pengajuan');
         } else if ($cekAdmin == 1) {
             Cookie::forget("userNowT");
@@ -303,28 +311,56 @@ class ControllerHalaman extends Controller
     }
     public function doDelete($id)
     {
+        // dd($id);
         $pengajuans = pengajuans::where('PENGAJUAN_ID', $id)->first();
         //sample $id => PNG#
         //example $id => PNG0
         $pengajuans->delete();
         return redirect('/admin');
     }
-    public function doApprove(Request $req, $id)
+    public function toDetail($id)
     {
-
-        if (Cookie::has('userNowT') == false) {
-            return redirect('/login');
-        } else {
-            $user = $req->cookie('userNowT');
-            $id_admin = substr($user, 5, 1);
-        }
         $pengajuans = pengajuans::where('PENGAJUAN_ID', $id)->first();
-        $pengajuans->status_pengajuan = 1;
-        $pengajuans->harga_approve = $req->hargaApprove;
-        $pengajuans->ADMINP_ID = $id_admin;
-        $pengajuans->save();
+        // dd($pengajuans);
+        return view('page.detailpengajuan',[
+            'pengajuans'=>$pengajuans,
+            'id'=>$id
+        ]);
+    }
+    public function doApprove(Request $req)
+    {
+        $id = $req->id;
+        $hargaApprove = (int)$req->hargaApprove;
+        $min =(int) $req->HARGA_MIN;
+        $max =  (int)$req->HARGA_MAKS;
+        // dd($max);
+        if($hargaApprove < $min){
+            return redirect('/toDetail/'.$id)->with('alert','Nominal terlalu kecil');
+        }else if($hargaApprove > $max){
+            return redirect('/toDetail/'.$id)->with('alert','Nominal terlalu besar');
+        }else{
+            $req->validate([
+                'hargaApprove'=>['required','numeric']
+            ],[
+                'required'=>":attribute harus di isi!",
+                'numeric'=>":attribute harus di angka!",
+            ]
+            );
+            if (Cookie::has('userNowT') == false) {
+                return redirect('/login');
+            } else {
+                $user = $req->cookie('userNowT');
+                $id_admin = substr($user, 5, 1);
+            }
+            $pengajuans = pengajuans::where('PENGAJUAN_ID', $id)->first();
+            $pengajuans->status_pengajuan = 1;
+            $pengajuans->harga_approve = $req->hargaApprove;
+            $pengajuans->ADMINP_ID = $id_admin;
+            $pengajuans->save();
 
-        return redirect('/admin');
+            return redirect('/admin');
+        }
+
     }
     public function daftaradmin(Request $req)
     {
@@ -484,6 +520,6 @@ class ControllerHalaman extends Controller
         return view('page.retur');
     }
 
-    
-    
+
+
 }
