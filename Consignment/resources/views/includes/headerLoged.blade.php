@@ -13,9 +13,11 @@
         <ul class="nav navbar-nav">
             <li><a href="{{url('/katalog')}}">Home</a></li>
             <li><a href="{{url('/pengajuan')}}">Pengajuan</a></li>
+            <li><a href="{{url('/barangreject')}}">Barang Reject</a></li>
             <li><a href="{{url('/retur')}}">Retur</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+            <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
             <li><a href="/doLogout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
         </ul>
         </div>

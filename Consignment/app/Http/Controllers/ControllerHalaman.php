@@ -544,6 +544,13 @@ class ControllerHalaman extends Controller
         return view('page.retur');
     }
 
+    public function profile()
+    {
+        return view('page.profile');
+    }
 
-
+    public function barangreject()
+    {
+        return view('page.barangreject');
+    }
 }

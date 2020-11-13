@@ -30,6 +30,10 @@ Route::get('/detailpengajuan', 'ControllerHalaman@detailpengajuan');
 Route::get('/daftarmerk', 'ControllerHalaman@daftarmerk');
 Route::get('/daftarretur', 'ControllerHalaman@daftarretur');
 Route::get('/retur', 'ControllerHalaman@retur');
+Route::get('/profile', 'ControllerHalaman@profile');
+Route::get('/barangreject', 'ControllerHalaman@barangreject');
+
+
 
 
 
