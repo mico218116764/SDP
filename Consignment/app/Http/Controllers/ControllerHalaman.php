@@ -602,4 +602,10 @@ class ControllerHalaman extends Controller
                     'NIK'=>$nik]);
         return redirect()->back();
     }
+
+    public function detailbarangreject()
+    {
+        return view('page.detailbarangreject');
+    }
+    
 }
