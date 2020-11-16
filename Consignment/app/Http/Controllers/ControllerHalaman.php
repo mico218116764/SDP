@@ -140,6 +140,7 @@ class ControllerHalaman extends Controller
         } else {
             $user = $request->cookie('userNowT');
             $userE = $request->cookie('userNowE');
+
             // dd($request->cookie('userNowT'));
 
             if ($user == "user") {
@@ -169,6 +170,7 @@ class ControllerHalaman extends Controller
             $jsonUserNow = $request->cookie("userNow");
             $dataUserNow = json_decode($jsonUserNow);
             $userNow = $dataUserNow[0]->USERPB_ID;
+            $userE = $request->cookie('userNowE');
         }
         $now = DB::selectOne("SELECT NOW() AS now from dual");
         // dd();
@@ -220,6 +222,7 @@ class ControllerHalaman extends Controller
         $pengajuans->KONDISI_ID = "KOND0";
         $pengajuans->USERPB_ID = $dataUserNow[0]->USERPB_ID;
         $pengajuans->TRANSAKSI_ID = "0";
+        $pengajuans->email_penjual = $userE;
         $pengajuans->JENIS_ID = $request->jenisBarang;
         $pengajuans->NAMA_BARANG = $request->NAMA_BARANG;
         $pengajuans->TGL_PENGAJUAN = $now->now;
