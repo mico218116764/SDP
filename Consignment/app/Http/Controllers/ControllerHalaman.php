@@ -187,10 +187,6 @@ class ControllerHalaman extends Controller
                 "FOTO_BAWAH" => ["required", "url"],
                 "FOTO_DEPAN" => ["required", "url"],
                 "FOTO_BELAKANG" => ["required", "url"],
-                "WARNA_BARANGP" => ["required"],
-                "USERPB_IDENTITY" => ["required", "url"],
-                "USERPB_NMBANK" => ["required"],
-                "USERPB_NOREK" => ["required"],
             ],
             [
                 "required" => ":attribute harus di isi!!",
@@ -210,10 +206,6 @@ class ControllerHalaman extends Controller
                 "FOTO_BAWAH" => "Url Foto Bawah",
                 "FOTO_DEPAN" => "Url Foto Depan",
                 "FOTO_BELAKANG" => "Url Foto Belakang",
-                "WARNA_BARANGP" => "Warna Barang",
-                "USERPB_IDENTITY" => "Link Ktp",
-                "USERPB_NMBANK" => "Nama Bank",
-                "USERPB_NOREK" => "Nomor Rekening",
             ]
         );
         $pengajuans = new pengajuans();
@@ -221,12 +213,12 @@ class ControllerHalaman extends Controller
         $pengajuans->MERK_ID = $request->merkBarang;
         $pengajuans->KONDISI_ID = "KOND0";
         $pengajuans->USERPB_ID = $dataUserNow[0]->USERPB_ID;
-        $pengajuans->TRANSAKSI_ID = "0";
         $pengajuans->email_penjual = $userE;
+        $pengajuans->TRANSAKSI_ID = "0";
         $pengajuans->JENIS_ID = $request->jenisBarang;
         $pengajuans->NAMA_BARANG = $request->NAMA_BARANG;
         $pengajuans->TGL_PENGAJUAN = $now->now;
-        $pengajuans->WARNA_BARANGP = $request->WARNA_BARANGP;
+        $pengajuans->WARNA_BARANGP = "";
         $pengajuans->PERSENTASE_KUALITAS = 0;
         $pengajuans->FUNGSIONALITAS = $request->FUNGSIONALITAS;
         $pengajuans->DESKRIPSI_BARANG = $request->DESKRIPSI_BARANG;
@@ -242,9 +234,10 @@ class ControllerHalaman extends Controller
         $pengajuans->HARGA_MAX = $request->HARGA_MAX;
         $pengajuans->HARGA_APPROVE = 0;
         $pengajuans->HARGA_JASA = 0;
-        $pengajuans->USERPB_IDENTITY = $request->USERPB_IDENTITY;
-        $pengajuans->bank_id = $request->USERPB_NMBANK;
-        $pengajuans->USERPB_NOREK = $request->USERPB_NOREK;
+        $pengajuans->USERPB_IDENTITY = "";
+        $pengajuans->bank_id = null;
+        $pengajuans->USERPB_NOREK = null;
+        $pengajuans->alasan = null;
         $pengajuans->save();
         //ini pasti berubah otomatis
         return redirect("/pengajuan");

@@ -66,31 +66,49 @@
                 <label for="exampleFormControlFile1">Foto Kiri</label>
                 <input type="text" style="width:70%;" class="form-control" name="FOTO_KIRI" >
             </div>
+            @error('FOTO_KIRI')
+            <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
 
             <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Kanan</label>
                 <input type="text" style="width:70%;" class="form-control" name="FOTO_KANAN">
             </div>
+            @error('FOTO_KANAN')
+            <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
 
             <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Atas</label>
                 <input type="text" style="width:70%;" class="form-control" name="FOTO_ATAS">
             </div>
+            @error('FOTO_ATAS')
+            <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
 
             <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Bawah</label>
                 <input type="text" style="width:70%;" class="form-control" name="FOTO_BAWAH">
             </div>
+            @error('FOTO_BAWAH')
+            <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
 
             <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Depan</label>
                 <input type="text" style="width:70%;" class="form-control" name="FOTO_DEPAN">
             </div>
+            @error('FOTO_DEPAN')
+            <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
 
             <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Belakang</label>
-                <input type="text" style="width:70%;" class="form-control" name="FOTO_ELAKANG">
+                <input type="text" style="width:70%;" class="form-control" name="FOTO_BELAKANG">
             </div>
+            @error('FOTO_BELAKANG')
+            <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
             <br>
             <button type="submit"  style="width:70%;font-size:13pt;" name="btnRegis" class="btn btn-primary btn-flat m-b-30 m-t-30">Ajukan</button>
             <br>
