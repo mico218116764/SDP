@@ -324,7 +324,8 @@ class ControllerHalaman extends Controller
     }
     public function toDetail($id)
     {
-        $pengajuans = pengajuans::where('PENGAJUAN_ID', $id)->first();
+        $pengajuans = pengajuans::withTrashed()->where('PENGAJUAN_ID', $id)->first();
+        // dd($pengajuans);
         // dd($pengajuans);
         return view('page.detailpengajuan',[
             'pengajuans'=>$pengajuans,
@@ -547,13 +548,58 @@ class ControllerHalaman extends Controller
         return view('page.retur');
     }
 
-    public function profile()
+    public function profile(Request $request)
     {
-        return view('page.profile');
+        if (Cookie::has("userNow")) {
+            $jsonUserNow = $request->cookie("userNow");
+            $dataUserNow = json_decode($jsonUserNow);
+            $userNow = $dataUserNow[0]->USERPB_ID;
+            $userE = $request->cookie('userNowE');
+        }
+        // dd($userE);
+        $dataUser = userpembelis::where("USERPB_EMAIL",$userE)->get();
+
+        return view('page.profile',[
+            'dataUser'=>$dataUser,
+        ]);
     }
 
-    public function barangreject()
+    public function barangreject(Request $request)
     {
-        return view('page.barangreject');
+        if (Cookie::has("userNow")) {
+            $jsonUserNow = $request->cookie("userNow");
+            $dataUserNow = json_decode($jsonUserNow);
+            $userNow = $dataUserNow[0]->USERPB_ID;
+            $userE = $request->cookie('userNowE');
+        }
+
+        $items = pengajuans::withTrashed()->get();
+        for ($i=0; $i < count($items); $i++) {
+            if($items[$i]->email_penjual == $userE){
+                $array[] = $items[$i];
+            }
+        }
+        // dd($array);
+        return view('page.barangreject',[
+            "items" => $array,
+        ]);
+    }
+
+    public function changeProfile(Request $request)
+    {
+        $request->validate([
+            "USERPB_PASSWORD" => ["required", "confirmed"],
+            "USERPB_PASSWORD_confirmation" => ["required"],
+        ]);
+        $email = $request->EMAIL_USERe;
+        $password = $request->USERPB_PASSWORD;
+        $nik = $request->NIK_USER;
+        // dd($nik);
+        // dd($email);
+        // dd( userpembelis::where('USERPB_EMAIL', $email)->get());
+        userpembelis::where('USERPB_EMAIL', $email)
+          ->update(['USERPB_PASSWORD' => $password,
+                    'NIK'=>$nik]);
+        return redirect()->back();
     }
 }

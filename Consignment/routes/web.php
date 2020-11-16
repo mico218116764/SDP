@@ -53,4 +53,6 @@ Route::post('/bayar', 'ControllerHalaman@bayar');
 Route::get('/toDetail/{id}', 'ControllerHalaman@toDetail');
 Route::get('/doApprove', 'ControllerHalaman@doApprove');
 Route::get('/doDelete/{id}', 'ControllerHalaman@doDelete');
+Route::get('/changeProfile', 'ControllerHalaman@changeProfile');
+
 // Route::get('/doApprove/{id}', 'ControllerHalaman@doApprove');
