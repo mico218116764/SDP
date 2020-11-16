@@ -64,32 +64,32 @@
 
             <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Kiri</label>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="FOTO_KIRI">
+                <input type="text" style="width:70%;" class="form-control" name="FOTO_KIRI" >
             </div>
 
             <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Kanan</label>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="FOTO_KANAN">
+                <input type="text" style="width:70%;" class="form-control" name="FOTO_KANAN">
             </div>
 
             <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Atas</label>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="FOTO_ATAS">
+                <input type="text" style="width:70%;" class="form-control" name="FOTO_ATAS">
             </div>
 
             <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Bawah</label>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="FOTO_BAWAH">
+                <input type="text" style="width:70%;" class="form-control" name="FOTO_BAWAH">
             </div>
 
             <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Depan</label>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="FOTO_DEPAN">
+                <input type="text" style="width:70%;" class="form-control" name="FOTO_DEPAN">
             </div>
 
             <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Belakang</label>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="FOTO_BELAKANG">
+                <input type="text" style="width:70%;" class="form-control" name="FOTO_ELAKANG">
             </div>
             <br>
             <button type="submit"  style="width:70%;font-size:13pt;" name="btnRegis" class="btn btn-primary btn-flat m-b-30 m-t-30">Ajukan</button>

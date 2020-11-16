@@ -33,7 +33,7 @@
 
             <div class="form-group">
                 <h4>Foto KTP </h4>
-                <input type="file" style="width:70%;" class="form-control-file" id="exampleFormControlFile1" name='FOTO_KTP'
+                <input type="text" style="width:70%;" class="form-control" name="FOTO_KTP">
                 @if ($dataUser[0]->FOTO_KTP == null)
                     value="{{$dataUser[0]->FOTO_KTP}}"
                 @else
