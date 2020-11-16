@@ -574,8 +574,10 @@ class ControllerHalaman extends Controller
         }
 
         $items = pengajuans::withTrashed()->get();
+        // dd($items);
+        $array=null;
         for ($i=0; $i < count($items); $i++) {
-            if($items[$i]->email_penjual == $userE){
+            if($items[$i]->email_penjual == $userE && $items[$i]->trashed()){
                 $array[] = $items[$i];
             }
         }
@@ -587,11 +589,16 @@ class ControllerHalaman extends Controller
 
     public function changeProfile(Request $request)
     {
+        $email = $request->EMAIL_USERe;
+        $pnow = $request->USERPB_PASSWORD_Now;
+        // dd($email);
+        $hasil = userpembelis::where('USERPB_EMAIL', $email)->where('USERPB_PASSWORD',$pnow)->count();
+        // dd($hasil);
         $request->validate([
+            "USERPB_PASSWORD_Now"=> ["required"],
             "USERPB_PASSWORD" => ["required", "confirmed"],
             "USERPB_PASSWORD_confirmation" => ["required"],
         ]);
-        $email = $request->EMAIL_USERe;
         $password = $request->USERPB_PASSWORD;
         $nik = $request->NIK_USER;
         // dd($nik);
@@ -603,9 +610,32 @@ class ControllerHalaman extends Controller
         return redirect()->back();
     }
 
-    public function detailbarangreject()
+    public function detailbarangreject($id)
     {
-        return view('page.detailbarangreject');
+        $pengajuans = pengajuans::withTrashed()->where('PENGAJUAN_ID', $id)->first();
+        // dd($pengajuans);
+        // dd($pengajuans);
+        return view('page.detailbarangreject',[
+            'pengajuans'=>$pengajuans,
+            'id'=>$id
+        ]);
     }
-    
+    public function doSubmit(Request $request)
+    {
+        $id = $request->ID_BARANG;
+        $NAMA_BARANG = $request->NAMA_BARANG;
+        $DESKRIPSI_BARANG = $request->DESKRIPSI_BARANG;
+        $HARGA_MIN = $request->HARGA_MIN;
+        $HARGA_MAX = $request->HARGA_MAKS;
+        // dd($id);
+        // dd(pengajuans::withTrashed()->where('PENGAJUAN_ID', (int)$id)->get());
+        pengajuans::withTrashed()->where('PENGAJUAN_ID', (int)$id)
+          ->update(['NAMA_BARANG' => $NAMA_BARANG,
+                    'DESKRIPSI_BARANG'=>$DESKRIPSI_BARANG,
+                    'HARGA_MIN' => $HARGA_MIN,
+                    'HARGA_MAX'=>$HARGA_MAX]);
+        pengajuans::withTrashed()->where('PENGAJUAN_ID', $id)->restore();
+        return redirect('/barangreject');
+    }
+
 }

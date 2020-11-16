@@ -49,7 +49,7 @@
                             @error('USERPB_PASSWORD')
                                 <div style="color:red; font-weight:bold"> {{$message}}</div><br>
                             @enderror
-                
+
                             <div class="form-group">
                                 <label>Confirm Password</label>
                                 <input type="password" class="form-control" style="width:70%;" name="USERPB_PASSWORD_confirmation" placeholder="Masukkan Confirm Password">
@@ -57,7 +57,7 @@
                             @error('USERPB_PASSWORD_confirmation')
                                 <div style="color:red; font-weight:bold"> {{$message}}</div><br>
                             @enderror
-        
+
                             <br><br><br>
                             <input name="butSave" style="width:70%;font-size:13pt;" class="btn btn-primary" type="submit" value="SAVE DATA">
                             <br><br><br>
@@ -69,20 +69,25 @@
                 <br>
                 <form method="get" action="/changeProfile">
                     @csrf
+                    <input type="hidden" name="EMAIL_USERe" value="{{$dataUser[0]->USERPB_EMAIL}}">
                     <div class="form-group">
                         <label>Current Password</label>
-                        <input type="password" class="form-control" style="width:70%;" name="USERPB_PASSWORD" placeholder="Masukkan Password">
+                        <input type="password" class="form-control" style="width:70%;" name="USERPB_PASSWORD_Now" placeholder="Masukkan Password">
                     </div>
                     <div class="form-group">
                         <label>New Password</label>
                         <input type="password" class="form-control" style="width:70%;" name="USERPB_PASSWORD" placeholder="Masukkan Password">
                     </div>
-        
+                    @error('USERPB_PASSWORD')
+                                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+                            @enderror
                     <div class="form-group">
                         <label>Confirm Password</label>
                         <input type="password" class="form-control" style="width:70%;" name="USERPB_PASSWORD_confirmation" placeholder="Masukkan Confirm Password">
                     </div>
-
+                    @error('USERPB_PASSWORD_confirmation')
+                                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+                            @enderror
                     <br><br><br>
                     <input name="butSavePass" style="width:70%;font-size:13pt;" class="btn btn-primary" type="submit" value="UPDATE PASSWORD">
                     <br><br><br>

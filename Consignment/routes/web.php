@@ -39,6 +39,7 @@ Route::get('/detailbarangreject', 'ControllerHalaman@detailbarangreject');
 
 Route::post('/doRegister', 'ControllerHalaman@doRegister');
 Route::post('/doLogin', 'ControllerHalaman@doLogin');
+Route::post('/doSubmit', 'ControllerHalaman@doSubmit');
 Route::post('/doApply', 'ControllerHalaman@doApply');
 Route::get('/doLogout', 'ControllerHalaman@doLogout');
 Route::post('/addAdmin', 'ControllerHalaman@addAdmin');
@@ -51,6 +52,7 @@ Route::post('/post_checkout', 'ControllerHalaman@checkout');
 Route::post('/bayar', 'ControllerHalaman@bayar');
 
 Route::get('/toDetail/{id}', 'ControllerHalaman@toDetail');
+Route::get('/detailbarangreject/{id}', 'ControllerHalaman@detailbarangreject');
 Route::get('/doApprove', 'ControllerHalaman@doApprove');
 Route::get('/doDelete/{id}', 'ControllerHalaman@doDelete');
 Route::get('/changeProfile', 'ControllerHalaman@changeProfile');

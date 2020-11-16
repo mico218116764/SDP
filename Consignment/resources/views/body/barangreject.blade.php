@@ -9,6 +9,7 @@
                 <th style="text-align:center">Action</th>
             </tr>
         </thead>
+        @if ($items != null)
         @foreach ($items as $item)
         @if($item->STATUS_PENGAJUAN == 0)
         <tbody>
@@ -24,7 +25,7 @@
                 </td>
 
                 <td style="text-align:center">
-                    <a style="width:100%;font-size:13pt;" href="/toDetail/{{ $item->PENGAJUAN_ID }}"
+                    <a style="width:100%;font-size:13pt;" href="/detailbarangreject/{{ $item->PENGAJUAN_ID }}"
                         class="btn list-group-item">
                         Detail
                     </a>
@@ -33,6 +34,8 @@
         </tbody>
         @endif
         @endforeach
+        @endif
+
     </table>
 </div>
 
