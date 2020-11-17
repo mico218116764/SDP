@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2020 at 06:51 PM
+-- Generation Time: Nov 17, 2020 at 09:57 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.2.32
 
@@ -88,6 +88,37 @@ INSERT INTO `banks` (`bank_id`, `nama_bank`, `rekening`, `pemilik`, `created_at`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `failed_jobs`
+--
+
+DROP TABLE IF EXISTS `failed_jobs`;
+CREATE TABLE `failed_jobs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `images`
+--
+
+DROP TABLE IF EXISTS `images`;
+CREATE TABLE `images` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_image` blob NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `jenisbarangs`
 --
 
@@ -147,9 +178,32 @@ CREATE TABLE `merkbarangs` (
 --
 
 INSERT INTO `merkbarangs` (`MERK_ID`, `NAMA_MERK2`) VALUES
-('MERK1', 'Logitech'),
-('MERK2', 'Razer'),
-('MERK3', 'SteelSeries');
+('1', 'Logitech'),
+('2', 'Razer'),
+('3', 'SteelSeries'),
+('4', 'Tazer');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2019_08_19_000000_create_failed_jobs_table', 1),
+(3, '2020_11_16_115253_create_images_table', 1);
 
 -- --------------------------------------------------------
 
@@ -164,6 +218,7 @@ CREATE TABLE `pengajuans` (
   `KONDISI_ID` varchar(5) DEFAULT NULL,
   `PENGAJUAN_ID` int(5) NOT NULL,
   `USERPB_ID` varchar(5) DEFAULT NULL,
+  `email_penjual` varchar(1000) NOT NULL,
   `TRANSAKSI_ID` varchar(5) DEFAULT NULL,
   `JENIS_ID` varchar(5) DEFAULT NULL,
   `NAMA_BARANG` varchar(25) DEFAULT NULL,
@@ -189,15 +244,18 @@ CREATE TABLE `pengajuans` (
   `USERPB_NOREK` varchar(20) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL,
-  `deleted_at` date DEFAULT NULL
+  `deleted_at` date DEFAULT NULL,
+  `alasan` varchar(1000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pengajuans`
 --
 
-INSERT INTO `pengajuans` (`ADMINP_ID`, `MERK_ID`, `KONDISI_ID`, `PENGAJUAN_ID`, `USERPB_ID`, `TRANSAKSI_ID`, `JENIS_ID`, `NAMA_BARANG`, `TGL_PENGAJUAN`, `WARNA_BARANGP`, `PERSENTASE_KUALITAS`, `FUNGSIONALITAS`, `DESKRIPSI_BARANG`, `STATUS_PENGAJUAN`, `STATUS_BARANG`, `FOTO_KIRI`, `FOTO_KANAN`, `FOTO_ATAS`, `FOTO_BAWAH`, `FOTO_DEPAN`, `FOTO_BELAKANG`, `HARGA_MIN`, `HARGA_MAX`, `HARGA_APPROVE`, `HARGA_JASA`, `USERPB_IDENTITY`, `bank_id`, `USERPB_NOREK`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('0', 'MERK1', 'KOND0', 1, '0', '0', '1', 'YA BARANG', '2020-11-13 00:25:15', '#ff0000', 0, 'Ngerungokno suara gendang', 'tung mbooo mu tung mbo mu', '0', '0', 'https://www.meijer.com/content/dam/meijer/product/0009/78/5508/05/0009785508059_1200.png', 'https://images-na.ssl-images-amazon.com/images/I/71-QPWNH%2BVL._AC_SX466_.jpg', 'https://mos.pcgamebenchmark.com/img/product/steelseries-siberia-v3-comfortable/steelseries-siberia-v3-comfortable-gaming-headset-review.jpg', 'https://images-na.ssl-images-amazon.com/images/I/71-QPWNH%2BVL._AC_SX466_.jpg', 'https://www.meijer.com/content/dam/meijer/product/0009/78/5508/05/0009785508059_1200.png', 'https://lh3.googleusercontent.com/proxy/NIIlc6fQTkpQt7qGlx1UzzjqT1P6zxIQXOEGTlA-n2gLiXpanEmeKCXw_VExH_t5gXmkjdhGhx2H7txFN6PABgs0Aeey9hL2Ejn_YCyhQDDCjaEk7ZE4cx7k_JGlXTD0b7kuzzz6wNYN0FKQrXw0IFUmmq-sQykbr4gNucZqY1vKiQ8jnDmFUr5VX4HVcsYJ_2Z2A1NeBTrKXpn_U2Z4kpaaoSG5MWqN', 1000000, 2000000, 0, 0, 'https://images.bisnis-cdn.com/posts/2019/02/27/894082/e-ktp-guohui-chen.jpg', '2', '123123123123', '2020-11-12', '2020-11-12', NULL);
+INSERT INTO `pengajuans` (`ADMINP_ID`, `MERK_ID`, `KONDISI_ID`, `PENGAJUAN_ID`, `USERPB_ID`, `email_penjual`, `TRANSAKSI_ID`, `JENIS_ID`, `NAMA_BARANG`, `TGL_PENGAJUAN`, `WARNA_BARANGP`, `PERSENTASE_KUALITAS`, `FUNGSIONALITAS`, `DESKRIPSI_BARANG`, `STATUS_PENGAJUAN`, `STATUS_BARANG`, `FOTO_KIRI`, `FOTO_KANAN`, `FOTO_ATAS`, `FOTO_BAWAH`, `FOTO_DEPAN`, `FOTO_BELAKANG`, `HARGA_MIN`, `HARGA_MAX`, `HARGA_APPROVE`, `HARGA_JASA`, `USERPB_IDENTITY`, `bank_id`, `USERPB_NOREK`, `created_at`, `updated_at`, `deleted_at`, `alasan`) VALUES
+('1', '1', 'KOND0', 3, '0', 'yungming6@gmail.com', '0', '1', 'YA BARANG', '2020-11-13 14:46:11', '#000000', 0, 'asdasd', 'Ini sudah jelas', '1', '0', 'https://www.meijer.com/content/dam/meijer/product/0009/78/5508/05/0009785508059_1200.png', 'https://images-na.ssl-images-amazon.com/images/I/71-QPWNH%2BVL._AC_SX466_.jpg', 'https://lh3.googleusercontent.com/proxy/NIIlc6fQTkpQt7qGlx1UzzjqT1P6zxIQXOEGTlA-n2gLiXpanEmeKCXw_VExH_t5gXmkjdhGhx2H7txFN6PABgs0Aeey9hL2Ejn_YCyhQDDCjaEk7ZE4cx7k_JGlXTD0b7kuzzz6wNYN0FKQrXw0IFUmmq-sQykbr4gNucZqY1vKiQ8jnDmFUr5VX4HVcsYJ_2Z2A1NeBTrKXpn_U2Z4kpaaoSG5MWqN', 'https://images-na.ssl-images-amazon.com/images/I/71-QPWNH%2BVL._AC_SX466_.jpg', 'https://www.meijer.com/content/dam/meijer/product/0009/78/5508/05/0009785508059_1200.png', 'https://lh3.googleusercontent.com/proxy/NIIlc6fQTkpQt7qGlx1UzzjqT1P6zxIQXOEGTlA-n2gLiXpanEmeKCXw_VExH_t5gXmkjdhGhx2H7txFN6PABgs0Aeey9hL2Ejn_YCyhQDDCjaEk7ZE4cx7k_JGlXTD0b7kuzzz6wNYN0FKQrXw0IFUmmq-sQykbr4gNucZqY1vKiQ8jnDmFUr5VX4HVcsYJ_2Z2A1NeBTrKXpn_U2Z4kpaaoSG5MWqN', 1000000, 2000000, 1000000, 0, 'https://images.bisnis-cdn.com/posts/2019/02/27/894082/e-ktp-guohui-chen.jpg', '1', '123123123', '2020-11-13', '2020-11-16', NULL, 'Deskripsi barang tidak jelas!!!'),
+('0', '1', 'KOND0', 4, '0', 'asd@asd.asd', '0', '1', 'asd', '2020-11-16 23:16:34', '', 0, 'Ngerungokno suara gendang', 'dudududut', '0', '0', 'https://www.meijer.com/content/dam/meijer/product/0009/78/5508/05/0009785508059_1200.png', 'https://www.meijer.com/content/dam/meijer/product/0009/78/5508/05/0009785508059_1200.png', 'https://www.meijer.com/content/dam/meijer/product/0009/78/5508/05/0009785508059_1200.png', 'https://lh3.googleusercontent.com/proxy/NIIlc6fQTkpQt7qGlx1UzzjqT1P6zxIQXOEGTlA-n2gLiXpanEmeKCXw_VExH_t5gXmkjdhGhx2H7txFN6PABgs0Aeey9hL2Ejn_YCyhQDDCjaEk7ZE4cx7k_JGlXTD0b7kuzzz6wNYN0FKQrXw0IFUmmq-sQykbr4gNucZqY1vKiQ8jnDmFUr5VX4HVcsYJ_2Z2A1NeBTrKXpn_U2Z4kpaaoSG5MWqN', 'https://lh3.googleusercontent.com/proxy/NIIlc6fQTkpQt7qGlx1UzzjqT1P6zxIQXOEGTlA-n2gLiXpanEmeKCXw_VExH_t5gXmkjdhGhx2H7txFN6PABgs0Aeey9hL2Ejn_YCyhQDDCjaEk7ZE4cx7k_JGlXTD0b7kuzzz6wNYN0FKQrXw0IFUmmq-sQykbr4gNucZqY1vKiQ8jnDmFUr5VX4HVcsYJ_2Z2A1NeBTrKXpn_U2Z4kpaaoSG5MWqN', 'https://www.meijer.com/content/dam/meijer/product/0009/78/5508/05/0009785508059_1200.png', 1, 2, 0, 0, '', NULL, NULL, '2020-11-16', '2020-11-16', '2020-11-16', NULL),
+('0', '1', 'KOND0', 5, '0', 'yungming6@gmail.com', '0', '1', 'asd', '2020-11-17 15:56:08', '', 0, 'cursor pada layar', 'asd', '0', '0', 'https://www.meijer.com/content/dam/meijer/product/0009/78/5508/05/0009785508059_1200.png', 'https://www.meijer.com/content/dam/meijer/product/0009/78/5508/05/0009785508059_1200.png', 'https://www.meijer.com/content/dam/meijer/product/0009/78/5508/05/0009785508059_1200.png', 'https://www.meijer.com/content/dam/meijer/product/0009/78/5508/05/0009785508059_1200.png', 'https://www.meijer.com/content/dam/meijer/product/0009/78/5508/05/0009785508059_1200.png', 'https://www.meijer.com/content/dam/meijer/product/0009/78/5508/05/0009785508059_1200.png', 1, 1, 0, 0, '', NULL, NULL, '2020-11-17', '2020-11-17', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -291,18 +349,38 @@ CREATE TABLE `userpembelis` (
   `USERPB_EMAIL` varchar(50) DEFAULT NULL,
   `USERPB_PHONE_NUMBER` varchar(20) DEFAULT NULL,
   `USERPB_ADDRESS` varchar(50) DEFAULT NULL,
-  `USERPB_PASSWORD` varchar(100) DEFAULT NULL
+  `USERPB_PASSWORD` varchar(100) DEFAULT NULL,
+  `NIK` varchar(100) DEFAULT NULL,
+  `FOTO_KTP` blob DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `userpembelis`
 --
 
-INSERT INTO `userpembelis` (`USERPB_ID`, `USERPB_NAME`, `USERPB_EMAIL`, `USERPB_PHONE_NUMBER`, `USERPB_ADDRESS`, `USERPB_PASSWORD`) VALUES
-('0', '0', 'def@def.def', '000000', 'def', 'def'),
-('1', 'ming1', 'yungming6@gmail.com', '082233101007', 'lokasiA', 'asdasdasd'),
-('2', 'asdasd', 'asd@asd.asd', '082233101008', 'lokasiBSD', 'asdasdasd'),
-('3', 'ko keset', 'ko@ko.ko', '082233101009', 'lokasiBSDe', 'asdasdasd');
+INSERT INTO `userpembelis` (`USERPB_ID`, `USERPB_NAME`, `USERPB_EMAIL`, `USERPB_PHONE_NUMBER`, `USERPB_ADDRESS`, `USERPB_PASSWORD`, `NIK`, `FOTO_KTP`) VALUES
+('0', '0', 'def@def.def', '000000', 'def', 'def', NULL, NULL),
+('1', 'ming1', 'yungming6@gmail.com', '082233101007', 'lokasiA', 'asd', NULL, NULL),
+('2', 'asdasd', 'asd@asd.asd', '082233101008', 'lokasiBSD', 'asdasdasd', NULL, NULL),
+('3', 'ko keset', 'ko@ko.ko', '082233101009', 'lokasiBSDe', 'asdasdasd', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indexes for dumped tables
@@ -321,6 +399,18 @@ ALTER TABLE `banks`
   ADD PRIMARY KEY (`bank_id`);
 
 --
+-- Indexes for table `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `images`
+--
+ALTER TABLE `images`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `jenisbarangs`
 --
 ALTER TABLE `jenisbarangs`
@@ -337,6 +427,12 @@ ALTER TABLE `kondisi_barang`
 --
 ALTER TABLE `merkbarangs`
   ADD PRIMARY KEY (`MERK_ID`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `pengajuans`
@@ -387,6 +483,13 @@ ALTER TABLE `userpembelis`
   ADD PRIMARY KEY (`USERPB_ID`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -397,10 +500,34 @@ ALTER TABLE `banks`
   MODIFY `bank_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
+-- AUTO_INCREMENT for table `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `images`
+--
+ALTER TABLE `images`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `pengajuans`
 --
 ALTER TABLE `pengajuans`
-  MODIFY `PENGAJUAN_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `PENGAJUAN_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
