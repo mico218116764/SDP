@@ -34,8 +34,10 @@
                       <h3><b>Nomor Rekening Tujuan:</b></h3>
                         <h3 style='margin-left: 25%'><b>0123456789</b></h3>
                         <h3 style='margin-left: 15%'><i>A.n Reteem Consigment</i></h3>
-                      <h3><b>Nomor Rekening:</b></h3>
-                      <input type="text" class="form-control" name="txtnomorrek" placeholder="Masukkan Nomor Rekening Anda">
+                      <h3><b>Upload Bukti Transfer:</b></h3>
+                        <div class="form-group">
+                          <input type="file" class="form-control-file" id="BUKTI_TRANSFER" name="BUKTI_TRANSFER">
+                        </div>
                     <div><br>
                     <input type='submit' value='Bayar' name='btnBayar' class='btn btn-primary'>
                     &nbsp;
