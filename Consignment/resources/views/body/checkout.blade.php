@@ -12,14 +12,15 @@
                 </div>
             </div>
             <div class='col-md-8'>
-                <form method='post' action='bayar'>
+                <form method='post' action='/bayar'>
                     @csrf
                     <br>
-                    <h3><b>NAMA BARANG</b></h3>
-                    <h3>Deskripsi:</h3>
-                    <h3>Price: <b>1,000,000</b></h3>
+                    <h3><b>{{$barang->NAMA_BARANG}}</b></h3>
+                    <h4>Deskripsi: {{$barang->DESKRIPSI_BARANG}}</h4><br>
+                    <h4>Price: {{$barang->HARGA_APPROVE}}</h4><br>
+                    <img style="width:120px; height:120px" src="{{$barang->FOTO_DEPAN}}" alt="">
                     <h3>Address:</h3>
-                       <h4 style='margin-left: 20px'><b>JL. Ngagel Jaya Tengah ...</b></h4>
+                       <h4 style='margin-left: 20px'><b>{{$userData->USERPB_ADDRESS}}</b></h4>
                     <div><br>
                     <input type='submit' value='Bayar' name='btnBayar' class='btn btn-primary'>
                     &nbsp;

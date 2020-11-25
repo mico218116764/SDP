@@ -1,10 +1,10 @@
 <div class="container">
-
+    form
 
     @foreach ($daftarKatalog as $item)
     <div class="row">
         <div class="col-sm-4">
-            <a href="{{url('/detailsbarang')}}">
+            <a href="{{url('/detailsbarang/'.$item->PENGAJUAN_ID)}}">
             <div class="panel panel-primary">
                 <div class="panel-heading">{{$item->NAMA_BARANG}}</div>
                 <div class="panel-body" style="width: 250px;

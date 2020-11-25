@@ -57,7 +57,6 @@ class ControllerHalaman extends Controller
         $daftarKatalog = new pengajuans();
         $daftarKatalog = $daftarKatalog::where('STATUS_PENGAJUAN', '1')->get();
         // dd($daftarKatalog::where('status_pengajuan', '1'));
-
         return view('page.home', [
             "daftarKatalog" => $daftarKatalog
         ]);
@@ -148,6 +147,9 @@ class ControllerHalaman extends Controller
                 $daftarMerk = new merkbarangs();
                 $daftarBank = new banks();
                 $dataPengajuan = pengajuans::onlyTrashed()->get();
+                $dataUser = userpembelis::where('USERPB_EMAIL', $userE)->get();
+                // dd($dataUser[0]->NIK);
+
                 // dd($dataPengajuan);
                 // dd($userE);
                 // dd($daftarJenis);
@@ -158,6 +160,7 @@ class ControllerHalaman extends Controller
                     "daftarBank" => $daftarBank::all(),
                     "dataPengajuan"=>$dataPengajuan,
                     "userEmail"=>$userE,
+                    "dataUser"=>$dataUser[0]
                 ]);
             } else {
                 return redirect('/login');
@@ -481,24 +484,46 @@ class ControllerHalaman extends Controller
         $daftarKatalog = new pengajuans();
         $daftarKatalog = $daftarKatalog::where('STATUS_PENGAJUAN', '1')->get();
         // dd($daftarKatalog::where('status_pengajuan', '1'));
-
+        // dd($daftarKatalog[0]->PENGAJUAN_ID);
         return view('page.katalog', [
             "daftarKatalog" => $daftarKatalog
         ]);
     }
 
-    public function detailsbarang()
+    public function detailsbarang($id, Request $request)
     {
-        return view('page.detailsbarang');
+        $detailBarang = pengajuans::where('PENGAJUAN_ID',$id)->get();
+        // dd($detailBarang[0]);
+        $barang = $detailBarang[0];
+        return view('page.detailsbarang',[
+            'barang'=>$barang
+        ]);
     }
 
-    public function checkout()
+    public function checkout($id, Request $request)
     {
-        return view('page.checkout');
+        if (Cookie::has("userNow")) {
+            $jsonUserNow = $request->cookie("userNow");
+            $dataUserNow = json_decode($jsonUserNow);
+            $userNow = $dataUserNow[0]->USERPB_ID;
+            $userE = $request->cookie('userNowE');
+        }
+        $detailBarang = pengajuans::where('PENGAJUAN_ID',$id)->get();
+        $userData = userpembelis::where('USERPB_EMAIL',$userE)->get();
+        // dd($userData[0]);
+        $barang = $detailBarang[0];
+
+        return view('page.checkout',[
+            'barang'=>$barang,
+            'userData'=>$userData[0]
+        ]);
     }
     public function bayar()
     {
-        return view('page.bayar');
+        $dataBank = banks::all();
+        return view('page.bayar',[
+            'dataBank'=>$dataBank,
+        ]);
     }
     public function detailpengajuan()
     {
@@ -583,23 +608,30 @@ class ControllerHalaman extends Controller
     public function changeProfile(Request $request)
     {
         $email = $request->EMAIL_USERe;
-        $pnow = $request->USERPB_PASSWORD_Now;
         // dd($email);
-        $hasil = userpembelis::where('USERPB_EMAIL', $email)->where('USERPB_PASSWORD',$pnow)->count();
+        $hasil = userpembelis::where('USERPB_EMAIL', $email)->count();
         // dd($hasil);
         $request->validate([
-            "USERPB_PASSWORD_Now"=> ["required"],
-            "USERPB_PASSWORD" => ["required", "confirmed"],
-            "USERPB_PASSWORD_confirmation" => ["required"],
+            "NIK_USER"=> ["required"],
+            "NOMOR_TELFON"=> ["required",new checkPhone],
+            "FOTO_KTP" => ["required","url"],
+            "ALAMAT_USER"=>["required"]
+        ],[
+            'required'=>':attribute sudah ada',
+            'url'=>':attribute harus berupa url'
         ]);
-        $password = $request->USERPB_PASSWORD;
+        $ktp = $request->FOTO_KTP;
         $nik = $request->NIK_USER;
+        $NOMOR_TELFON = $request->NOMOR_TELFON;
+        $ALAMAT_USER = $request->ALAMAT_USER;
         // dd($nik);
         // dd($email);
         // dd( userpembelis::where('USERPB_EMAIL', $email)->get());
         userpembelis::where('USERPB_EMAIL', $email)
-          ->update(['USERPB_PASSWORD' => $password,
-                    'NIK'=>$nik]);
+          ->update(['FOTO_KTP' => $ktp,
+                    'NIK'=>$nik,
+                    'USERPB_PHONE_NUMBER'=>$NOMOR_TELFON,
+                    'USERPB_ADDRESS'=>$ALAMAT_USER]);
         return redirect()->back();
     }
 

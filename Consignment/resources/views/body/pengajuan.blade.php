@@ -110,7 +110,16 @@
             <div style="color:red; font-weight:bold"> {{$message}}</div><br>
             @enderror
             <br>
+            @if ($dataUser->NIK == null)
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong> Anda belum melengkapi profile
+                </div>
+                <button type="submit"  style="width:70%;font-size:13pt;" name="btnRegis" class="btn btn-primary btn-flat m-b-30 m-t-30" disabled="true">Ajukan</button>
+            @else
+
             <button type="submit"  style="width:70%;font-size:13pt;" name="btnRegis" class="btn btn-primary btn-flat m-b-30 m-t-30">Ajukan</button>
+            @endif
+
             <br>
             <br>
             <br>
@@ -118,4 +127,7 @@
     </form>
 
 </div>
+
+
+
 

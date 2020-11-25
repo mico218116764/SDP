@@ -20,41 +20,34 @@
                         <input type="text" style="width:70%;" class="form-control" name="NAMA_USER" placeholder="Masukkan Nama Anda" value="{{$dataUser[0]->USERPB_NAME}}" disabled="true">
 
                         <h4>Nomor Telefon: </h4>
-                        <input type="text" style="width:70%;"class="form-control" name="NOMOR_TELFON" placeholder="Masukkan Nomor Telfon Anda" value="{{$dataUser[0]->USERPB_PHONE_NUMBER}}" disabled="true">
+                        <input type="text" style="width:70%;"class="form-control" name="NOMOR_TELFON" placeholder="Masukkan Nomor Telfon Anda" value="{{$dataUser[0]->USERPB_PHONE_NUMBER}}">
+                        @error('NOMOR_TELFON')
+                            <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+                        @enderror
 
                         <h4>Alamat: </h4>
-                        <input type="text" style="width:70%;" class="form-control" name="ALAMAT_USER" placeholder="Masukkan Alamat Anda" value="{{$dataUser[0]->USERPB_ADDRESS}}" disabled="true">
+                        <input type="text" style="width:70%;" class="form-control" name="ALAMAT_USER" placeholder="Masukkan Alamat Anda" value="{{$dataUser[0]->USERPB_ADDRESS}}">
 
                         <h4>NIK: </h4>
                         <input type="number" style="width:70%;" class="form-control" name="NIK_USER" placeholder="Masukkan NIK Anda"
                         @if ($dataUser[0]->NIK == null)
                             value="{{$dataUser[0]->NIK}}"
                         @else
-                            value="{{$dataUser[0]->NIK}}" disabled="true"
+                            value="{{$dataUser[0]->NIK}}" readonly='true'
                         @endif
                         >
-
+                        @error('NIK_USER')
+                            <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+                        @enderror
                         <div class="form-group">
                             <h4>Foto KTP </h4>
-                            <input type="file" style="width:70%;" class="form-control-file" id="exampleFormControlFile1" name='FOTO_KTP'
+                            <input type="url" placeholder="URL KTP" style="width:70%;" class="form-control" id="exampleFormControlFile1" name='FOTO_KTP'
                             @if ($dataUser[0]->FOTO_KTP == null)
                                 value="{{$dataUser[0]->FOTO_KTP}}"
                             @else
-                                value="{{$dataUser[0]->FOTO_KTP}}" disabled="true"
+                                value="{{$dataUser[0]->FOTO_KTP}}" readonly='true'
                             @endif>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" class="form-control" style="width:70%;" name="USERPB_PASSWORD" placeholder="Masukkan Password">
-                            </div>
-                            @error('USERPB_PASSWORD')
-                                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
-                            @enderror
-
-                            <div class="form-group">
-                                <label>Confirm Password</label>
-                                <input type="password" class="form-control" style="width:70%;" name="USERPB_PASSWORD_confirmation" placeholder="Masukkan Confirm Password">
-                            </div>
-                            @error('USERPB_PASSWORD_confirmation')
+                            @error('FOTO_KTP')
                                 <div style="color:red; font-weight:bold"> {{$message}}</div><br>
                             @enderror
 
@@ -86,8 +79,8 @@
                         <input type="password" class="form-control" style="width:70%;" name="USERPB_PASSWORD_confirmation" placeholder="Masukkan Confirm Password">
                     </div>
                     @error('USERPB_PASSWORD_confirmation')
-                                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
-                            @enderror
+                        <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+                    @enderror
                     <br><br><br>
                     <input name="butSavePass" style="width:70%;font-size:13pt;" class="btn btn-primary" type="submit" value="UPDATE PASSWORD">
                     <br><br><br>
