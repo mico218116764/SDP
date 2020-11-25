@@ -25,19 +25,12 @@
                         @endforeach
                     </select>
                       <h3><b>Nomor Rekening Tujuan:</b></h3>
-<<<<<<< Updated upstream
-                        <h3 style='margin-left: 25%'><b>0123456789</b></h3>
-                        <h3 style='margin-left: 15%'><i>A.n Reteem Consigment</i></h3>
+                      <h3 style='margin-left: 25%'><b><p id="output">5230001</p></b></h3>
+                      <h3 style='margin-left: 15%'><i>A.n Michael Louis Chandra</i></h3>
                       <h3><b>Upload Bukti Transfer:</b></h3>
                         <div class="form-group">
                           <input type="file" class="form-control-file" id="BUKTI_TRANSFER" name="BUKTI_TRANSFER">
                         </div>
-=======
-                        <h3 style='margin-left: 25%'><b><p id="output"></p></b></h3>
-                        <h3 style='margin-left: 15%'><i>A.n Michael Louis Chandra</i></h3>
-                      <h3><b>Nomor Rekening:</b></h3>
-                      <input type="text" class="form-control" style="width:70%; font-size: 12pt;" name="txtnomorrek" placeholder="Masukkan Nomor Rekening Anda">
->>>>>>> Stashed changes
                     <div><br>
                     <input type='submit' value='Bayar' name='btnBayar' class='btn btn-primary'>
                     &nbsp;
