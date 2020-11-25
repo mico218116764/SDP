@@ -18,7 +18,12 @@
                     <h2>Total Pembayaran:</h2>
                         <h1 style='margin-left: 25%; color:red'><b>Rp.1,000,000</b></h1>
                         <br>
-                      </div>
+                    <h3><b>Pilih Bank:</b></h3>
+                    <select id="myDropDown" class="form-control" style="width:70%; font-size: 12pt;" name="merkBarang" id="">
+                        @foreach ($dataBank as $bank)
+                            <option value="{{$bank->rekening}}">{{$bank->nama_bank}}</option>
+                        @endforeach
+                    </select>
                       <h3><b>Nomor Rekening Tujuan:</b></h3>
 <<<<<<< Updated upstream
                         <h3 style='margin-left: 25%'><b>0123456789</b></h3>
