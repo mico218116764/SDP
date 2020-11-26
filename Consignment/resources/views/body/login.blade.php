@@ -33,9 +33,19 @@
                     <div class="register-link m-t-15 text-center">
                         <p>Don't have account ? <a href="/register"> Sign Up Here</a></p>
                     </div>
+                    @if (session('alert-Warning'))
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+                            <script>
+                                $(document).ready(function(){
+                                alert('Silahkan Login sebelum melakukan transaksi');
+                            });
+                        </script>
+                    @endif
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+
 

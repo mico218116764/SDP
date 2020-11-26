@@ -110,6 +110,23 @@
             <div style="color:red; font-weight:bold"> {{$message}}</div><br>
             @enderror
             <br>
+            <div class="form-group">
+                <label>Jenis Bank</label><BR>
+                <select class="form-control" style="width:70%; font-size: 12pt;" name="jenisBank" id="">
+                    @foreach ($daftarBank as $bank)
+                    <option value="{{$bank->bank_id}}">{{$bank->nama_bank}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="exampleFormControlFile1">No rekening</label>
+                <input type="text" style="width:70%;" class="form-control" name="no_rek">
+            </div>
+            @error('no_rek')
+            <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
+            <br>
             @if ($dataUser->NIK == null)
                 <div class="alert alert-warning">
                     <strong>Warning!</strong> Anda belum melengkapi profile

@@ -7,6 +7,7 @@ use App\banks;
 use App\jenisbarangs;
 use App\merkbarangs;
 use App\pengajuans;
+use App\returs;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -24,6 +25,7 @@ use App\Rules\checkMerk;
 use App\Rules\checkNamaBank;
 use App\Rules\checkNominal;
 use App\Rules\checkPhone;
+use App\transaksis;
 use App\userpembelis;
 
 class ControllerHalaman extends Controller
@@ -177,6 +179,9 @@ class ControllerHalaman extends Controller
         }
         $now = DB::selectOne("SELECT NOW() AS now from dual");
         // dd();
+
+        // $dataUser = userpembelis::where('USERPB_EMAIL',$userE)->get();
+        // dd($dataUser[0]);
         $request->validate(
             [
                 "NAMA_BARANG" => ["required"],
@@ -190,6 +195,7 @@ class ControllerHalaman extends Controller
                 "FOTO_BAWAH" => ["required", "url"],
                 "FOTO_DEPAN" => ["required", "url"],
                 "FOTO_BELAKANG" => ["required", "url"],
+                "no_rek"=>["required",'numeric']
             ],
             [
                 "required" => ":attribute harus di isi!!",
@@ -209,12 +215,12 @@ class ControllerHalaman extends Controller
                 "FOTO_BAWAH" => "Url Foto Bawah",
                 "FOTO_DEPAN" => "Url Foto Depan",
                 "FOTO_BELAKANG" => "Url Foto Belakang",
+                "no_rek" => "Nomor rekening"
             ]
         );
         $pengajuans = new pengajuans();
         $pengajuans->ADMINP_ID = "0";
         $pengajuans->MERK_ID = $request->merkBarang;
-        $pengajuans->KONDISI_ID = "KOND0";
         $pengajuans->USERPB_ID = $dataUserNow[0]->USERPB_ID;
         $pengajuans->email_penjual = $userE;
         $pengajuans->TRANSAKSI_ID = "0";
@@ -222,7 +228,6 @@ class ControllerHalaman extends Controller
         $pengajuans->NAMA_BARANG = $request->NAMA_BARANG;
         $pengajuans->TGL_PENGAJUAN = $now->now;
         $pengajuans->WARNA_BARANGP = "";
-        $pengajuans->PERSENTASE_KUALITAS = 0;
         $pengajuans->FUNGSIONALITAS = $request->FUNGSIONALITAS;
         $pengajuans->DESKRIPSI_BARANG = $request->DESKRIPSI_BARANG;
         $pengajuans->STATUS_PENGAJUAN = "0";
@@ -238,8 +243,8 @@ class ControllerHalaman extends Controller
         $pengajuans->HARGA_APPROVE = 0;
         $pengajuans->HARGA_JASA = 0;
         $pengajuans->USERPB_IDENTITY = "";
-        $pengajuans->bank_id = null;
-        $pengajuans->USERPB_NOREK = null;
+        $pengajuans->bank_id = $request->jenisBank;
+        $pengajuans->USERPB_NOREK = $request->no_rek;
         $pengajuans->alasan = null;
         $pengajuans->save();
         //ini pasti berubah otomatis
@@ -248,6 +253,7 @@ class ControllerHalaman extends Controller
     public function doLogout(Request $request)
     {
         Cookie::queue(Cookie::forget("userNowT"));
+        Cookie::queue(Cookie::forget("userNowE"));
         return redirect("/login");
     }
     public function doLogin(Request $request)
@@ -482,7 +488,7 @@ class ControllerHalaman extends Controller
     {
         // $daftarKatalog = DB::select('select * from pengajuans where STATUS_PENGAJUAN = "1"  ');
         $daftarKatalog = new pengajuans();
-        $daftarKatalog = $daftarKatalog::where('STATUS_PENGAJUAN', '1')->get();
+        $daftarKatalog = $daftarKatalog::where('STATUS_PENGAJUAN', '1')->where('STATUS_BARANG',"0")->get();
         // dd($daftarKatalog::where('status_pengajuan', '1'));
         // dd($daftarKatalog[0]->PENGAJUAN_ID);
         return view('page.katalog', [
@@ -506,24 +512,94 @@ class ControllerHalaman extends Controller
             $jsonUserNow = $request->cookie("userNow");
             $dataUserNow = json_decode($jsonUserNow);
             $userNow = $dataUserNow[0]->USERPB_ID;
-            $userE = $request->cookie('userNowE');
+            if(!Cookie::has("userNowE")){
+                return redirect('/login');
+            }else{
+                $userE = $request->cookie('userNowE');
+            }
+        }else{
+            return redirect('/login')->with('alert-Warning','Harap login dulu');
         }
+
         $detailBarang = pengajuans::where('PENGAJUAN_ID',$id)->get();
         $userData = userpembelis::where('USERPB_EMAIL',$userE)->get();
         // dd($userData[0]);
         $barang = $detailBarang[0];
+        // dd($barang->HARGA_APPROVE);
+        // $harga = $barang->HARGA_APPROVE;
+        // $harga = number_format($harga);
+        // dd($harga);
 
         return view('page.checkout',[
             'barang'=>$barang,
-            'userData'=>$userData[0]
+            'userData'=>$userData[0],
+
         ]);
     }
-    public function bayar()
+    public function bayar(Request $request)
     {
+        $id = $request->id;
+        if(Cookie::has("userNow")) {
+            $jsonUserNow = $request->cookie("userNow");
+            $dataUserNow = json_decode($jsonUserNow);
+            $userNow = $dataUserNow[0]->USERPB_ID;
+            if(!Cookie::has("userNowE")){
+                return redirect('/login');
+            }else{
+                $userE = $request->cookie('userNowE');
+            }
+        }else{
+            return redirect('/login')->with('alert-Warning','Harap login dulu');
+        }
         $dataBank = banks::all();
+        $detailBarang = pengajuans::where('PENGAJUAN_ID',$id)->get();
+        $userData = userpembelis::where('USERPB_EMAIL',$userE)->get();
+        // dd($userData[0]);
+        $barang = $detailBarang[0];
         return view('page.bayar',[
+            'barang'=>$barang,
+            'userData'=>$userData[0],
             'dataBank'=>$dataBank,
         ]);
+    }
+
+    public function membayar(Request $request)
+    {
+        if(Cookie::has("userNow")) {
+            $jsonUserNow = $request->cookie("userNow");
+            $dataUserNow = json_decode($jsonUserNow);
+            $userNow = $dataUserNow[0]->USERPB_ID;
+            if(!Cookie::has("userNowE")){
+                return redirect('/login');
+            }else{
+                $userE = $request->cookie('userNowE');
+            }
+        }else{
+            return redirect('/login')->with('alert-Warning','Harap login dulu');
+        }
+        $rekening = $request->merkBarang;
+        $image = $request->BUKTI_TRANSFER;
+        $id = $request->id;
+        // dd($image);
+        if($image == null){
+            // dd('ada kesalahan');
+            return redirect('/katalog')->with('gagal','a');
+        }else{
+            // userpembelis::where('USERPB_EMAIL', $email)
+            // ->update(['FOTO_KTP' => $ktp,
+            //             'NIK'=>$nik,
+            //             'USERPB_PHONE_NUMBER'=>$NOMOR_TELFON,
+            //             'USERPB_ADDRESS'=>$ALAMAT_USER]);
+            pengajuans::where('PENGAJUAN_ID',$id)->update(['STATUS_BARANG'=>1]);
+            $transaksi = new transaksis;
+            $transaksi->PENGAJUAN_ID = $id;
+            $transaksi->bukti_transfer = $image;
+            $transaksi->status = 0;
+            $transaksi->email_pembeli = $userE;
+            $transaksi->save();
+            return redirect('/katalog')->with('berhasil','a');
+        }
+
     }
     public function detailpengajuan()
     {
@@ -559,27 +635,96 @@ class ControllerHalaman extends Controller
     }
     public function daftarretur()
     {
-        return view('page.daftarretur');
+        $dataRetur = returs::all();
+        $dataUser = userpembelis::all();
+        $dataTransaksi = transaksis::all();
+        return view('page.daftarretur',[
+            'dataRetur'=>$dataRetur,
+            'dataUser'=>$dataUser,
+            'dataTransaksi'=>$dataTransaksi
+        ]);
     }
-    public function retur()
+    public function retur(Request $request)
     {
-        return view('page.retur');
-    }
-
-    public function profile(Request $request)
-    {
-        if (Cookie::has("userNow")) {
+        if(Cookie::has("userNow")) {
             $jsonUserNow = $request->cookie("userNow");
             $dataUserNow = json_decode($jsonUserNow);
             $userNow = $dataUserNow[0]->USERPB_ID;
-            $userE = $request->cookie('userNowE');
+            if(!Cookie::has("userNowE")){
+                return redirect('/login');
+            }else{
+                $userE = $request->cookie('userNowE');
+            }
+        }else{
+            return redirect('/login')->with('alert-Warning','Harap login dulu');
         }
-        // dd($userE);
-        $dataUser = userpembelis::where("USERPB_EMAIL",$userE)->get();
-
-        return view('page.profile',[
-            'dataUser'=>$dataUser,
+        if(Cookie::has("userNow")) {
+            $jsonUserNow = $request->cookie("userNow");
+            $dataUserNow = json_decode($jsonUserNow);
+            $userNow = $dataUserNow[0]->USERPB_ID;
+            if(!Cookie::has("userNowE")){
+                return redirect('/login');
+            }else{
+                $userE = $request->cookie('userNowE');
+            }
+        }else{
+            return redirect('/login')->with('alert-Warning','Harap login dulu');
+        }
+        $dataTransaksi = transaksis::where('email_pembeli',$userE)->get();
+        // $userNow = userpembelis::where('')
+        $userNow = userpembelis::where('USERPB_EMAIL',$userE)->get();
+        // dd($userNow[0]);
+        return view('page.retur',[
+            'dataTransaksi'=>$dataTransaksi,
+            'userNow'=>$userNow[0]
         ]);
+    }
+    public function doRetur(Request $request)
+    {
+        if(Cookie::has("userNow")) {
+            $jsonUserNow = $request->cookie("userNow");
+            $dataUserNow = json_decode($jsonUserNow);
+            $userNow = $dataUserNow[0]->USERPB_ID;
+            if(!Cookie::has("userNowE")){
+                return redirect('/login');
+            }else{
+                $userE = $request->cookie('userNowE');
+            }
+        }else{
+            return redirect('/login')->with('alert-Warning','Harap login dulu');
+        }
+        $request->validate([
+            'DESKRIPSI_BARANG'=>['required'],
+            'LINK_VIDEO'=>['required','url']
+        ],[
+            'required'=>':attribute harus di isi',
+            'url'=>':attribute harus dalam bentuk link'
+        ],[
+            'DESKRIPSI_BARANG'=>"deskripsi barang",
+            'LINK_VIDEO'=>"Link video"
+        ]);
+        $retur = new returs;
+        $retur->deskripsi = $request->DESKRIPSI_BARANG;
+        $retur->link_video = $request->LINK_VIDEO;
+        $retur->transaksi_id = $request->transaksi_id;
+        $retur->status = 0;
+        $userNow = userpembelis::where('USERPB_EMAIL',$userE)->get();
+        $retur->USERPB_ID = $userNow[0]->USERPB_ID;
+        $retur->save();
+        // dd($userNow[0]->USERPB_ID);
+        return redirect()->back()->with('alert',"Keluhan telah diajukan");
+    }
+    public function doDeleteRetur(Request $request)
+    {
+        // // dd($id);
+        // $pengajuans = pengajuans::where('PENGAJUAN_ID', $id)->first();
+        // //sample $id => PNG#
+        // //example $id => PNG0
+        // $pengajuans->delete();
+        // return redirect('/admin');
+        $retur = returs::where('retur_id',$request->butDel)->first();
+        $retur->delete();
+        return redirect()->back()->with('alert','Pengajuan retur ditolak');
     }
 
     public function barangreject(Request $request)
@@ -662,5 +807,6 @@ class ControllerHalaman extends Controller
         pengajuans::withTrashed()->where('PENGAJUAN_ID', $id)->restore();
         return redirect('/barangreject');
     }
+
 
 }

@@ -14,6 +14,7 @@
             <div class='col-md-8'>
                 <form method='post' action='/bayar'>
                     @csrf
+                    <input type="hidden" name="id" value="{{$barang->PENGAJUAN_ID}}">
                     <br>
                     <h3><b>{{$barang->NAMA_BARANG}}</b></h3>
                     <h4>Deskripsi: {{$barang->DESKRIPSI_BARANG}}</h4><br>

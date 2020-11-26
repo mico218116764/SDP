@@ -38,6 +38,7 @@ Route::get('/detailbarangreject', 'ControllerHalaman@detailbarangreject');
 
 
 Route::post('/doRegister', 'ControllerHalaman@doRegister');
+Route::post('/doDeleteRetur', 'ControllerHalaman@doDeleteRetur');
 Route::post('/doLogin', 'ControllerHalaman@doLogin');
 Route::post('/doSubmit', 'ControllerHalaman@doSubmit');
 Route::post('/doApply', 'ControllerHalaman@doApply');
@@ -56,5 +57,8 @@ Route::get('/detailbarangreject/{id}', 'ControllerHalaman@detailbarangreject');
 Route::get('/doApprove', 'ControllerHalaman@doApprove');
 Route::get('/doDelete/{id}', 'ControllerHalaman@doDelete');
 Route::get('/changeProfile', 'ControllerHalaman@changeProfile');
+Route::post('/doRetur', 'ControllerHalaman@doRetur');
+
+Route::post('/membayar','ControllerHalaman@membayar');
 
 // Route::get('/doApprove/{id}', 'ControllerHalaman@doApprove');
