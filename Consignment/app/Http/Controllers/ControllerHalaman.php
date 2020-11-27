@@ -749,7 +749,22 @@ class ControllerHalaman extends Controller
             "items" => $array,
         ]);
     }
-
+    public function profile(Request $request)
+    {
+        if (Cookie::has("userNow")) {
+            $jsonUserNow = $request->cookie("userNow");
+            $dataUserNow = json_decode($jsonUserNow);
+            $userNow = $dataUserNow[0]->USERPB_ID;
+            $userE = $request->cookie('userNowE');
+        }else{
+            return redirect('/login')->with('alert-Warning','a');
+        }
+        $dataUser = userpembelis::where('USERPB_EMAIL',$userE)->get();
+        // dd($dataUser);
+        return view('page.profile',[
+            'dataUser'=>$dataUser,
+        ]);
+    }
     public function changeProfile(Request $request)
     {
         $email = $request->EMAIL_USERe;
