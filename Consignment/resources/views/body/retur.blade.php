@@ -3,6 +3,7 @@
         @csrf
         <div class="container" style="padding: 20px; margin-left: 20%">
             <h1>Pengajuan Keluhan</h1>
+            <h4 style="color: red">*maksimal pengembalian barang adalah 2 bulan setelah pembelian</h4>
             <br>
             <div class="form-group">
                 <label>Transaksi ID - Tanggal transaksi</label>
@@ -10,7 +11,7 @@
                 <select id="myDropDown" class="form-control" style="width:70%; font-size: 12pt;" name="transaksi_id" >
                     @foreach ($dataTransaksi as $transaksi)
                         <option value="{{$transaksi->transaksi_id}}">
-                            <p>ID = {{$transaksi->transaksi_id}} |<-X->| Tanggal ={{$transaksi->created_at}}</p>
+                            <p>{{$transaksi->transaksi_id}} || {{$transaksi->created_at}}</p>
                         </option>
                     @endforeach
                 </select>
@@ -22,6 +23,14 @@
                 placeholder="Masukkan Nama Anda" readonly="true" value="{{$userNow->USERPB_NAME}}">
             </div>
 
+            <div class="form-group">
+                <label>Pilih Barang</label>
+                    <select id="myDropDown" class="form-control" style="width:70%; font-size: 12pt;" name="merkBarang" id="">
+                        <option value="keyboard">Keyboard Logitech G107</option>
+                        <option value="mouse">Mouse Logitech G107</option>
+                    </select>
+            </div><br>
+            
             <div class="form-group">
                 <label>Deskripsi Barang</label>
                 <textarea id="w3review"style="width:70%;" class="form-control" name="DESKRIPSI_BARANG" placeholder="Deskripsi barang"
@@ -35,7 +44,8 @@
                 <label>Link Video</label>
                 <textarea id="w3review" style="width:70%;"class="form-control" name="LINK_VIDEO" placeholder="Masukkan Link Video"
                     rows="4" cols="50"></textarea>
-            </div>
+            </div><br>
+
             @error('LINK_VIDEO')
                 <div style="color:red; font-weight:bold"> {{$message}}</div><br>
             @enderror

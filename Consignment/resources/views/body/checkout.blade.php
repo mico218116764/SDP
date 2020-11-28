@@ -23,6 +23,17 @@
                     <h3>Address:</h3>
                        <h4 style='margin-left: 20px'><b>{{$userData->USERPB_ADDRESS}}</b></h4>
                     <div><br>
+                        <div class="form-group">
+                            <label>Pilih Kurir</label>
+                                <select id="myDropDown" class="form-control" style="width:70%; font-size: 12pt;" name="merkBarang" id="">
+                                    <option value="AnterAja">AnterAja - Rp. 27.000</option>
+                                    <option value="sicepatreg">SiCepat Reg - Rp. 21.000</option>
+                                    <option value="jnt">J&T - Rp. 19.000</option>
+                                    <option value="jnereg">JNE Reg - Rp. 19.000</option>
+                                </select>
+                                <h4 style="color: red">*durasi pengiriman 2-4 hari</h4>
+                        </div>
+                        <br>
                     <input type='submit' value='Bayar' name='btnBayar' class='btn btn-primary'>
                     &nbsp;
                     </div>

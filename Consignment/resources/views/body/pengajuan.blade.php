@@ -61,54 +61,37 @@
             @error('HARGA_MAX')
             <div style="color:red; font-weight:bold"> {{$message}}</div><br>
             @enderror
-
+            
             <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Kiri</label>
-                <input type="text" style="width:70%;" class="form-control" name="FOTO_KIRI" >
-            </div>
-            @error('FOTO_KIRI')
-            <div style="color:red; font-weight:bold"> {{$message}}</div><br>
-            @enderror
-
+                <input type="file" class="form-control-file" id="FOTO_KIRI" name="FOTO_KIRI">
+              </div>
+            
             <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Kanan</label>
-                <input type="text" style="width:70%;" class="form-control" name="FOTO_KANAN">
-            </div>
-            @error('FOTO_KANAN')
-            <div style="color:red; font-weight:bold"> {{$message}}</div><br>
-            @enderror
+                <input type="file" class="form-control-file" id="FOTO_KANAN" name="FOTO_KANAN">
+              </div>
 
-            <div class="form-group">
+              <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Atas</label>
-                <input type="text" style="width:70%;" class="form-control" name="FOTO_ATAS">
-            </div>
-            @error('FOTO_ATAS')
-            <div style="color:red; font-weight:bold"> {{$message}}</div><br>
-            @enderror
+                <input type="file" class="form-control-file" id="FOTO_ATAS" name="FOTO_ATAS">
+              </div>
 
-            <div class="form-group">
+              <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Bawah</label>
-                <input type="text" style="width:70%;" class="form-control" name="FOTO_BAWAH">
-            </div>
-            @error('FOTO_BAWAH')
-            <div style="color:red; font-weight:bold"> {{$message}}</div><br>
-            @enderror
+                <input type="file" class="form-control-file" id="FOTO_BAWAH" name="FOTO_BAWAH">
+              </div>
 
-            <div class="form-group">
+              <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Depan</label>
-                <input type="text" style="width:70%;" class="form-control" name="FOTO_DEPAN">
-            </div>
-            @error('FOTO_DEPAN')
-            <div style="color:red; font-weight:bold"> {{$message}}</div><br>
-            @enderror
+                <input type="file" class="form-control-file" id="FOTO_DEPAN" name="FOTO_DEPAN">
+              </div>
 
-            <div class="form-group">
+              <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Belakang</label>
-                <input type="text" style="width:70%;" class="form-control" name="FOTO_BELAKANG">
-            </div>
-            @error('FOTO_BELAKANG')
-            <div style="color:red; font-weight:bold"> {{$message}}</div><br>
-            @enderror
+                <input type="file" class="form-control-file" id="FOTO_BELAKANG" name="FOTO_BELAKANG">
+              </div>
+
             <br>
             <div class="form-group">
                 <label>Jenis Bank</label><BR>
