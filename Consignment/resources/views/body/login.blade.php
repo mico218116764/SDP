@@ -7,7 +7,7 @@
                 </a>
             </div>
             <div class="login-form">
-                <form method="POST" action="/doLogin">
+                <form method="POST" action="{{url('/doLogin')}}">
                     @csrf
                     <div class="form-group">
                         <label>Email address</label>
