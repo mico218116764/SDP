@@ -2,9 +2,16 @@
     td {
         text-align: center;
     }
+    .login-form{
+        width: 100%;
+        height: 10%;
+        margin-top: -5%;
+        background-repeat: no-repeat;
+    }
 </style>
-<div class="login-form">
-    <div style="padding-left: 200px;padding-right: 200px;">
+<div class="login-form" >
+<img src=" {{asset('images/background.jpg')}}" alt="" >
+    <div style="margin-top:-80%; padding-left: 200px;padding-right: 200px;">
         Barang yang belum di approve:
         <table class="table">
             <thead>
@@ -41,7 +48,6 @@
             @endforeach
         </table>
 
-
         Barang yang sudah approved:
         <table class="table">
             <thead>
@@ -75,6 +81,6 @@
             </tbody>
             @endif
             @endforeach
-        </table>
+            </table>
     </div>
 </div>

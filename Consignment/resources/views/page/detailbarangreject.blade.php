@@ -27,7 +27,8 @@
 <body>
 
 <div class="jumbotron">
-  <div class="container text-center">
+  <img src=" {{asset('images/logo.png')}}" style='margin-top:-10%; margin-left:2%;'alt=""  width='300px;' height='300px'>
+  <div class="container text-center" style='margin-top:-10%;'>
     <h1>Reteem Consignment</h1>
     <p><i>Serve you with trust</i></p>
   </div>
