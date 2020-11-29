@@ -8,8 +8,8 @@
 </style>
 
 <div class="login-form">
-    <img src=" {{asset('images/background.jpg')}}" alt="" >
-    <div style=" margin-top:-80%; padding-left: 200px;padding-right: 200px;">
+    <img src=" {{asset('images/background1.jpg')}}" alt="" >
+    <div style=" margin-top:-50%; padding-left: 200px;padding-right: 200px;">
         <h2>Barang yang belum di approve:</h2>
         <table class="table">
             <thead>

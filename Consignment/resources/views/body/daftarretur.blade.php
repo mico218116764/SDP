@@ -1,7 +1,21 @@
+<style>
+    .login-form{
+        width: 100%;
+        height: 10%;
+        margin-top: -5%;
+        background-repeat: no-repeat;
+    }
+</style>
+
 <div class="addAdmin-form">
+    <img src=" {{asset('images/background1.jpg')}}" alt="" >
+    <div style="margin-top:-45%;padding-right: 200px;">
     <style>
         td {
             text-align: center;
+        }
+        .table{
+            border:1px solid black;
         }
     </style>
     <form action="{{url('/doDeleteRetur')}}" method="post">
@@ -41,8 +55,10 @@
                     @endforeach
                 </table>
             </div>
-        </div>
+        </div>        
     </form>
+    </div>    
+</div>
 @if (session('alert'))
     <div class="alert alert-success">
         {{ session('alert') }}

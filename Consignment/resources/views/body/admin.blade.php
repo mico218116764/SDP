@@ -10,8 +10,8 @@
     }
 </style>
 <div class="login-form" >
-<img src=" {{asset('images/background.jpg')}}" alt="" >
-    <div style="margin-top:-80%; padding-left: 200px;padding-right: 200px;">
+<img src=" {{asset('images/background1.jpg')}}" alt="" >
+    <div style="margin-top:-45%; padding-left: 200px;padding-right: 200px;">
         Barang yang belum di approve:
         <table class="table">
             <thead>

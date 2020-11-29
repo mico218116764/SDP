@@ -6,11 +6,17 @@
         display: inline-block;
 
     }
+    .container{
+        width: 100%;
+        height: 10%;
+        margin-top: -5%;
+        background-repeat: no-repeat;
+    }
 </style>
 <div class="container">
-
+    <img src=" {{asset('images/background1.jpg')}}" alt="" style="margin-left: -2%">
+    <div style="margin-top:-45%; padding-left: 200px;padding-right: 200px;">
     @foreach ($daftarKatalog as $item)
-
     <div class="row">
         <div class="col-sm-4">
             <a href="{{url('/detailsbarang/'.$item->PENGAJUAN_ID)}}">
@@ -49,3 +55,4 @@
             });
         </script>
     @endif
+    </div>  

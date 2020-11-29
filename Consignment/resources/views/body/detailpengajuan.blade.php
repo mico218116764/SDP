@@ -2,9 +2,16 @@
     td {
         text-align: center;
     }
+    .login-form{
+        width: 100%;
+        height: 10%;
+        margin-top: -5%;
+        background-repeat: no-repeat;
+    }
 </style>
 <div class="login-form">
-    <div style="padding-left: 200px;padding-right: 200px;">
+  <img src=" {{asset('images/background1.jpg')}}" alt="" >
+  <div style="margin-top:-45%; padding-left: 200px;padding-right: 200px;">
     <div class="container">
         <div class="col">
           <div class="col-md-1" style='margin-right: 20px;'>

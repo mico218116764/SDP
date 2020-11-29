@@ -33,7 +33,7 @@ Route::get('/retur', 'ControllerHalaman@retur');
 Route::get('/profile', 'ControllerHalaman@profile');
 Route::get('/barangreject', 'ControllerHalaman@barangreject');
 Route::get('/detailbarangreject', 'ControllerHalaman@detailbarangreject');
-
+Route::get('/statusbarang', 'ControllerHalaman@statusbarang');
 
 
 

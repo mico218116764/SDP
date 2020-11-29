@@ -823,5 +823,8 @@ class ControllerHalaman extends Controller
         return redirect('/barangreject');
     }
 
-
+    public function statusbarang()
+    {
+        return view('page.statusbarang');
+    }
 }

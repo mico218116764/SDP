@@ -8,8 +8,8 @@
 </style>
 
 <div class="addAdmin-form">
-    <img src=" {{asset('images/background.jpg')}}" alt="" >
-    <div style="margin-top:-80%; padding-left: 200px;padding-right: 200px;">
+    <img src=" {{asset('images/background1.jpg')}}" alt="" >
+    <div style="margin-top:-50%; padding-left: 200px;padding-right: 200px;">
         <form method="POST" action="{{url('/addJenis')}}">
             @csrf
             <div class="container" style="padding: 20px">
