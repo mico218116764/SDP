@@ -189,12 +189,12 @@ class ControllerHalaman extends Controller
                 "DESKRIPSI_BARANG" => ["required"],
                 "HARGA_MIN" => ["required", "numeric"],
                 "HARGA_MAX" => ["required", "numeric"],
-                "FOTO_KIRI" => ["required", "url"],
-                "FOTO_KANAN" => ["required", "url"],
-                "FOTO_ATAS" => ["required", "url"],
-                "FOTO_BAWAH" => ["required", "url"],
-                "FOTO_DEPAN" => ["required", "url"],
-                "FOTO_BELAKANG" => ["required", "url"],
+                "FOTO_KIRI" => ["required"],
+                "FOTO_KANAN" => ["required"],
+                "FOTO_ATAS" => ["required"],
+                "FOTO_BAWAH" => ["required"],
+                "FOTO_DEPAN" => ["required"],
+                "FOTO_BELAKANG" => ["required"],
                 "no_rek"=>["required",'numeric']
             ],
             [

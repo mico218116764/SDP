@@ -26,7 +26,7 @@
                     <h2><b>{{$barang->NAMA_BARANG}}</b></h2>
                     <h4>Deskripsi: {{$barang->DESKRIPSI_BARANG}}</h4><br>
                     <h4>Price: {{$barang->HARGA_APPROVE}}</h4><br>
-                    <img style="width:120px; height:120px" src="{{$barang->FOTO_DEPAN}}" alt="">
+                    <img style="width:120px; height:120px" src="{{asset('images/'.$barang->FOTO_DEPAN)}}" alt="">
                     <h3>Address:</h3>
                        <h4 style='margin-left: 20px'><b>{{$userData->USERPB_ADDRESS}}</b></h4>
                     <div><br>

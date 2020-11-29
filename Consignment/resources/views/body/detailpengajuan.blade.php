@@ -8,27 +8,27 @@
     <div class="container">
         <div class="col">
           <div class="col-md-1" style='margin-right: 20px;'>
-            <img src="{{$pengajuans->FOTO_KIRI}}" width='100px' height='100px'>
+            <img src="{{asset('images/'.$pengajuans->FOTO_KIRI)}}" width='100px' height='100px'>
             <h4>Tampak Kiri</h4>
           </div>
           <div class="col-md-1" style='margin-right: 20px;'>
-            <img src="{{$pengajuans->FOTO_KANAN}}" width='100px' height='100px'>
+            <img src="{{asset('images/'.$pengajuans->FOTO_KANAN)}}" width='100px' height='100px'>
             <h4>Tampak Kanan</h4>
           </div>
           <div class="col-md-1" style='margin-right: 20px;'>
-            <img src="{{$pengajuans->FOTO_ATAS}}" width='100px' height='100px'>
+            <img src="{{asset('images/'.$pengajuans->FOTO_ATAS)}}" width='100px' height='100px'>
             <h4>Tampak Atas</h4>
           </div>
           <div class="col-md-1" style='margin-right: 20px;'>
-            <img src="{{$pengajuans->FOTO_BAWAH}}" width='100px' height='100px'>
+            <img src="{{asset('images/'.$pengajuans->FOTO_BAWAH)}}" width='100px' height='100px'>
             <h4>Tampak Bawah</h4>
           </div>
           <div class="col-md-1" style='margin-right: 20px;'>
-            <img src="{{$pengajuans->FOTO_DEPAN}}" width='100px' height='100px'>
+            <img src="{{asset('images/'.$pengajuans->FOTO_DEPAN)}}" width='100px' height='100px'>
             <h4>Tampak Depan</h4>
           </div>
           <div class="col-md-1" style='margin-right: 20px;'>
-            <img src="{{$pengajuans->FOTO_BELAKANG}}" width='100px' height='100px'>
+            <img src="{{asset('images/'.$pengajuans->FOTO_BELAKANG)}}" width='100px' height='100px'>
             <h4>Tampak Belakang</h4>
           </div>
         </div>

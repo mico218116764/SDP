@@ -1,3 +1,12 @@
+<style>
+    .desc {
+        width: 300px;
+        height: 100px;
+        overflow: hidden;
+        display: inline-block;
+
+    }
+</style>
 <div class="container">
 
     @foreach ($daftarKatalog as $item)
@@ -8,8 +17,11 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">{{$item->NAMA_BARANG}}</div>
                 <div class="panel-body" style="width: 250px;
-                height: 250px;"><img src="{{$item->FOTO_KIRI}}" class="img-responsive"alt="Image"></div>
-                <div class="panel-footer">{{$item->DESKRIPSI_BARANG}}</div>
+                height: 250px;"><img src="{{asset('images/'.$item->FOTO_KIRI)}}" class="img-responsive"alt="Image"></div>
+                <div class="panel-footer desc">
+                    <?php
+                        echo substr($item->DESKRIPSI_BARANG, 0, 100) . (strlen($item->DESKRIPSI_BARANG) > 100 ? "..." : '');
+                    ?> </div>
             </div>
         </a>
         </div>
