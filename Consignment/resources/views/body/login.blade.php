@@ -16,7 +16,7 @@
                     <img class="align-content" src="">
                 </a>
             </div>
-            <div class="login-form">
+            <div class="login-form background">
                 <form method="POST" action="{{url('/doLogin')}}">
                     @csrf
                     <div class="form-group">
