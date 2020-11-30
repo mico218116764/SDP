@@ -10,9 +10,11 @@
                 {{-- <input type="text" style="width:70%;" class="form-control" name="TRANSAKSI_ID" placeholder="Masukkan ID Transaksi"> --}}
                 <select id="myDropDown" class="form-control" style="width:70%; font-size: 12pt;" name="transaksi_id" >
                     @foreach ($dataTransaksi as $transaksi)
-                        <option value="{{$transaksi->transaksi_id}}">
-                            <p>{{$transaksi->transaksi_id}} || {{$transaksi->created_at}}</p>
-                        </option>
+                        @if ($dataTransaksi[0]->status == 1)
+                            <option value="{{$transaksi->transaksi_id}}">
+                                <p>{{$transaksi->transaksi_id}} || {{$transaksi->created_at}}</p>
+                            </option>
+                        @endif
                     @endforeach
                 </select>
             </div>
@@ -30,7 +32,7 @@
                         <option value="mouse">Mouse Logitech G107</option>
                     </select>
             </div><br>
-            
+
             <div class="form-group">
                 <label>Deskripsi Barang</label>
                 <textarea id="w3review"style="width:70%;" class="form-control" name="DESKRIPSI_BARANG" placeholder="Deskripsi barang"

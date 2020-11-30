@@ -577,7 +577,8 @@ class ControllerHalaman extends Controller
         }else{
             return redirect('/login')->with('alert-Warning','Harap login dulu');
         }
-        $rekening = $request->merkBarang;
+
+        $rekening = $request->bank;
         $image = $request->BUKTI_TRANSFER;
         $id = $request->id;
         // dd($image);
@@ -585,17 +586,14 @@ class ControllerHalaman extends Controller
             // dd('ada kesalahan');
             return redirect('/katalog')->with('gagal','a');
         }else{
-            // userpembelis::where('USERPB_EMAIL', $email)
-            // ->update(['FOTO_KTP' => $ktp,
-            //             'NIK'=>$nik,
-            //             'USERPB_PHONE_NUMBER'=>$NOMOR_TELFON,
-            //             'USERPB_ADDRESS'=>$ALAMAT_USER]);
+
             pengajuans::where('PENGAJUAN_ID',$id)->update(['STATUS_BARANG'=>1]);
             $transaksi = new transaksis;
             $transaksi->PENGAJUAN_ID = $id;
             $transaksi->bukti_transfer = $image;
             $transaksi->status = 0;
             $transaksi->email_pembeli = $userE;
+            $transaksi->rekening_tujuan = $rekening;
             $transaksi->save();
             return redirect('/katalog')->with('berhasil','a');
         }
@@ -823,8 +821,107 @@ class ControllerHalaman extends Controller
         return redirect('/barangreject');
     }
 
-    public function statusbarang()
+    public function statusbarang(Request $request)
     {
-        return view('page.statusbarang');
+        if (Cookie::has("userNow")) {
+            $jsonUserNow = $request->cookie("userNow");
+            $dataUserNow = json_decode($jsonUserNow);
+            $userNow = $dataUserNow[0]->USERPB_ID;
+            $userE = $request->cookie('userNowE');
+        }else{
+            return redirect('/login')->with('alert-Warning','a');
+        }
+        $daftarTransaksi = transaksis::where('email_pembeli',$userE)->get();
+        $daftarPengajuan = pengajuans::all();
+        return view('page.statusbarang',[
+            'daftarTransaksi'=>$daftarTransaksi,
+            'daftarPengajuan'=>$daftarPengajuan
+        ]);
+    }
+
+    public function barangSaya(Request $request)
+    {
+        if (Cookie::has("userNow")) {
+            $jsonUserNow = $request->cookie("userNow");
+            $dataUserNow = json_decode($jsonUserNow);
+            $userNow = $dataUserNow[0]->USERPB_ID;
+            $userE = $request->cookie('userNowE');
+        }else{
+            return redirect('/login')->with('alert-Warning','a');
+        }
+        $daftarKatalog = pengajuans::where('email_penjual', $userE)->get();
+        // dd($daftarKatalog);
+        return view('page.barangSaya',[
+            "daftarKatalog"=>$daftarKatalog,
+        ]);
+    }
+    public function detailbarangku($id)
+    {
+        $transaksi = transaksis::where('PENGAJUAN_ID',$id)->get();
+        return view('page.detailBarangSaya',[
+            'transaksi'=>$transaksi,
+            'id'=>$id
+        ]);
+    }
+    public function back()
+    {
+        return redirect('/barangSaya');
+    }
+    public function daftarTransaksi()
+    {
+        $daftarTransaksi = transaksis::where('status','0')->get();
+        // dd($daftarTransaksi);
+        return view('page.daftarTransaksi',[
+            "daftarTransaksi"=>$daftarTransaksi
+        ]);
+    }
+    public function detailTransaksi($id)
+    {
+        $trans = transaksis::where('transaksi_id',$id)->get();
+        $id_pengajuan = transaksis::where('transaksi_id',$id)->get();
+        $id_pengajuan = $id_pengajuan[0]->PENGAJUAN_ID;
+        $pengajuan = pengajuans::where('PENGAJUAN_ID',$id_pengajuan)->get();
+        $harga = $pengajuan[0]->HARGA_APPROVE;
+        // dd($harga);
+        return view('page.transaksiDetail',[
+            'transaksi'=>$trans,
+            'harga'=>$harga,
+            'id'=>$id
+        ]);
+    }
+    public function doSell(Request $request)
+    {
+        $but = $request->btnAction;
+        $id = $request->id;
+        // dd($id);
+
+        $id_pengajuan = transaksis::where('transaksi_id',$id)->get();
+        $id_pengajuan = $id_pengajuan[0]->PENGAJUAN_ID;
+        // dd($id_pengajuan);
+        if($but == "approve"){
+            $trans = transaksis::where('transaksi_id',$id)->update([
+                'status'=>1
+            ]);
+        }else{
+            $request->validate([
+                'alasan'=>['required']
+            ],[
+                'required'=>":attribute wajib di isi"
+            ],[
+                'alasan'=>"Alasan"
+            ]);
+            $trans = transaksis::where('transaksi_id',$id)->update([
+                'status'=>2,
+                'alasan'=>$request->alasan,
+            ]);
+            $pengajuan = pengajuans::where('PENGAJUAN_ID',$id_pengajuan)->update([
+                'STATUS_BARANG'=>0,
+            ]);
+        }
+        return redirect('/daftarTransaksi');
     }
 }
+
+
+
+

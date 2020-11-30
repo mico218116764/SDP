@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class='col-md-8'>
-                <form action="/membayar" method="post">
+                <form action="{{url('/membayar')}}" method="post">
                     @csrf
                     <input type="hidden" value="{{$barang->PENGAJUAN_ID}}" name="id">
                     <br>
@@ -29,7 +29,7 @@
                         <h1 style='margin-left: 25%; color:red'><b>Rp.{{number_format($barang->HARGA_APPROVE)}}</b></h1>
                         <br>
                     <h3><b>Pilih Bank:</b></h3>
-                    <select id="myDropDown" class="form-control" style="width:70%; font-size: 12pt;" name="merkBarang" id="">
+                    <select id="myDropDown" class="form-control" style="width:70%; font-size: 12pt;" name="bank" id="">
                         @foreach ($dataBank as $bank)
                             <option value="{{$bank->rekening}}">{{$bank->nama_bank}}</option>
                         @endforeach

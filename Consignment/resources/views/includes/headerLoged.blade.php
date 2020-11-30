@@ -15,8 +15,9 @@
             <li><a href="{{url('/pengajuan')}}">Pengajuan</a></li>
             <li><a href="{{url('/barangreject')}}">Barang Reject</a></li>
             <li><a href="{{url('/retur')}}">Retur</a></li>
-            <li><a href="{{url('/statusbarang')}}">Status Barang</a></li>
-            
+            <li><a href="{{url('/barangSaya')}}">Barang Saya</a></li>
+            <li><a href="{{url('/statusbarang')}}">Barang Dibeli</a></li>
+
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>

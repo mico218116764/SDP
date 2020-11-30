@@ -17,21 +17,24 @@
     <img src=" {{asset('images/background1.jpg')}}" alt="" style="margin-left: -2%">
     <div style="margin-top:-45%; padding-left: 200px;padding-right: 200px;">
     @foreach ($daftarKatalog as $item)
-    <div class="row">
-        <div class="col-sm-4">
-            <a href="{{url('/detailsbarang/'.$item->PENGAJUAN_ID)}}">
-            <div class="panel panel-primary">
-                <div class="panel-heading">{{$item->NAMA_BARANG}}</div>
-                <div class="panel-body" style="width: 250px;
-                height: 250px;"><img src="{{asset('images/'.$item->FOTO_KIRI)}}" class="img-responsive"alt="Image"></div>
-                <div class="panel-footer desc">
-                    <?php
-                        echo substr($item->DESKRIPSI_BARANG, 0, 100) . (strlen($item->DESKRIPSI_BARANG) > 100 ? "..." : '');
-                    ?> </div>
-            </div>
-        </a>
+    @if ($item->STATUS_BARANG == 0)
+        <div class="row">
+            <div class="col-sm-4">
+                <a href="{{url('/detailsbarang/'.$item->PENGAJUAN_ID)}}">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">{{$item->NAMA_BARANG}}</div>
+                    <div class="panel-body" style="width: 250px;
+                    height: 250px;"><img src="{{asset('images/'.$item->FOTO_KIRI)}}" class="img-responsive"alt="Image"></div>
+                    <div class="panel-footer desc">
+                        <?php
+                            echo substr($item->DESKRIPSI_BARANG, 0, 100) . (strlen($item->DESKRIPSI_BARANG) > 100 ? "..." : '');
+                        ?> </div>
+                </div>
+                </a>
         </div>
-        @endforeach
+    @endif
+
+    @endforeach
 
     </div><br><br>
     @if (session('gagal'))
@@ -55,4 +58,4 @@
             });
         </script>
     @endif
-    </div>  
+    </div>
