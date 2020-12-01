@@ -38,6 +38,7 @@ Route::get('/detailbarangreject', 'ControllerHalaman@detailbarangreject');
 Route::get('/statusbarang', 'ControllerHalaman@statusbarang');
 Route::get('/barangSaya','ControllerHalaman@barangSaya');
 Route::get('/back','ControllerHalaman@back');
+Route::get('/cekPengiriman', 'ControllerHalaman@checkPengiriman');
 
 
 Route::post('/doRegister', 'ControllerHalaman@doRegister');

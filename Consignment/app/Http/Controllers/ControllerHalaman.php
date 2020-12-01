@@ -7,6 +7,7 @@ use App\banks;
 use App\jenisbarangs;
 use App\merkbarangs;
 use App\pengajuans;
+use App\pengirimans;
 use App\returs;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
@@ -27,6 +28,7 @@ use App\Rules\checkNominal;
 use App\Rules\checkPhone;
 use App\transaksis;
 use App\userpembelis;
+use Carbon\Carbon;
 
 class ControllerHalaman extends Controller
 {
@@ -858,6 +860,7 @@ class ControllerHalaman extends Controller
     public function detailbarangku($id)
     {
         $transaksi = transaksis::where('PENGAJUAN_ID',$id)->get();
+        // dd(count($transaksi));
         return view('page.detailBarangSaya',[
             'transaksi'=>$transaksi,
             'id'=>$id
@@ -882,7 +885,9 @@ class ControllerHalaman extends Controller
         $id_pengajuan = $id_pengajuan[0]->PENGAJUAN_ID;
         $pengajuan = pengajuans::where('PENGAJUAN_ID',$id_pengajuan)->get();
         $harga = $pengajuan[0]->HARGA_APPROVE;
-        // dd($harga);
+
+
+
         return view('page.transaksiDetail',[
             'transaksi'=>$trans,
             'harga'=>$harga,
@@ -899,6 +904,11 @@ class ControllerHalaman extends Controller
         $id_pengajuan = $id_pengajuan[0]->PENGAJUAN_ID;
         // dd($id_pengajuan);
         if($but == "approve"){
+            $pengiriman = new pengirimans();
+            $pengiriman->status = 0;
+            $pengiriman->transaksi_id = $id;
+            $pengiriman->save();
+            //belum diperiksa = 0; approve belum ada resi = 1 ; tertolak = 2 ; sudah ada resi = 3 ;
             $trans = transaksis::where('transaksi_id',$id)->update([
                 'status'=>1
             ]);
@@ -919,6 +929,14 @@ class ControllerHalaman extends Controller
             ]);
         }
         return redirect('/daftarTransaksi');
+    }
+    public function checkPengiriman(Request $request)
+    {
+        $id = $request->butSub;
+        // dd($id);
+        $pengiriman = pengirimans::where('transaksi_id',$id)->get();
+        // dd($)
+        return view('page.checkPengiriman',["pengiriman"=>$pengiriman]);
     }
 }
 

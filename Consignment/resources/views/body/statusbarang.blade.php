@@ -11,7 +11,7 @@
             text-align: center;
         }
     </style>
-    <form action="{{"/deleteBank"}}" method="post">
+    <form action="{{"/cekPengiriman"}}" method="get">
         @csrf
         <div class="login-form">
             <div style="padding-left: 200px;padding-right: 200px;">
@@ -48,10 +48,10 @@
                             @else
                                 <th style="text-align:center">-</th>
                             @endif
-                            @if ($transaksi->status == 1)
-                                <th style="text-align:center"><a href="{{url('detailTransaksi/'.$transaksi->transaksi_id)}}"><button type="submit">Check Status</button></a></th>
+                            @if ($transaksi->status == 1 || $transaksi->status == 4)
+                                <th style="text-align:center"><button type="submit" name="butSub" value="{{$transaksi->transaksi_id}}">Check Status</button></th>
                             @elseif ($transaksi->status == 0)
-                                <th style="text-align:center">-</th>
+                                <th style="text-align:center" ><button value="{{$transaksi->transaksi_id}} " name="butSub" type="submit">Check Status</button></th>
                             @else
                                 <th style="text-align:center">Please Apply again</th>
                             @endif
