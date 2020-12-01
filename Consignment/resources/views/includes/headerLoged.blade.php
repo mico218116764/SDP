@@ -20,8 +20,8 @@
 
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-            <li><a href="/doLogout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+            <li><a href="{{url('/profile')}}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+            <li><a href="{{url('/doLogout')}}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
         </ul>
         </div>
     </div>
