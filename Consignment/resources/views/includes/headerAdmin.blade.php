@@ -18,8 +18,12 @@
                 <li><a href="{{url('/daftarTransaksi')}}">Daftar Transaksi</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/doLogout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                <li><a href="{{url('/doLogout')}}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
             </ul>
         </div>
     </div>
 </nav>
+
+@if (Session::has('message'))
+    <script>alert(`{{ Session::get('message') }}`)</script>
+@endif

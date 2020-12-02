@@ -26,3 +26,7 @@
         </div>
     </div>
 </nav>
+
+@if (Session::has('message'))
+    <script>alert(`{{ Session::get('message') }}`)</script>
+@endif

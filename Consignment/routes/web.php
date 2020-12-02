@@ -17,26 +17,50 @@ Route::get('/', 'ControllerHalaman@home');
 
 //ini routing untuk pindah halaman. '/pindahHalaman disesuaikan dengan link pada komponen'
 //<a> pada view
-Route::get('/register', 'ControllerHalaman@register');
-Route::get('/login', 'ControllerHalaman@login');
-Route::get('/pengajuan', 'ControllerHalaman@pengajuan');
-Route::get('/admin', 'ControllerHalaman@admin');
-Route::get('/daftaradmin', 'ControllerHalaman@daftaradmin');
-Route::get('/daftarTransaksi', 'ControllerHalaman@daftarTransaksi');
-Route::get('/daftarbank', 'ControllerHalaman@daftarbank');
-Route::get('/daftarjenis', 'ControllerHalaman@daftarjenis');
-Route::get('/katalog', 'ControllerHalaman@katalog');
+
+//middleware dari file CekRole.php
+//middleware untuk admin
+Route::group(['middleware' => ['CekRole:admin']], function () {//['CekRole:(parameter $role)'] lihat di file CekRole.php
+    Route::get('/admin', 'ControllerHalaman@admin');
+    Route::get('/daftaradmin', 'ControllerHalaman@daftaradmin');
+    Route::get('/daftarbank', 'ControllerHalaman@daftarbank');
+    Route::get('/daftarTransaksi', 'ControllerHalaman@daftarTransaksi');
+    Route::get('/daftarjenis', 'ControllerHalaman@daftarjenis');
+    Route::get('/daftarmerk', 'ControllerHalaman@daftarmerk');
+    Route::get('/daftarretur', 'ControllerHalaman@daftarretur');
+    Route::get('/register', 'ControllerHalaman@register');
+    Route::get('/login', 'ControllerHalaman@login');
+});
+
+//middleware untuk user
+Route::group(['middleware' => ['CekRole:user']], function () {
+    Route::get('/katalog', 'ControllerHalaman@katalog');
+    Route::get('/pengajuan', 'ControllerHalaman@pengajuan');
+    Route::get('/barangreject', 'ControllerHalaman@barangreject');
+    Route::get('/retur', 'ControllerHalaman@retur');
+    Route::get('/barangSaya','ControllerHalaman@barangSaya');
+    Route::get('/statusbarang', 'ControllerHalaman@statusbarang');
+});
+
+
+
+
+
+
+
+
+
 Route::get('/detailsbarang/{id}', 'ControllerHalaman@detailsbarang');
 Route::get('/detailpengajuan', 'ControllerHalaman@detailpengajuan');
 Route::get('/detailTransaksi/{id}', 'ControllerHalaman@detailTransaksi');
-Route::get('/daftarmerk', 'ControllerHalaman@daftarmerk');
-Route::get('/daftarretur', 'ControllerHalaman@daftarretur');
-Route::get('/retur', 'ControllerHalaman@retur');
+
+
+
 Route::get('/profile', 'ControllerHalaman@profile');
-Route::get('/barangreject', 'ControllerHalaman@barangreject');
+
 Route::get('/detailbarangreject', 'ControllerHalaman@detailbarangreject');
-Route::get('/statusbarang', 'ControllerHalaman@statusbarang');
-Route::get('/barangSaya','ControllerHalaman@barangSaya');
+
+
 Route::get('/back','ControllerHalaman@back');
 Route::get('/cekPengiriman', 'ControllerHalaman@checkPengiriman');
 
