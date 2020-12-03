@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Courier;
+use App\City;
+use App\Province;
 use App\admins;
 use App\banks;
 use App\jenisbarangs;
@@ -14,6 +17,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Kavist\RajaOngkir\Facades\RajaOngkir;
 use App\Rules\CekEmail;
 use App\Rules\CekEmaillogin;
 use App\Rules\checkAdmin;
@@ -531,11 +535,12 @@ class ControllerHalaman extends Controller
         // $harga = $barang->HARGA_APPROVE;
         // $harga = number_format($harga);
         // dd($harga);
-
-        return view('page.checkout',[
+        $couriers = Courier::pluck('title','code');
+        $provinces = Province::pluck('title','province_id');
+        // return view('welcome', );
+        return view('page.checkout',compact('couriers','provinces'),[
             'barang'=>$barang,
             'userData'=>$userData[0],
-
         ]);
     }
     public function bayar(Request $request)
@@ -557,11 +562,19 @@ class ControllerHalaman extends Controller
         $detailBarang = pengajuans::where('PENGAJUAN_ID',$id)->get();
         $userData = userpembelis::where('USERPB_EMAIL',$userE)->get();
         // dd($userData[0]);
+        $cost = RajaOngkir::ongkosKirim([
+            'origin'=> $request->city_origin,
+            'destination'=> $request->city_destination,
+            'weight'=> $request->weight,
+            'courier'=> $request->courier,
+        ])->get();
+        $costCourier = $cost[0]['costs'][0]['cost'][0]['value'];
         $barang = $detailBarang[0];
         return view('page.bayar',[
             'barang'=>$barang,
             'userData'=>$userData[0],
             'dataBank'=>$dataBank,
+            'costCourier'=>$costCourier
         ]);
     }
 
@@ -588,7 +601,7 @@ class ControllerHalaman extends Controller
             // dd('ada kesalahan');
             return redirect('/katalog')->with('gagal','a');
         }else{
-
+            // dd($request->costKurir);
             pengajuans::where('PENGAJUAN_ID',$id)->update(['STATUS_BARANG'=>1]);
             $transaksi = new transaksis;
             $transaksi->PENGAJUAN_ID = $id;
@@ -596,6 +609,8 @@ class ControllerHalaman extends Controller
             $transaksi->status = 0;
             $transaksi->email_pembeli = $userE;
             $transaksi->rekening_tujuan = $rekening;
+            $transaksi->harga_kurir = $request->costKurir;
+            $transaksi->harga_total = $request->costTotal;
             $transaksi->save();
             return redirect('/katalog')->with('berhasil','a');
         }
@@ -882,9 +897,11 @@ class ControllerHalaman extends Controller
     {
         $trans = transaksis::where('transaksi_id',$id)->get();
         $id_pengajuan = transaksis::where('transaksi_id',$id)->get();
+        $harga = $id_pengajuan[0]->harga_total;
         $id_pengajuan = $id_pengajuan[0]->PENGAJUAN_ID;
         $pengajuan = pengajuans::where('PENGAJUAN_ID',$id_pengajuan)->get();
-        $harga = $pengajuan[0]->HARGA_APPROVE;
+        // $harga = $pengajuan[0]->HARGA_APPROVE;
+
 
 
 
@@ -937,6 +954,28 @@ class ControllerHalaman extends Controller
         $pengiriman = pengirimans::where('transaksi_id',$id)->get();
         // dd($)
         return view('page.checkPengiriman',["pengiriman"=>$pengiriman]);
+    }
+    public function index()
+    {
+        $couriers = Courier::pluck('title','code');
+        $provinces = Province::pluck('title','province_id');
+        return view('welcome', compact('couriers','provinces'));
+    }
+    public function getCities($id)
+    {
+        $city = City::where('province_id',$id)->pluck('title','city_id');
+        // dd($city);
+        return json_encode($city);
+    }
+    public function submit(Request $request)
+    {
+        $cost = RajaOngkir::ongkosKirim([
+            'origin'=> $request->city_origin,
+            'destination'=> $request->city_destination,
+            'weight'=> $request->weight,
+            'courier'=> $request->courier,
+        ])->get();
+        dd($cost[0]['costs'][0]['cost'][0]['value']);
     }
 }
 

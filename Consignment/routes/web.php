@@ -12,7 +12,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// asd
+// courier
+Route::get('/testing', 'ControllerHalaman@index');
+Route::post('/testing', 'ControllerHalaman@submit');
+Route::get('/province/{id}/cities', 'ControllerHalaman@getCities');
+
+
+
+
 Route::get('/', 'ControllerHalaman@home');
 
 //ini routing untuk pindah halaman. '/pindahHalaman disesuaikan dengan link pada komponen'
@@ -22,6 +29,7 @@ Route::get('/', 'ControllerHalaman@home');
 //middleware untuk admin
 
 Route::group(['middleware' => ['CekRole:admin']], function () {//['CekRole:(parameter $role)'] lihat di file CekRole.php
+
     Route::get('/admin', 'ControllerHalaman@admin');
     Route::get('/daftaradmin', 'ControllerHalaman@daftaradmin');
     Route::get('/daftarbank', 'ControllerHalaman@daftarbank');
@@ -31,25 +39,22 @@ Route::group(['middleware' => ['CekRole:admin']], function () {//['CekRole:(para
     Route::get('/daftarretur', 'ControllerHalaman@daftarretur');
     Route::get('/register', 'ControllerHalaman@register');
 
+
 });
 Route::get('/login', 'ControllerHalaman@login');
 
+// });
+
+
 //middleware untuk user
-Route::group(['middleware' => ['CekRole:user']], function () {
+// Route::group(['middleware' => ['CekRole:user']], function () {
     Route::get('/katalog', 'ControllerHalaman@katalog');
     Route::get('/pengajuan', 'ControllerHalaman@pengajuan');
     Route::get('/barangreject', 'ControllerHalaman@barangreject');
     Route::get('/retur', 'ControllerHalaman@retur');
     Route::get('/barangSaya','ControllerHalaman@barangSaya');
     Route::get('/statusbarang', 'ControllerHalaman@statusbarang');
-});
-
-
-
-
-
-
-
+// });
 
 
 Route::get('/detailsbarang/{id}', 'ControllerHalaman@detailsbarang');

@@ -25,9 +25,17 @@
                     <input type="hidden" value="{{$barang->PENGAJUAN_ID}}" name="id">
                     <br>
                     {{-- <img src="{{ url('/images/dummy1.png') }}" style="width:100px; height:100px;"> --}}
-                    <h2>Total Pembayaran:</h2>
+                    <h2>Harga Barang:</h2>
                         <h1 style='margin-left: 25%; color:red'><b>Rp.{{number_format($barang->HARGA_APPROVE)}}</b></h1>
                         <br>
+                    <h2>Ongkos Kirim:</h2>
+                    <h1 style='margin-left: 25%; color:red'><b>Rp.{{number_format($costCourier)}}</b></h1>
+                    <br>
+                    <input type="hidden" name="costKurir" value="{{$costCourier}}">
+                    <h2>Total Pembayaran:</h2>
+                    <h1 style='margin-left: 25%; color:red'><b>Rp.{{number_format($barang->HARGA_APPROVE + $costCourier)}}</b></h1>
+                    <br>
+                    <input type="hidden" name="costTotal" value="{{$barang->HARGA_APPROVE + $costCourier}}">
                     <h3><b>Pilih Bank:</b></h3>
                     <select id="myDropDown" class="form-control" style="width:70%; font-size: 12pt;" name="bank" id="">
                         @foreach ($dataBank as $bank)

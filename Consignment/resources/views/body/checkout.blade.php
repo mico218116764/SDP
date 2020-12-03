@@ -27,26 +27,119 @@
                     <h4>Deskripsi: {{$barang->DESKRIPSI_BARANG}}</h4><br>
                     <h4>Price: {{$barang->HARGA_APPROVE}}</h4><br>
                     <img style="width:120px; height:120px" src="{{asset('images/'.$barang->FOTO_DEPAN)}}" alt="">
-                    <h3>Address:</h3>
-                       <h4 style='margin-left: 20px'><b>{{$userData->USERPB_ADDRESS}}</b></h4>
-                    <div><br>
-                        <div class="form-group">
-                            <label>Pilih Kurir</label>
-                                <select id="myDropDown" class="form-control" style="width:70%; font-size: 12pt;" name="merkBarang" id="">
-                                    <option value="AnterAja">Gojek - Rp.40.000 || Durasi 1 Hari</option>
-                                    <option value="AnterAja">AnterAja - Rp. 27.000 || Durasi 2-4 Hari</option>
-                                    <option value="sicepatreg">SiCepat Reg - Rp. 21.000 || Durasi 2-4 Hari</option>
-                                    <option value="jnt">J&T - Rp. 19.000 || Durasi 2-4 Hari </option>
-                                    <option value="jnereg">JNE Reg - Rp. 19.000 || Durasi 2-4 Hari</option>
-                                </select>
-                                <h4 style="color: red">*durasi pengiriman 2-4 hari</h4>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h1>Cek Ongkir</h1>
+                                    </div>
+                                    <div class="card-body">
+                                        <form role="form" class="form-horizontal" action="/testing" method="post">
+                                            {{ csrf_field() }}
+                                            <div class="form-group-sm">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="">Provinsi Asal</label>
+                                                        <select name="province_origin" class="form-control">
+                                                            <option value="">--Provinsi--</option>
+                                                            @foreach ($provinces as $province => $value)
+                                                                <option value="{{$province}}">{{$value}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">Kota Asal</label>
+                                                        <select name="city_origin" class="form-control">
+                                                            <option value="">--Kota--</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">Provinsi Tujuan</label>
+                                                        <select name="province_destination" class="form-control">
+                                                            <option value="">--Provinsi--</option>
+                                                            @foreach ($provinces as $province => $value)
+                                                                <option value="{{$province}}">{{$value}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">Kota Tujuan</label>
+                                                        <select name="city_destination" class="form-control">
+                                                            <option value="">--Kota--</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">Kurir</label>
+                                                        <select name="courier" class="form-control">
+                                                            <option value="">--Kurir--</option>
+                                                            @foreach ($couriers as $courier => $value)
+                                                                <option value="{{$courier}}">{{$value}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">Berat (g)</label>
+                                                        <input type="number" name="weight" class="form-control" id="" value="1000">
+                                                    </div>
+                                                    <br>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <br>
-                    <input type='submit' value='Bayar' name='btnBayar' class='btn btn-primary'>
+                    </div>
+                    {{-- <input type='submit' value='Bayar' name='btnBayar' class='btn btn-primary'> --}}
                     &nbsp;
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
 </div><br><br><br>
+<script>
+    $(document).ready(function(){
+        $('select[name="province_origin"]').on('change',function(){
+            let provinceId = $(this).val();
+            if(provinceId){
+                jQuery.ajax({
+                    url:'/province/'+provinceId+'/cities',
+                    type:"GET",
+                    dataType:"json",
+                    success:function(data){
+                        $('select[name="city_origin"]').empty();
+                        $.each(data, function(key, value){
+                            $('select[name="city_origin"]').append('<option value="'+key+'">'+value+'</option>')
+                        });
+                    },
+                });
+            }else{
+                $('select[name="city_origin"]').empty();
+            }
+        });
+        $('select[name="province_destination"]').on('change',function(){
+            let provinceId = $(this).val();
+            if(provinceId){
+                jQuery.ajax({
+                    url:'/province/'+provinceId+'/cities',
+                    type:"GET",
+                    dataType:"json",
+                    success:function(data){
+                        $('select[name="city_destination"]').empty();
+                        $.each(data, function(key, value){
+                            $('select[name="city_destination"]').append('<option value="'+key+'">'+value+'</option>')
+                        });
+                    },
+                });
+            }else{
+                $('select[name="city_destination"]').empty();
+            }
+        });
+    });
+
+
+</script>

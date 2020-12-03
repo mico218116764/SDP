@@ -64,28 +64,116 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            <a href="{{ url('/home') }}">Home</a>
-            <a href="{{ route('login') }}">Login</a>
-            <a href="{{ route('register') }}">Register</a>
-            </div>
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h1>Cek Ongkir</h1>
+                        </div>
+                        <div class="card-body">
+                            <form role="form" class="form-horizontal" action="/testing" method="post">
+                                {{ csrf_field() }}
+                                <div class="form-group-sm">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Provinsi Asal</label>
+                                            <select name="province_origin" class="form-control">
+                                                <option value="">--Provinsi--</option>
+                                                @foreach ($provinces as $province => $value)
+                                                    <option value="{{$province}}">{{$value}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Kota Asal</label>
+                                            <select name="city_origin" class="form-control">
+                                                <option value="">--Kota--</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Provinsi Tujuan</label>
+                                            <select name="province_destination" class="form-control">
+                                                <option value="">--Provinsi--</option>
+                                                @foreach ($provinces as $province => $value)
+                                                    <option value="{{$province}}">{{$value}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Kota Tujuan</label>
+                                            <select name="city_destination" class="form-control">
+                                                <option value="">--Kota--</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Kurir</label>
+                                            <select name="courier" class="form-control">
+                                                <option value="">--Kurir--</option>
+                                                @foreach ($couriers as $courier => $value)
+                                                    <option value="{{$courier}}">{{$value}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Berat (g)</label>
+                                            <input type="number" name="weight" class="form-control" id="" value="1000">
+                                        </div>
+                                        <br>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('select[name="province_origin"]').on('change',function(){
+                    let provinceId = $(this).val();
+                    if(provinceId){
+                        jQuery.ajax({
+                            url:'/province/'+provinceId+'/cities',
+                            type:"GET",
+                            dataType:"json",
+                            success:function(data){
+                                $('select[name="city_origin"]').empty();
+                                $.each(data, function(key, value){
+                                    $('select[name="city_origin"]').append('<option value="'+key+'">'+value+'</option>')
+                                });
+                            },
+                        });
+                    }else{
+                        $('select[name="city_origin"]').empty();
+                    }
+                });
+                $('select[name="province_destination"]').on('change',function(){
+                    let provinceId = $(this).val();
+                    if(provinceId){
+                        jQuery.ajax({
+                            url:'/province/'+provinceId+'/cities',
+                            type:"GET",
+                            dataType:"json",
+                            success:function(data){
+                                $('select[name="city_destination"]').empty();
+                                $.each(data, function(key, value){
+                                    $('select[name="city_destination"]').append('<option value="'+key+'">'+value+'</option>')
+                                });
+                            },
+                        });
+                    }else{
+                        $('select[name="city_destination"]').empty();
+                    }
+                });
+            });
+
+
+        </script>
     </body>
 </html>
