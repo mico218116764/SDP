@@ -20,6 +20,7 @@ Route::get('/', 'ControllerHalaman@home');
 
 //middleware dari file CekRole.php
 //middleware untuk admin
+
 Route::group(['middleware' => ['CekRole:admin']], function () {//['CekRole:(parameter $role)'] lihat di file CekRole.php
     Route::get('/admin', 'ControllerHalaman@admin');
     Route::get('/daftaradmin', 'ControllerHalaman@daftaradmin');
@@ -29,8 +30,9 @@ Route::group(['middleware' => ['CekRole:admin']], function () {//['CekRole:(para
     Route::get('/daftarmerk', 'ControllerHalaman@daftarmerk');
     Route::get('/daftarretur', 'ControllerHalaman@daftarretur');
     Route::get('/register', 'ControllerHalaman@register');
-    Route::get('/login', 'ControllerHalaman@login');
+
 });
+Route::get('/login', 'ControllerHalaman@login');
 
 //middleware untuk user
 Route::group(['middleware' => ['CekRole:user']], function () {
