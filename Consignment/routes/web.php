@@ -47,14 +47,14 @@ Route::get('/login', 'ControllerHalaman@login');
 
 
 //middleware untuk user
-// Route::group(['middleware' => ['CekRole:user']], function () {
+Route::group(['middleware' => ['CekRole:user']], function () {
     Route::get('/katalog', 'ControllerHalaman@katalog');
     Route::get('/pengajuan', 'ControllerHalaman@pengajuan');
     Route::get('/barangreject', 'ControllerHalaman@barangreject');
     Route::get('/retur', 'ControllerHalaman@retur');
     Route::get('/barangSaya','ControllerHalaman@barangSaya');
     Route::get('/statusbarang', 'ControllerHalaman@statusbarang');
-// });
+});
 
 
 Route::get('/detailsbarang/{id}', 'ControllerHalaman@detailsbarang');
