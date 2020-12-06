@@ -33,6 +33,7 @@ use App\Rules\checkPhone;
 use App\transaksis;
 use App\userpembelis;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class ControllerHalaman extends Controller
 {
@@ -122,7 +123,7 @@ class ControllerHalaman extends Controller
         $userpembelis->USERPB_EMAIL = $request->USERPB_EMAIL;
         $userpembelis->USERPB_PHONE_NUMBER = $request->USERPB_PHONE_NUMBER;
         $userpembelis->USERPB_ADDRESS = $request->USERPB_ADDRESS;
-        $userpembelis->USERPB_PASSWORD = $request->USERPB_PASSWORD;
+        $userpembelis->USERPB_PASSWORD = md5($request->USERPB_PASSWORD);
 
         $userpembelis->save();
 
@@ -280,9 +281,11 @@ class ControllerHalaman extends Controller
         $userpembelis = new userpembelis();
         $admins = new admins();
 
+
         $cekAdmin = $admins::where("email", $request->USERPB_EMAIL)
                     ->where("PASSWORD_ADMINP", $request->USERPB_PASSWORD)
                     ->count();
+        $request->USERPB_PASSWORD = md5($request->USERPB_PASSWORD);
         $cekUser = $userpembelis::where("USERPB_EMAIL", $request->USERPB_EMAIL)
             ->where("USERPB_PASSWORD", $request->USERPB_PASSWORD)
             ->count();
@@ -298,8 +301,10 @@ class ControllerHalaman extends Controller
             Cookie::queue("userNowE", $request->USERPB_EMAIL, 60);
             return redirect('/pengajuan');
         } else if ($cekAdmin == 1) {
+            $admine = $admins::where("email", $request->USERPB_EMAIL)->get();
+            // dd($admine[0]->PASSWORD_ADMINP);
             Cookie::forget("userNowT");
-            Cookie::queue("userNowT", $request->USERPB_PASSWORD . "", 60);
+            Cookie::queue("userNowT", $admine[0]->PASSWORD_ADMINP . "", 60);
             return redirect('/admin');
         }
         return redirect('/login');
