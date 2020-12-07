@@ -13,14 +13,18 @@
         margin-left: 30%;
         margin-top: 10%;
     }
-
-
+    .body{
+        background-image: src("{{asset('images/background1.jpg')}}");
+        width: 100%;
+        height: 100%;
+        background-repeat:no-repeat;
+    }
 
 </style>
-
+<body>
+{{--<img src=" {{asset('images/background1.jpg')}}" alt="" style="margin-left:-2%;">--}}
 <div class="sufee-login d-flex align-content-center flex-wrap">
     <div class="container">
-        {{-- <img src=" {{asset('images/background1.jpg')}}" alt="" style="margin-left:-2%;"> --}}
         <div class="login-content">
             <div class="login-logo">
                 <a href="index.html">
@@ -70,6 +74,5 @@
         </div>
     </div>
 </div>
-
-
+</body>
 
