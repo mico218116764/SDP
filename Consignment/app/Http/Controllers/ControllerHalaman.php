@@ -1027,7 +1027,7 @@ class ControllerHalaman extends Controller
     public function konfirmasi(Request $request)
     {
         transaksis::where('transaksi_id',$request->transaksi)->update(['status'=>5]);
-        return view('page.statusbarang');
+        return redirect('/barangSaya');
     }
 }
 
