@@ -70,12 +70,19 @@
             @error('HARGA_MAX')
             <div style="color:red; font-weight:bold"> {{$message}}</div><br>
             @enderror
-            
+            <div class="form-group">
+                <label>Berat (Gram)</label>
+                <input type="text" style="width:70%;" class="form-control" name="berat" placeholder="Masukkan Berat Barang">
+            </div>
+            @error('berat')
+            <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+            @enderror
+
             <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Kiri</label>
                 <input type="file" class="form-control-file" id="FOTO_KIRI" name="FOTO_KIRI">
               </div>
-            
+
             <div class="form-group">
                 <label for="exampleFormControlFile1">Foto Kanan</label>
                 <input type="file" class="form-control-file" id="FOTO_KANAN" name="FOTO_KANAN">
@@ -119,7 +126,7 @@
             <div style="color:red; font-weight:bold"> {{$message}}</div><br>
             @enderror
             <br>
-            @if ($dataUser->NIK == null)
+            @if ($dataUser->NIK == null || $dataUser->city == null)
                 <div class="alert alert-warning">
                     <strong>Warning!</strong> Anda belum melengkapi profile
                 </div>

@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class='col-md-8'>
-                <form method='post' action='/bayar'>
+                <form method='post' action='{{url('/bayar')}}'>
                     @csrf
                     <input type="hidden" name="id" value="{{$barang->PENGAJUAN_ID}}">
                     <br>
@@ -33,67 +33,24 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h1>Cek Ongkir</h1>
+                                        <h1>Pilih kurir</h1>
                                     </div>
                                     <div class="card-body">
-                                        <form role="form" class="form-horizontal" action="/testing" method="post">
-                                            {{ csrf_field() }}
-                                            <div class="form-group-sm">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="">Provinsi Asal</label>
-                                                        <select name="province_origin" class="form-control">
-                                                            <option value="">--Provinsi--</option>
-                                                            @foreach ($provinces as $province => $value)
-                                                                <option value="{{$province}}">{{$value}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">Kota Asal</label>
-                                                        <select name="city_origin" class="form-control">
-                                                            <option value="">--Kota--</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">Provinsi Tujuan</label>
-                                                        <select name="province_destination" class="form-control">
-                                                            <option value="">--Provinsi--</option>
-                                                            @foreach ($provinces as $province => $value)
-                                                                <option value="{{$province}}">{{$value}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">Kota Tujuan</label>
-                                                        <select name="city_destination" class="form-control">
-                                                            <option value="">--Kota--</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">Kurir</label>
-                                                        <select name="courier" class="form-control">
-                                                            <option value="">--Kurir--</option>
-                                                            @foreach ($couriers as $courier => $value)
-                                                                <option value="{{$courier}}">{{$value}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">Berat (g)</label>
-                                                        <input type="number" name="weight" class="form-control" id="" value="1000">
-                                                    </div>
-                                                    <br>
-                                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                                </div>
-                                            </div>
-                                        </form>
+                                        <div class="form-group">
+                                            <label for="">Kurir</label>
+                                            <select name="courier" style="width: 70%" class="form-control">
+                                                <option value="">--Kurir--</option>
+                                                @foreach ($couriers as $courier => $value)
+                                                    <option value="{{$courier}}">{{$value}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {{-- <input type='submit' value='Bayar' name='btnBayar' class='btn btn-primary'> --}}
+                    <input type='submit' value='Bayar' name='btnBayar' class='btn btn-primary'>
                     &nbsp;
                     </div>
                 </form>

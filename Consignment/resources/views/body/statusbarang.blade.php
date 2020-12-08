@@ -48,6 +48,10 @@
                                 <th style="text-align:center">Menunggu seller mengirim resi</th>
                             @elseif($transaksi->status == 2)
                                 <th style="text-align:center">Rejected</th>
+                            @elseif($transaksi->status == 4)
+                                <th style="text-align:center">Barang Telah dikirim</th>
+                            @elseif($transaksi->status == 5)
+                                <th style="text-align:center">Transaksi Selesai</th>
                             @else
                                 <th style="text-align:center">Out Of Time</th>
                             @endif
@@ -61,6 +65,8 @@
                                 <th style="text-align:center"><button type="submit" name="butSub" value="{{$transaksi->transaksi_id}}">Check Status</button></th>
                             @elseif ($transaksi->status == 0)
                                 <th style="text-align:center" ><button value="{{$transaksi->transaksi_id}} " name="butSub" type="submit">Check Status</button></th>
+                            @elseif ($transaksi->status == 5)
+                                <th style="text-align:center" >Done</th>
                             @else
                                 <th style="text-align:center">Please Apply again</th>
                             @endif

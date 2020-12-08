@@ -34,6 +34,30 @@
 
                         <h4>Alamat: </h4>
                         <input type="text" style="width:70%;" class="form-control" name="ALAMAT_USER" placeholder="Masukkan Alamat Anda" value="{{$dataUser[0]->USERPB_ADDRESS}}">
+                        <div>
+                            <div class="form-group">
+                                <label for="">Provinsi Asal</label>
+                                <select name="province_origin" style="width:70%;" class="form-control">
+                                    <option value="">--Provinsi--</option>
+                                    @foreach ($provinces as $province => $value)
+                                        <option value="{{$province}}">{{$value}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @error('province_origin')
+                                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+                            @enderror
+                            <div class="form-group">
+                                <label for="">Kota Asal</label>
+                                <select name="city_origin" style="width:70%;" class="form-control">
+                                    <option value="">--Kota--</option>
+                                </select>
+                            </div>
+                            @error('city_origin')
+                                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+                            @enderror
+                            <br>
+                        </div>
 
                         <h4>NIK: </h4>
                         <input type="number" style="width:70%;" class="form-control" name="NIK_USER" placeholder="Masukkan NIK Anda"
@@ -98,6 +122,31 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function(){
+        $('select[name="province_origin"]').on('change',function(){
+            let provinceId = $(this).val();
+            if(provinceId){
+                jQuery.ajax({
+                    url:'/province/'+provinceId+'/cities',
+                    type:"GET",
+                    dataType:"json",
+                    success:function(data){
+                        $('select[name="city_origin"]').empty();
+                        $.each(data, function(key, value){
+                            $('select[name="city_origin"]').append('<option value="'+key+'">'+value+'</option>')
+                        });
+                    },
+                });
+            }else{
+                $('select[name="city_origin"]').empty();
+            }
+        });
+
+    });
+
+
+</script>
 @if (session('alert'))
     <div class="alert alert-warning">
         {{ session('alert') }}

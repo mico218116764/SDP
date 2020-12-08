@@ -49,19 +49,33 @@
         </div>
     @elseif ($transaksi[0]->status == 1)
     <div class="card">
-        <img src="{{asset('images/verify.png')}}" alt="Avatar" style="width:100%">
-        <div class="container" >
-            <h1><b>Telah disetujui admin</b></h1>
-            <br>
-            <div class="form-group centered">
-                <label>Input Nomor Resi</label>
-                <input type="text" class="form-control" style="width: auto" name="resi" placeholder="Masukkan No Resi">
+        <form action="{{url('/sendResi')}}" method="post">
+            @csrf
+            <input type="hidden" name="transaksie" value="{{$transaksi[0]->transaksi_id}}">
+            <img src="{{asset('images/verify.png')}}" alt="Avatar" style="width:100%">
+            <div class="container" >
+                <h1><b>Telah disetujui admin</b></h1>
+                <br>
+                <div class="form-group centered">
+                    <label>Input Nomor Resi</label>
+                    <input type="text" class="form-control" style="width: auto" name="resi" placeholder="Masukkan No Resi">
+                </div>
+                @error('resi')
+                    <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+                @enderror
+                <button class="btn btn-primary" type="submit">Kirim</button>
             </div>
-            @error('alasan')
-                <div style="color:red; font-weight:bold"> {{$message}}</div><br>
-            @enderror
-            <a href="{{url('/back')}}"><button class="btn btn-primary" type="submit">back</button></a>
-        </div>
+        </form>
+
+    </div>
+    @else
+        <div class="card">
+            <img src="{{asset('images/sand-clock.jpg')}}" alt="Avatar" style="width:100%">
+            <div class="container" >
+                <h1><b>Menunggu Pengiriman Dana</b></h1>
+                <h3><p>harap menunggu</p></h3>
+                <a href="{{url('/back')}}"><button class="btn btn-primary" type="submit">back</button></a>
+            </div>
         </div>
     @endif
 </div>

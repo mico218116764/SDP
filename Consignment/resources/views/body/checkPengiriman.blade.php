@@ -26,10 +26,32 @@
 </style>
 <body>
 <div class="addAdmin-form">
-    <form action="{{"/deleteBank"}}" method="post">
+    <form action="{{url("/con")}}" method="get">
         @csrf
         <div class="login-form">
-            @if ($pengiriman[0]->resi == null)
+            @if($pengiriman[0]->status == 1)
+            <div class="card">
+                <h1><strong>Status: Barang Telah Dikirim</strong></h1>
+                <input type="hidden" name="transaksi" value="{{$pengiriman[0]->transaksi_id}}">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="75"
+                    aria-valuemin="0" aria-valuemax="100" style="width:75%">
+                        75%
+                    </div>
+                </div><br>
+                <button type="submit">konfirmasi</button>
+            </div>
+            @elseif ($pengiriman[0]->status == 2)
+            <div class="card">
+                <h1><strong>Status: Barang Telah DiTerima</strong></h1>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="100"
+                    aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                        100%
+                    </div>
+                </div>
+            </div>
+            @elseif ($pengiriman[0]->resi == null)
                 <div class="card">
                     <h1><strong>Status: Penjual Menyiapkan barang</strong></h1>
                     <div class="progress">
@@ -61,17 +83,7 @@
                 </div>
             </div>
             @endif
-            @if($pengiriman[0]->status != 0)
-            <div class="card">
-                <h1><strong>Status: Cargo Siap Dikirim</strong></h1>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="100"
-                    aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                        100%
-                    </div>
-                </div>
-            </div>
-            @endif
+
         </div>
     </form>
 </div>

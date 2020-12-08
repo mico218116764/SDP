@@ -202,7 +202,8 @@ class ControllerHalaman extends Controller
                 "FOTO_BAWAH" => ["required"],
                 "FOTO_DEPAN" => ["required"],
                 "FOTO_BELAKANG" => ["required"],
-                "no_rek"=>["required",'numeric']
+                "no_rek"=>["required",'numeric'],
+                "berat"=>["required"]
             ],
             [
                 "required" => ":attribute harus di isi!!",
@@ -222,11 +223,13 @@ class ControllerHalaman extends Controller
                 "FOTO_BAWAH" => "Url Foto Bawah",
                 "FOTO_DEPAN" => "Url Foto Depan",
                 "FOTO_BELAKANG" => "Url Foto Belakang",
-                "no_rek" => "Nomor rekening"
+                "no_rek" => "Nomor rekening",
+                "berat" => "berat",
             ]
         );
         $pengajuans = new pengajuans();
         $pengajuans->ADMINP_ID = "0";
+        $pengajuans->weight = $request->berat;
         $pengajuans->MERK_ID = $request->merkBarang;
         $pengajuans->USERPB_ID = $dataUserNow[0]->USERPB_ID;
         $pengajuans->email_penjual = $userE;
@@ -540,10 +543,10 @@ class ControllerHalaman extends Controller
         // $harga = $barang->HARGA_APPROVE;
         // $harga = number_format($harga);
         // dd($harga);
-        $couriers = Courier::pluck('title','code');
-        $provinces = Province::pluck('title','province_id');
+        // dd($barang);
         // return view('welcome', );
-        return view('page.checkout',compact('couriers','provinces'),[
+        $couriers = Courier::pluck('title','code');
+        return view('page.checkout',compact('couriers'),[
             'barang'=>$barang,
             'userData'=>$userData[0],
         ]);
@@ -566,11 +569,17 @@ class ControllerHalaman extends Controller
         $dataBank = banks::all();
         $detailBarang = pengajuans::where('PENGAJUAN_ID',$id)->get();
         $userData = userpembelis::where('USERPB_EMAIL',$userE)->get();
-        // dd($userData[0]);
+        $userPemEmail = $detailBarang[0]->email_penjual;
+        $berat = $detailBarang[0]->weight;
+        $userPenjual = userpembelis::where('USERPB_EMAIL',$userPemEmail)->get();
+        $cityOrigin = $userPenjual[0]->city;
+        // dd($request->courier);
+        // dd($userPenjual[0]->city);
+        // dd($userData[0]->city);
         $cost = RajaOngkir::ongkosKirim([
-            'origin'=> $request->city_origin,
-            'destination'=> $request->city_destination,
-            'weight'=> $request->weight,
+            'origin'=> $cityOrigin,
+            'destination'=> $userData[0]->city,
+            'weight'=> $berat,
             'courier'=> $request->courier,
         ])->get();
         $costCourier = $cost[0]['costs'][0]['cost'][0]['value'];
@@ -690,13 +699,14 @@ class ControllerHalaman extends Controller
         }else{
             return redirect('/login')->with('alert-Warning','Harap login dulu');
         }
-        $dataTransaksi = transaksis::where('email_pembeli',$userE)->get();
-        // $userNow = userpembelis::where('')
+        $dataTransaksi = transaksis::where('email_pembeli',$userE)->where('status',5)->get();
         $userNow = userpembelis::where('USERPB_EMAIL',$userE)->get();
+        $barang = pengajuans::all();
         // dd($userNow[0]);
         return view('page.retur',[
             'dataTransaksi'=>$dataTransaksi,
-            'userNow'=>$userNow[0]
+            'userNow'=>$userNow[0],
+            'barang'=>$barang,
         ]);
     }
     public function doRetur(Request $request)
@@ -781,7 +791,10 @@ class ControllerHalaman extends Controller
         }
         $dataUser = userpembelis::where('USERPB_EMAIL',$userE)->get();
         // dd($dataUser);
-        return view('page.profile',[
+        $couriers = Courier::pluck('title','code');
+        $provinces = Province::pluck('title','province_id');
+
+        return view('page.profile',compact('couriers','provinces'),[
             'dataUser'=>$dataUser,
         ]);
     }
@@ -791,15 +804,22 @@ class ControllerHalaman extends Controller
         // dd($email);
         $hasil = userpembelis::where('USERPB_EMAIL', $email)->count();
         // dd($hasil);
+
+
         $request->validate([
             "NIK_USER"=> ["required"],
-            "NOMOR_TELFON"=> ["required",new checkPhone],
+            "NOMOR_TELFON"=> ["required"],
             "FOTO_KTP" => ["required","url"],
-            "ALAMAT_USER"=>["required"]
+            "ALAMAT_USER"=>["required"],
+            "province_origin"=>["required"],
+            "city_origin"=>["required"],
         ],[
-            'required'=>':attribute sudah ada',
+            'required'=>':attribute harus ada',
             'url'=>':attribute harus berupa url'
         ]);
+        $provinces = $request->province_origin;
+        $city = $request->city_origin;
+        // dd($city);
         $ktp = $request->FOTO_KTP;
         $nik = $request->NIK_USER;
         $NOMOR_TELFON = $request->NOMOR_TELFON;
@@ -811,7 +831,9 @@ class ControllerHalaman extends Controller
           ->update(['FOTO_KTP' => $ktp,
                     'NIK'=>$nik,
                     'USERPB_PHONE_NUMBER'=>$NOMOR_TELFON,
-                    'USERPB_ADDRESS'=>$ALAMAT_USER]);
+                    'USERPB_ADDRESS'=>$ALAMAT_USER,
+                    "province"=>$provinces,
+                    "city"=>$city]);
         return redirect()->back();
     }
 
@@ -957,6 +979,7 @@ class ControllerHalaman extends Controller
         $id = $request->butSub;
         // dd($id);
         $pengiriman = pengirimans::where('transaksi_id',$id)->get();
+        // dd($pengiriman);
         // dd($)
         return view('page.checkPengiriman',["pengiriman"=>$pengiriman]);
     }
@@ -974,6 +997,7 @@ class ControllerHalaman extends Controller
     }
     public function submit(Request $request)
     {
+        dd();
         $cost = RajaOngkir::ongkosKirim([
             'origin'=> $request->city_origin,
             'destination'=> $request->city_destination,
@@ -981,6 +1005,29 @@ class ControllerHalaman extends Controller
             'courier'=> $request->courier,
         ])->get();
         dd($cost[0]['costs'][0]['cost'][0]['value']);
+    }
+    public function sendResi(Request $request)
+    {
+        // dd($request->transaksie);
+        $request->validate([
+            'resi'=>["required"]
+        ],[
+            'required'=>"resi harus di isi"
+        ]);
+        $now = DB::selectOne("SELECT NOW() AS now from dual");
+        // dd($now->now);
+        $transaksi = transaksis::where('transaksi_id',$request->transaksie)->get();
+        // dd($transaksi[0]);
+        $pengiriman = pengirimans::where('transaksi_id',$request->transaksie)->get();
+        pengirimans::where('transaksi_id',$request->transaksie)->update(['resi'=>$request->resi,'status'=>1,'tanggal_pengiriman'=>$now->now]);
+        transaksis::where('transaksi_id',$request->transaksie)->update(['status'=>4]);
+        // dd($pengiriman[0]);
+        return redirect('/barangSaya');
+    }
+    public function konfirmasi(Request $request)
+    {
+        transaksis::where('transaksi_id',$request->transaksi)->update(['status'=>5]);
+        return view('page.statusbarang');
     }
 }
 

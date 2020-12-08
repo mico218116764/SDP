@@ -86,6 +86,8 @@ Route::post('/addJenis', 'ControllerHalaman@addJenis');
 Route::post('/addMerk', 'ControllerHalaman@addMerk');
 Route::post('/post_checkout/{id}', 'ControllerHalaman@checkout');
 Route::post('/bayar', 'ControllerHalaman@bayar');
+Route::post('/sendResi', 'ControllerHalaman@sendResi');
+Route::get('/con', 'ControllerHalaman@konfirmasi');
 
 Route::get('/toDetail/{id}', 'ControllerHalaman@toDetail');
 Route::get('/detailbarangreject/{id}', 'ControllerHalaman@detailbarangreject');
