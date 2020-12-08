@@ -19,11 +19,14 @@
                 {{-- <input type="text" style="width:70%;" class="form-control" name="TRANSAKSI_ID" placeholder="Masukkan ID Transaksi"> --}}
                 <select id="myDropDown" class="form-control" style="width:70%; font-size: 12pt;" name="transaksi_id" >
                     @foreach ($dataTransaksi as $transaksi)
-                        @if ($dataTransaksi[0]->status == 1)
-                            <option value="{{$transaksi->transaksi_id}}">
-                                <p>{{$transaksi->transaksi_id}} || {{$transaksi->created_at}}</p>
-                            </option>
-                        @endif
+                        @foreach ($barang as $bar)
+                            @if ($transaksi->PENGAJUAN_ID == $bar->PENGAJUAN_ID)
+                                <option value="{{$transaksi->transaksi_id}}">
+                                <p>{{$transaksi->transaksi_id}} || {{$transaksi->created_at}} || {{$bar->NAMA_BARANG}}</p>
+                                </option>
+                            @endif
+                        @endforeach
+
                     @endforeach
                 </select>
             </div>
@@ -34,13 +37,7 @@
                 placeholder="Masukkan Nama Anda" readonly="true" value="{{$userNow->USERPB_NAME}}">
             </div>
 
-            <div class="form-group">
-                <label>Pilih Barang</label>
-                    <select id="myDropDown" class="form-control" style="width:70%; font-size: 12pt;" name="merkBarang" id="">
-                        <option value="keyboard">Keyboard Logitech G107</option>
-                        <option value="mouse">Mouse Logitech G107</option>
-                    </select>
-            </div><br>
+            <br>
 
             <div class="form-group">
                 <label>Deskripsi Barang</label>
