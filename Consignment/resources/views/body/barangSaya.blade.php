@@ -7,8 +7,6 @@
       /* border: 1px solid gray; */
       border-radius: 15px;
     }
-
-
     .container {
       padding: 2px 16px;
     }
@@ -21,9 +19,13 @@
         height: 100%;
         background-repeat:no-repeat;
     }
+    .login-form{
+        margin-top: -50%;
+    }
 </style>
 <body>
 <div class="login-form containerS" style="height: 100px">
+    <img src=" {{asset('images/background1.jpg')}}" alt="" style="margin-top: -3%; margin-left: -2%;">
     @if (count($daftarKatalog) == 0)
         <div class="card" style="height: 500px">
     @else
