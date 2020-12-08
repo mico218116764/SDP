@@ -8,10 +8,13 @@
         height: 100%;
         background-repeat:no-repeat;
     }
+    .login-form{
+        margin-top: -50%;
+    }
 </style>
 <body>
 <div class="addAdmin-form">
-    {{-- <img src=" {{asset('images/background1.jpg')}}" alt="" > --}}
+    <img src=" {{asset('images/background1.jpg')}}" alt="" style="margin-top: -5%">
     <div>
         <br><br>
         <style>
