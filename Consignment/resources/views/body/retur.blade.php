@@ -1,3 +1,12 @@
+<style>
+    .body{
+        background-image: src("{{asset('images/background1.jpg')}}");
+        width: 100%;
+        height: 100%;
+        background-repeat:no-repeat;
+    }
+</style>
+<body>
 <div class="retur-form">
     <form method="POST" action="{{url('/doRetur')}}">
         @csrf
@@ -64,3 +73,4 @@
         <strong>Success!</strong> {{session('alert')}}
     </div>
 @endif
+</body>

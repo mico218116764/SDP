@@ -22,7 +22,14 @@
         margin-left: auto;
         margin-right: auto;
     }
+    .body{
+        background-image: src("{{asset('images/background1.jpg')}}");
+        width: 100%;
+        height: 100%;
+        background-repeat:no-repeat;
+    }
 </style>
+<body>
 <div class="kotak">
     <div class="card">
         {{-- <img src="img_avatar.png" alt="Avatar" style="width:100%"> --}}
@@ -63,4 +70,4 @@
         </div>
       </div>
 </div>
-
+</body>

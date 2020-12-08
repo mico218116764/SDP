@@ -1,3 +1,12 @@
+<style>
+    .body{
+        background-image: src("{{asset('images/background1.jpg')}}");
+        width: 100%;
+        height: 100%;
+        background-repeat:no-repeat;
+    }
+</style>
+<body>
 <div class="login-form">
     <form method="POST" action="{{url('/doApply')}}">
         @csrf
@@ -125,9 +134,8 @@
             <br>
         </div>
     </form>
-
 </div>
-
+</body>
 
 
 

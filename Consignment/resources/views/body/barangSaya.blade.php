@@ -15,7 +15,14 @@
     .containerS{
         margin: 1%;
     }
+    .body{
+        background-image: src("{{asset('images/background1.jpg')}}");
+        width: 100%;
+        height: 100%;
+        background-repeat:no-repeat;
+    }
 </style>
+<body>
 <div class="login-form containerS" style="height: 100px">
     @if (count($daftarKatalog) == 0)
         <div class="card" style="height: 500px">
@@ -49,9 +56,8 @@
             </div>
         @endforeach
     </div>
-
 </div>
-
+</body>
 
 
 

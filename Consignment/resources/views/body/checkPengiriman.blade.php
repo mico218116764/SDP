@@ -17,8 +17,14 @@
     .container {
         padding: 2px 16px;
     }
+    .body{
+        background-image: src("{{asset('images/background1.jpg')}}");
+        width: 100%;
+        height: 100%;
+        background-repeat:no-repeat;
+    }
 </style>
-
+<body>
 <div class="addAdmin-form">
     <form action="{{"/deleteBank"}}" method="post">
         @csrf
@@ -69,3 +75,4 @@
         </div>
     </form>
 </div>
+</body>

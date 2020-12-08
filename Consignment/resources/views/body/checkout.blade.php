@@ -9,6 +9,7 @@
         background-repeat: no-repeat;
     }
 </style>
+<body>
 <div class="login-form">
     <img src=" {{asset('images/background1.jpg')}}" alt="" >
     <div style="margin-top:-50%; padding-left: 200px;padding-right: 200px;">
@@ -101,6 +102,7 @@
         </div>
     </div>
 </div><br><br><br>
+</body>
 <script>
     $(document).ready(function(){
         $('select[name="province_origin"]').on('change',function(){

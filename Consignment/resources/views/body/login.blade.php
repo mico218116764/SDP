@@ -13,7 +13,7 @@
         margin-left: 30%;
         margin-top: 10%;
     }
-    .body{
+    body{
         background-image: src("{{asset('images/background1.jpg')}}");
         width: 100%;
         height: 100%;

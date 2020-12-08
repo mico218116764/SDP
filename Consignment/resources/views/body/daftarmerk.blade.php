@@ -8,7 +8,14 @@
         margin-top: -5%;
         background-repeat: no-repeat;
     }
+    .body{
+        background-image: src("{{asset('images/background1.jpg')}}");
+        width: 100%;
+        height: 100%;
+        background-repeat:no-repeat;
+    }
 </style>
+<body>
 <div class="addAdmin-form">
     <img src=" {{asset('images/background1.jpg')}}" alt="" >
     <div style="margin-top:-50%; padding-left: 200px;padding-right: 200px;">
@@ -53,7 +60,7 @@
         </div>
     </div>
 </div>
-
+</body>
 @if (session('alert'))
     <div class="alert alert-success">
         {{ session('alert') }}

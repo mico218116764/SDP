@@ -2,7 +2,14 @@
     td {
         text-align: center;
     }
+    .body{
+        background-image: src("{{asset('images/background1.jpg')}}");
+        width: 100%;
+        height: 100%;
+        background-repeat:no-repeat;
+    }
 </style>
+<body>
 <div class="profile-form">
     <div style="padding-left: 200px;padding-right: 200px;">
         <div class="container">
@@ -90,8 +97,10 @@
           </div>
     </div>
 </div>
+
 @if (session('alert'))
     <div class="alert alert-warning">
         {{ session('alert') }}
     </div>
 @endif
+</body>

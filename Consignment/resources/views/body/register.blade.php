@@ -1,3 +1,12 @@
+<style>
+    .body{
+        background-image: src("{{asset('images/background1.jpg')}}");
+        width: 100%;
+        height: 100%;
+        background-repeat:no-repeat;
+    }
+</style>
+<body>
 <div class="login-form">
     <form method="POST" action="{{url('/doRegister')}}">
         @csrf
@@ -67,12 +76,11 @@
                 <p>Already have account ? <a href="/login">Sign in</a></p>
             </div>
         </div>
-
     </form>
-</div>
-
+</div>]
 @if (session('alert-Warning'))
     <div class="alert alert-Warning">
         {{ session('alert-Warning') }}
     </div>
 @endif
+</body>
