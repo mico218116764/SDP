@@ -8,23 +8,35 @@
         height: 100%;
         background-repeat:no-repeat;
     }
+    .card {
+      box-shadow: -10px 10px 10px 10px rgba(0,0,0,0.3);
+      transition: 0.3s;
+      width: 95%;
+      padding: 2%;
+      /* border: 1px solid gray; */
+      border-radius: 1%;
+      margin-left: auto;
+      margin-right: auto;
+    }
 </style>
 <body>
-<div class="login-form">
-    <div style="padding-left: 200px;padding-right: 200px;">
-        Status Barang:
-        <table class="table">
-            <thead>
-                <tr>
-                    <th style="text-align:center">ID</th>
-                    <th style="text-align:center">Nama Barang</th>
-                    <th style="text-align:center">Status</th>
-                </tr>
-            </thead>
-            
-                </tr>
-            </tbody>
-        </table>
+    <div class="login-form">
+    <div class="card">
+        <div style="margin-top:2%; padding: 1%;">
+            Status Barang:
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="text-align:center">ID</th>
+                        <th style="text-align:center">Nama Barang</th>
+                        <th style="text-align:center">Status</th>
+                    </tr>
+                </thead>
+                
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
+    </div>
 </body>

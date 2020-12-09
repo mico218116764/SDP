@@ -8,10 +8,21 @@
         height: 100%;
         background-repeat:no-repeat;
     }
+    .card {
+      box-shadow: -10px 10px 10px 10px rgba(0,0,0,0.3);
+      transition: 0.3s;
+      width: 95%;
+      padding: 2%;
+      /* border: 1px solid gray; */
+      border-radius: 1%;
+      margin-left: auto;
+      margin-right: auto;
+    }
 </style>
 <body>
 <div class="profile-form">
-    <div style="padding-left: 200px;padding-right: 200px;">
+<div class="card">
+    <div style="margin:2%;">
         <div class="container">
             <div class="row">
               <div class="col-md-5">
@@ -120,6 +131,7 @@
             </div>
           </div>
     </div>
+</div>
 </div>
 
 <script>

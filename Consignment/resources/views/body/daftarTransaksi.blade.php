@@ -11,11 +11,21 @@
     .login-form{
         margin-top: -50%;
     }
+    .card {
+      box-shadow: -10px 10px 10px 10px rgba(0,0,0,0.3);
+      transition: 0.3s;
+      width: 95%;
+      padding: 2%;
+      /* border: 1px solid gray; */
+      border-radius: 1%;
+      margin-left: auto;
+      margin-right: auto;
+    }
 </style>
 <body>
-<div class="addAdmin-form">
-    <img src=" {{asset('images/background1.jpg')}}" alt="" style="margin-top: -5%">
-    <div>
+    <div class="addAdmin-form">
+    <div class="card">
+    {{--<img src=" {{asset('images/background1.jpg')}}" alt="" style="margin-top: -5%">--}} 
         <br><br>
         <style>
             td {
@@ -33,20 +43,19 @@
                             <th style="text-align:center">Action</th>
                         </tr>
                     </thead>
-
-                        @foreach ($daftarTransaksi as $transaksi)
-                            <tbody>
-                                <th style="text-align:center">{{$transaksi->transaksi_id}}</th>
-                                <th style="text-align:center">{{$transaksi->PENGAJUAN_ID}}</th>
-                                <th style="text-align:center">{{$transaksi->email_pembeli}}</th>
-                                <th style="text-align:center"><a href="{{url('detailTransaksi/'.$transaksi->transaksi_id)}}"><button type="submit">Check</button></a></th>
-                            </tbody>
-                        @endforeach
+                    @foreach ($daftarTransaksi as $transaksi)
+                        <tbody>
+                            <th style="text-align:center">{{$transaksi->transaksi_id}}</th>
+                            <th style="text-align:center">{{$transaksi->PENGAJUAN_ID}}</th>
+                            <th style="text-align:center">{{$transaksi->email_pembeli}}</th>
+                            <th style="text-align:center"><a href="{{url('detailTransaksi/'.$transaksi->transaksi_id)}}"><button type="submit">Check</button></a></th>
+                        </tbody>
+                    @endforeach
                 </table>
             </div>
         </div>
     </div>
-</div>
+    </div>
 </body>
 @if (session('alert'))
     <div class="alert alert-success">
