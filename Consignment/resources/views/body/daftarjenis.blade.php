@@ -11,14 +11,26 @@
         height: 100%;
         background-repeat:no-repeat;
     }
+    .card {
+      box-shadow: -10px 10px 10px 10px rgba(0,0,0,0.3);
+      transition: 0.3s;
+      width: 95%;
+      padding: 2%;
+      /* border: 1px solid gray; */
+      border-radius: 1%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 8%;
+    }
 </style>
 <body>
-<div class="addAdmin-form">
-    <img src=" {{asset('images/background1.jpg')}}" alt="" >
-    <div style="margin-top:-50%; padding-left: 200px;padding-right: 200px;">
-        <form method="POST" action="{{url('/addJenis')}}">
+    <div class="addAdmin-form">
+    <div class="card">
+    {{--<img src=" {{asset('images/background1.jpg')}}" alt="" >--}}
+        <div style="margin-top:2%;">
+            <form method="POST" action="{{url('/addJenis')}}">
             @csrf
-            <div class="container" style="padding: 20px">
+            <div class="container" style="padding: 1%">
                 <div class="form-group">
                     <label>Nama Jenis</label>
                     <input type="text" class="form-control" name="namaJ" placeholder="Masukkan Nama Jenis">
@@ -26,11 +38,11 @@
                 @error('namaJ')
                     <div style="color:red; font-weight:bold"> {{$message}}</div><br>
                 @enderror
-
                 <button type="submit" name="btnTambahJenis" class="btn btn-primary btn-flat m-b-30 m-t-30">Tambah Jenis</button>
-
+            </div>
         </form>
         <br><br>
+
         <style>
             td {
                 text-align: center;
@@ -54,6 +66,8 @@
                         @endforeach
                 </table>
             </div>
+        </div>
+    </div>
     </div>
 </body>
 @if (session('alert'))

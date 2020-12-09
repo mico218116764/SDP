@@ -8,45 +8,46 @@
         margin-top: -5%;
         background-repeat: no-repeat;
     }
+    .card {
+      box-shadow: -10px 10px 10px 10px rgba(0,0,0,0.3);
+      transition: 0.3s;
+      width: 95%;
+      padding: 2%;
+      /* border: 1px solid gray; */
+      border-radius: 1%;
+      margin-top: 8%;
+      margin-left: auto;
+      margin-right: auto;
+    }
 </style>
 <body>
-<div class="login-form">
-    <img src=" {{asset('images/background1.jpg')}}" alt="" >
-    <div style="margin-top:-50%; padding-left: 200px;padding-right: 200px;">
+    <div class="login-form">
+    <div class="card">
+    {{--<img src=" {{asset('images/background1.jpg')}}" alt="" >--}}
         <div class='row'>
-            <div class='col-md-4'>
-                <div class="gambar">
-                    <img src="">
-                </div>
+            <div class='col-md-1'>
             </div>
-            <div class='col-md-8'>
+            <div class='col-md-5'>
                 <form method='post' action='{{url('/bayar')}}'>
                     @csrf
                     <input type="hidden" name="id" value="{{$barang->PENGAJUAN_ID}}">
                     <br>
                     <h2><b>{{$barang->NAMA_BARANG}}</b></h2>
-                    <h4>Deskripsi: {{$barang->DESKRIPSI_BARANG}}</h4><br>
+                    <h4>Deskripsi: {{$barang->DESKRIPSI_BARANG}}</h4>
                     <h4>Price: {{$barang->HARGA_APPROVE}}</h4><br>
-                    <img style="width:120px; height:120px" src="{{asset('images/'.$barang->FOTO_DEPAN)}}" alt="">
+                    <img style="width:200px; height:200px; margin-bottom: 2%" src="{{asset('images/'.$barang->FOTO_DEPAN)}}" alt=""><br>
                     <div class="container">
                         <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h1>Pilih kurir</h1>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="">Kurir</label>
-                                            <select name="courier" style="width: 70%" class="form-control">
-                                                <option value="">--Kurir--</option>
-                                                @foreach ($couriers as $courier => $value)
-                                                    <option value="{{$courier}}">{{$value}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-md-10">
+                                <h3>Pilih kurir</h3>
+                                <div class="form-group">
+                                    <select name="courier" style="width: 100%" class="form-control">
+                                        <option value="">--Kurir--</option>
+                                        @foreach ($couriers as $courier => $value)
+                                            <option value="{{$courier}}">{{$value}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>                                
                             </div>
                         </div>
                     </div>
@@ -58,7 +59,7 @@
             </div>
         </div>
     </div>
-</div><br><br><br>
+    </div><br><br><br>
 </body>
 <script>
     $(document).ready(function(){
