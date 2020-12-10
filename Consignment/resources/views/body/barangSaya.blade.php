@@ -7,7 +7,7 @@
       padding-right: 5%;
       /* border: 1px solid gray; */
       border-radius: 1%;
-      margin-bottom: 2%;
+      margin-bottom: 5%;
       background-color: white;
     }
     .container {

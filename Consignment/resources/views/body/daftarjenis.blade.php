@@ -23,6 +23,7 @@
       margin-right: auto;
       margin-top: 8%;
       background-color: white;
+      margin-bottom: 5%;
     }
 </style>
 <body>

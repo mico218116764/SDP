@@ -7,6 +7,7 @@
         margin-left: auto;
         margin-right: auto;
         background-color: white;
+        margin-bottom: 5%;
     }
 
     /* On mouse-over, add a deeper shadow */

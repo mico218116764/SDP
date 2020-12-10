@@ -17,6 +17,7 @@
       margin-right: auto;
       margin-top: 2%;
       background-color:white;
+      margin-bottom: 5%;
     }
 </style>
 <body>

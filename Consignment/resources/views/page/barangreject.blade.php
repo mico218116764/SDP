@@ -37,5 +37,6 @@
 
     @include('includes.headerLoged')
     @include('body.barangreject')
+    @include('includes.footer')
 </body>
 </html>

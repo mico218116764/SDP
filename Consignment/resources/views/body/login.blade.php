@@ -13,6 +13,7 @@
         margin-left: 30%;
         margin-top: 10%;
         background-color: white;
+        margin-bottom: 10%;
     }
     body{
         background-image: url("{{asset('images/background1.jpg')}}");

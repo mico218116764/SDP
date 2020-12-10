@@ -15,7 +15,7 @@
       border-radius: 1%;
       margin-left: auto;
       margin-right: auto;
-      margin-bottom: 2%;
+      margin-bottom: 5%;
       background-color: white;
     }
 </style>

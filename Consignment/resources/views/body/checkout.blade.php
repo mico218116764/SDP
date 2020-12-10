@@ -18,6 +18,7 @@
       margin-top: 8%;
       margin-left: auto;
       margin-right: auto;
+      margin-bottom: 5%;
     }
 </style>
 <body>
