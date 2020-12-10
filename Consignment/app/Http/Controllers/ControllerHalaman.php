@@ -288,8 +288,8 @@ class ControllerHalaman extends Controller
         $cekAdmin = $admins::where("email", $request->USERPB_EMAIL)
                     ->where("PASSWORD_ADMINP", $request->USERPB_PASSWORD)
                     ->count();
-        // $request->USERPB_PASSWORD = md5($request->USERPB_PASSWORD);
-        $request->USERPB_PASSWORD = $request->USERPB_PASSWORD;
+        $request->USERPB_PASSWORD = md5($request->USERPB_PASSWORD);
+        // $request->USERPB_PASSWORD = $request->USERPB_PASSWORD;
         $cekUser = $userpembelis::where("USERPB_EMAIL", $request->USERPB_EMAIL)
             ->where("USERPB_PASSWORD", $request->USERPB_PASSWORD)
             ->count();
