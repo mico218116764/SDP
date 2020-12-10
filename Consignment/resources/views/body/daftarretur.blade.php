@@ -5,11 +5,13 @@
         margin-top: -5%;
         background-repeat: no-repeat;
     }
-    .body{
-        background-image: src("{{asset('images/background1.jpg')}}");
+    body{
+        background-image: url("{{asset('images/background1.jpg')}}");
         width: 100%;
         height: 100%;
         background-repeat:no-repeat;
+        background-size: cover;
+
     }
     .card {
       box-shadow: -10px 10px 10px 10px rgba(0,0,0,0.3);
@@ -20,12 +22,13 @@
       border-radius: 1%;
       margin-left: auto;
       margin-right: auto;
+      background-color: white;
     }
 </style>
 <body>
     <div class="addAdmin-form">
     <div class="card">
-     {{--<img src=" {{asset('images/background1.jpg')}}" alt="" >--}}   
+     {{--<img src=" {{asset('images/background1.jpg')}}" alt="" >--}}
         <div style="margin-top:2%;">
             <style>
                 td {
@@ -69,9 +72,9 @@
                             @endforeach
                         </table>
                     </div>
-                </div>        
+                </div>
             </form>
-        </div>    
+        </div>
     </div>
     </div>
 </body>

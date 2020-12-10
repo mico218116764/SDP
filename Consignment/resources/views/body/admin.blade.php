@@ -8,6 +8,7 @@
       border-radius: 1%;
       margin-left: auto;
       margin-right: auto;
+      background-color: white;
     }
     td {
         text-align: center;
@@ -18,17 +19,16 @@
         margin-top: -2%;
         background-repeat: no-repeat;
     }
-    .body{
-        background-image: src("{{asset('images/background1.jpg')}}");
-        width: 100%;
-        height: 100%;
+    body{
+        background-image: url("{{asset('images/background1.jpg')}}");
+        background-size:cover;
         background-repeat:no-repeat;
     }
 </style>
 <body>
     <div class="login-form" >
     <div class="card">
-       {{--<img src=" {{asset('images/background1.jpg')}}" alt="" >--}} 
+       {{--<img src=" {{asset('images/background1.jpg')}}" alt="" >--}}
             <div style="margin-top:2%;">
                 Barang yang belum di approve:
                 <table class="table">

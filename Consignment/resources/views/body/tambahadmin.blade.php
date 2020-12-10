@@ -1,9 +1,10 @@
 <style>
-    .body{
-        background-image: src("{{asset('images/background1.jpg')}}");
+    body{
+        background-image: url("{{asset('images/background1.jpg')}}");
         width: 100%;
         height: 100%;
         background-repeat:no-repeat;
+        background-size:cover;
     }
     .card {
       box-shadow: -10px 10px 10px 10px rgba(0,0,0,0.3);
@@ -15,6 +16,7 @@
       margin-left: auto;
       margin-right: auto;
       margin-bottom: 2%;
+      background-color: white;
     }
 </style>
 <body>

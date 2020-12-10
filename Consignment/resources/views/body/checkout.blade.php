@@ -47,7 +47,7 @@
                                             <option value="{{$courier}}">{{$value}}</option>
                                         @endforeach
                                     </select>
-                                </div>                                
+                                </div>
                             </div>
                         </div>
                     </div>

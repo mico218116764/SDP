@@ -12,12 +12,14 @@
         padding: 5%;
         margin-left: 30%;
         margin-top: 10%;
+        background-color: white;
     }
     body{
-        background-image: src("{{asset('images/background1.jpg')}}");
+        background-image: url("{{asset('images/background1.jpg')}}");
         width: 100%;
         height: 100%;
         background-repeat:no-repeat;
+        background-size:cover;
     }
 
 </style>

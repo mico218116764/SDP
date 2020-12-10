@@ -9,11 +9,12 @@
         margin-top: -5%;
         background-repeat: no-repeat;
     }
-    .body{
-        background-image: src("{{asset('images/background1.jpg')}}");
+    body{
+        background-image: url("{{asset('images/background1.jpg')}}");
         width: 100%;
         height: 100%;
         background-repeat:no-repeat;
+        background-size:cover;
     }
 
     .card {
@@ -25,6 +26,7 @@
       border-radius: 1%;
       margin-left: auto;
       margin-right: auto;
+      background-color: white;
     }
 </style>
 <body>

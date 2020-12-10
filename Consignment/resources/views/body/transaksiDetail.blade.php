@@ -6,6 +6,7 @@
         padding: 10px;
         box-shadow: 0px 0px 8px 5px rgba(0,0,0,0.2);
         border-radius: 10px;
+        background-color: white;
     }
 
     /* Add some padding inside the card container */
@@ -22,11 +23,12 @@
         margin-left: auto;
         margin-right: auto;
     }
-    .body{
-        background-image: src("{{asset('images/background1.jpg')}}");
+    body{
+        background-image: url("{{asset('images/background1.jpg')}}");
         width: 100%;
         height: 100%;
         background-repeat:no-repeat;
+        background-size:cover;
     }
 </style>
 <body>

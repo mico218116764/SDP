@@ -6,6 +6,7 @@
         width: fit-content;
         margin-left: auto;
         margin-right: auto;
+        background-color: white;
     }
 
     /* On mouse-over, add a deeper shadow */
@@ -17,11 +18,12 @@
     .container {
         padding: 2px 16px;
     }
-    .body{
-        background-image: src("{{asset('images/background1.jpg')}}");
+    body{
+        background-image: url("{{asset('images/background1.jpg')}}");
         width: 100%;
         height: 100%;
         background-repeat:no-repeat;
+        background-size: cover;
     }
 </style>
 <body>

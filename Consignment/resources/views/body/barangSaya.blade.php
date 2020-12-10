@@ -8,6 +8,7 @@
       /* border: 1px solid gray; */
       border-radius: 1%;
       margin-bottom: 2%;
+      background-color: white;
     }
     .container {
       padding: 1% 1% 1% 1%;
@@ -15,16 +16,17 @@
     .containerS{
         margin: 1%;
     }
-    .body{
-        background-image: src("{{asset('images/background1.jpg')}}");
+    body{
+        background-image: url("{{asset('images/background1.jpg')}}");
         width: 100%;
         height: 100%;
         background-repeat:no-repeat;
+        background-size:cover;
     }
 </style>
 <body>
 <div class="login-form containerS" style="height: 50%">
-  {{--<img src=" {{asset('images/background1.jpg')}}" alt="" style="margin-top: -3%; margin-left: -2%;">--}} 
+  {{--<img src=" {{asset('images/background1.jpg')}}" alt="" style="margin-top: -3%; margin-left: -2%;">--}}
     @if (count($daftarKatalog) == 0)
         <div class="card" style="height: 50%">
     @else

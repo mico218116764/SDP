@@ -2,11 +2,12 @@
     td {
         text-align: center;
     }
-    .body{
-        background-image: src("{{asset('images/background1.jpg')}}");
+    body{
+        background-image: url("{{asset('images/background1.jpg')}}");
         width: 100%;
         height: 100%;
         background-repeat:no-repeat;
+        background-size: cover;
     }
     .login-form{
         margin-top: -50%;
@@ -20,12 +21,13 @@
       border-radius: 1%;
       margin-left: auto;
       margin-right: auto;
+      background-color: white;
     }
 </style>
 <body>
     <div class="addAdmin-form">
     <div class="card">
-    {{--<img src=" {{asset('images/background1.jpg')}}" alt="" style="margin-top: -5%">--}} 
+    {{--<img src=" {{asset('images/background1.jpg')}}" alt="" style="margin-top: -5%">--}}
         <br><br>
         <style>
             td {

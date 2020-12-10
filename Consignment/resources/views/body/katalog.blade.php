@@ -36,7 +36,7 @@
                         <div class="panel-footer desc" style="width: 100%; height: 50%;">
                             <?php
                                 echo substr($item->DESKRIPSI_BARANG, 0, 100) . (strlen($item->DESKRIPSI_BARANG) > 100 ? "..." : '');
-                            ?> 
+                            ?>
                         </div>
                     </div>
                 </a>
