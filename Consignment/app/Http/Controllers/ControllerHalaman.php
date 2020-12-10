@@ -1030,8 +1030,14 @@ class ControllerHalaman extends Controller
         transaksis::where('transaksi_id',$request->transaksi)->update(['status'=>5]);
         return redirect('/barangSaya');
     }
+
+    public function approved(Request $request)
+    {
+        return view ('page.approved');
+    }
+
+    public function notapproved(Request $request)
+    {
+        return view ('page.notapproved');
+    }
 }
-
-
-
-

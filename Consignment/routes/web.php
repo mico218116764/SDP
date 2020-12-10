@@ -37,6 +37,8 @@ Route::group(['middleware' => ['CekRole:admin']], function () {//['CekRole:(para
     Route::get('/daftarjenis', 'ControllerHalaman@daftarjenis');
     Route::get('/daftarmerk', 'ControllerHalaman@daftarmerk');
     Route::get('/daftarretur', 'ControllerHalaman@daftarretur');
+    Route::get('/approved', 'ControllerHalaman@approved');
+    Route::get('/notapproved', 'ControllerHalaman@notapproved');
 
 
 });
