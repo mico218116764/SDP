@@ -36,7 +36,6 @@
                 <button type="button" class="btn btn-danger" style="width: 50%;">Not Approved</button>
             </a>
             <br><br><br><br>
-        </div>
     </div>
     </div>
-</body>
+            </body>

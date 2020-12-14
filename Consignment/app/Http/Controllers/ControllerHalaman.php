@@ -1033,11 +1033,35 @@ class ControllerHalaman extends Controller
 
     public function approved(Request $request)
     {
-        return view ('page.approved');
+        if (Cookie::has('userNowT') == false) {
+            return redirect('/login');
+        } else {
+            $user = $request->cookie('userNowT');
+            // dd($request->cookie('userNowT'));
+            if ($user == "user") {
+                return redirect('/login');
+            } else {
+                return view('page.approved', [
+                    "items" => pengajuans::all()
+                ]);
+            }
+        }
     }
 
     public function notapproved(Request $request)
     {
-        return view ('page.notapproved');
+        if (Cookie::has('userNowT') == false) {
+            return redirect('/login');
+        } else {
+            $user = $request->cookie('userNowT');
+            // dd($request->cookie('userNowT'));
+            if ($user == "user") {
+                return redirect('/login');
+            } else {
+                return view('page.notapproved', [
+                    "items" => pengajuans::all()
+                ]);
+            }
+        }
     }
 }
