@@ -87,7 +87,7 @@
                 <button type="submit" name="btnRegis" class="btn btn-primary btn-flat m-b-30 m-t-30">Register</button>
 
                 <div class="register-link m-t-15 text-center">
-                    <p>Already have account ? <a href="/login">Sign in</a></p>
+                    <p>Already have account ? <a href="{{url('/login')}}">Sign in</a></p>
                 </div>
             </div>
         </form>

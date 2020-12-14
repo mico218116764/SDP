@@ -60,7 +60,7 @@
                         </div>
                         <button type="submit" name="btnLogin" class="btn btn-success btn-flat m-b-30 m-t-30">Sign in</button>
                         <div class="register-link m-t-15 text-center">
-                            <p>Don't have account ? <a href="/register"> Sign Up Here</a></p>
+                            <p>Don't have account ? <a href="{{url('/register')}}"> Sign Up Here</a></p>
                         </div>
                         @if (session('alert-Warning'))
                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
