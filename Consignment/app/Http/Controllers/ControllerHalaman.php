@@ -547,6 +547,7 @@ class ControllerHalaman extends Controller
         // dd($barang);
         // return view('welcome', );
         $couriers = Courier::pluck('title','code');
+        // dd($couriers);
         return view('page.checkout',compact('couriers'),[
             'barang'=>$barang,
             'userData'=>$userData[0],
@@ -583,13 +584,23 @@ class ControllerHalaman extends Controller
             'weight'=> $berat,
             'courier'=> $request->courier,
         ])->get();
+        $courier_id = $courier_id = Courier::where('code',$request->courier)->get();
+        // dd($courier_id[0]->id);
+        $asal = City::where('city_id',$cityOrigin)->get();
+        // $asalProvinsi = Province
+        // dd($asal[0]->title);
+        $ke = City::where('city_id',$userData[0]->city)->get();
+        // dd($ke[0]->title);
         $costCourier = $cost[0]['costs'][0]['cost'][0]['value'];
         $barang = $detailBarang[0];
         return view('page.bayar',[
             'barang'=>$barang,
             'userData'=>$userData[0],
             'dataBank'=>$dataBank,
-            'costCourier'=>$costCourier
+            'costCourier'=>$costCourier,
+            'courier_id'=>$courier_id[0]->id,
+            'asal'=>$asal[0]->title,
+            'ke'=>$ke[0]->title,
         ]);
     }
 
@@ -626,6 +637,7 @@ class ControllerHalaman extends Controller
             $transaksi->rekening_tujuan = $rekening;
             $transaksi->harga_kurir = $request->costKurir;
             $transaksi->harga_total = $request->costTotal;
+            $transaksi->courier_id = $request->courier_id;
             $transaksi->save();
             return redirect('/katalog')->with('berhasil','a');
         }
@@ -665,7 +677,7 @@ class ControllerHalaman extends Controller
     }
     public function daftarretur()
     {
-        $dataRetur = returs::all();
+        $dataRetur = returs::where('status',0 )->get();
         $dataUser = userpembelis::all();
         $dataTransaksi = transaksis::all();
         return view('page.daftarretur',[
@@ -700,14 +712,34 @@ class ControllerHalaman extends Controller
         }else{
             return redirect('/login')->with('alert-Warning','Harap login dulu');
         }
-        $dataTransaksi = transaksis::where('email_pembeli',$userE)->where('status',5)->get();
+        $dataTransaksi = transaksis::where('email_pembeli',$userE)->get();
         $userNow = userpembelis::where('USERPB_EMAIL',$userE)->get();
+        // dd($userNow[0]->USERPB_ID);
+        $retur = returs::where('USERPB_ID',$userNow[0]->USERPB_ID)->get();
         $barang = pengajuans::all();
-        // dd($userNow[0]);
+        // if (60 - ((new \Carbon\Carbon($dataTransaksi[0]['updated_at'], 'UTC'))->diffInDays()) < 0) {
+        //     // dd($dataTransaksi[0]['updated_at']);
+        // }
+        // dd($dataTransaksi[0]['updated_at']);
+        // dd(60 - ((new \Carbon\Carbon($dataTransaksi[0]['updated_at'], 'UTC'))->diffInDays()));
         return view('page.retur',[
             'dataTransaksi'=>$dataTransaksi,
             'userNow'=>$userNow[0],
             'barang'=>$barang,
+            'dataRetur'=>$retur
+        ]);
+    }
+    public function returResi($id)
+    {
+        // dd($id);
+        $dataRetur = returs::where('retur_id',$id)->get();
+        // dd($dataRetur[0]);
+        $transaksi = transaksis::where('transaksi_id',$dataRetur[0]->transaksi_id)->get();
+        // dd($transaksi);
+        $couriers = Courier::pluck('title','code');
+        return view('page.returResi',compact('couriers'),[
+            'transaksi'=>$transaksi,
+            'retur_id'=>$id
         ]);
     }
     public function doRetur(Request $request)
@@ -753,9 +785,18 @@ class ControllerHalaman extends Controller
         // //example $id => PNG0
         // $pengajuans->delete();
         // return redirect('/admin');
-        $retur = returs::where('retur_id',$request->butDel)->first();
-        $retur->delete();
-        return redirect()->back()->with('alert','Pengajuan retur ditolak');
+
+        if($request->butDel == null){
+            $retur = returs::where('retur_id',$request->butAcc)->update(['status' => 1]);
+            return redirect()->back()->with('alert','Pengajuan retur Diterima');
+            // dd($request->butAcc . ' + ' . $request->butDel);
+        }
+        else{
+            $retur = returs::where('retur_id',$request->butDel)->first();
+            $retur->delete();
+            return redirect()->back()->with('alert','Pengajuan retur ditolak');
+        }
+
     }
 
     public function barangreject(Request $request)
@@ -894,6 +935,7 @@ class ControllerHalaman extends Controller
         }else{
             return redirect('/login')->with('alert-Warning','a');
         }
+        //status barang == 2 maka barang diretur
         $daftarKatalog = pengajuans::where('email_penjual', $userE)->get();
         // dd($daftarKatalog);
         return view('page.barangSaya',[
@@ -904,10 +946,53 @@ class ControllerHalaman extends Controller
     {
         $transaksi = transaksis::where('PENGAJUAN_ID',$id)->get();
         // dd(count($transaksi));
-        return view('page.detailBarangSaya',[
-            'transaksi'=>$transaksi,
-            'id'=>$id
+        // dd($transaksi[0]->courier_id);
+        if(count($transaksi)>0){
+            $courier = Courier::where('id',$transaksi[0]->courier_id)->get();
+            // dd($courier[0]->title);
+            // dd($transaksi[0]);
+            if($transaksi[0]->status == 6){
+                $retur = returs::where('transaksi_id',$transaksi[0]->transaksi_id)->get();
+                $courier_retur = Courier::where('id',$retur[0]->courier_id)->get();
+                // dd($retur[0]->resi);
+                // dd($transaksi);
+                return view('page.detailBarangSaya',[
+                    'transaksi'=>$transaksi,
+                    'id'=>$id,
+                    'nama_courier'=>$courier_retur[0]->title,
+                    'resi'=>$retur[0]->resi
+                ]);
+            }else{
+                // dd($transaksi);
+                return view('page.detailBarangSaya',[
+                    'transaksi'=>$transaksi,
+                    'id'=>$id,
+                    'nama_courier'=>$courier[0]->title
+                ]);
+            }
+        }else{
+
+            return view('page.detailBarangSaya',[
+                'transaksi'=>$transaksi,
+            ]);
+        }
+
+
+    }
+    public function batalTransaksi(Request $request)
+    {
+        // $pengajuans = pengajuans::where('PENGAJUAN_ID', $id)->first();
+        // $pengajuans->delete();
+        returs::where('transaksi_id',$request->transaksi)->update([
+            'status'=>3
         ]);
+        $transaksi = transaksis::where('transaksi_id',$request->transaksi)->get();
+        pengajuans::where('PENGAJUAN_ID',$transaksi[0]->PENGAJUAN_ID)->update(['STATUS_BARANG'=>3]);
+        // dd($transaksi[0]->PENGAJUAN_ID);
+        $transaksi = transaksis::where('transaksi_id',$request->transaksi)->first();
+        $transaksi->delete();
+        // dd($request->transaksi);
+        return redirect('/barangSaya');
     }
     public function back()
     {
@@ -946,12 +1031,15 @@ class ControllerHalaman extends Controller
         // dd($id);
 
         $id_pengajuan = transaksis::where('transaksi_id',$id)->get();
+        $courier_id = $id_pengajuan[0]->courier_id;
+        // dd($id_pengajuan[0]->courier_id);
         $id_pengajuan = $id_pengajuan[0]->PENGAJUAN_ID;
         // dd($id_pengajuan);
         if($but == "approve"){
             $pengiriman = new pengirimans();
             $pengiriman->status = 0;
             $pengiriman->transaksi_id = $id;
+            $pengiriman->courier_id = $courier_id;
             $pengiriman->save();
             //belum diperiksa = 0; approve belum ada resi = 1 ; tertolak = 2 ; sudah ada resi = 3 ;
             $trans = transaksis::where('transaksi_id',$id)->update([
@@ -980,9 +1068,15 @@ class ControllerHalaman extends Controller
         $id = $request->butSub;
         // dd($id);
         $pengiriman = pengirimans::where('transaksi_id',$id)->get();
-        // dd($pengiriman);
-        // dd($)
-        return view('page.checkPengiriman',["pengiriman"=>$pengiriman]);
+        // dd($id);
+        // dd($pengiriman[0]->resi);
+        $courier = Courier::where('id',$pengiriman[0]->courier_id)->get();
+        $courier = $courier[0]->title;
+        // dd($courier);
+        if(count($pengiriman)<1 == true){
+            // dd('true');
+        };
+        return view('page.checkPengiriman',["pengiriman"=>$pengiriman,"courier"=>$courier,"resi"=>$pengiriman[0]->resi]);
     }
     public function index()
     {
@@ -1018,13 +1112,38 @@ class ControllerHalaman extends Controller
         $now = DB::selectOne("SELECT NOW() AS now from dual");
         // dd($now->now);
         $transaksi = transaksis::where('transaksi_id',$request->transaksie)->get();
-        // dd($transaksi[0]);
+        // dd($transaksi[0]->courier_id);
         $pengiriman = pengirimans::where('transaksi_id',$request->transaksie)->get();
-        pengirimans::where('transaksi_id',$request->transaksie)->update(['resi'=>$request->resi,'status'=>1,'tanggal_pengiriman'=>$now->now]);
+        pengirimans::where('transaksi_id',$request->transaksie)->update(['resi'=>$request->resi,'status'=>1,'tanggal_pengiriman'=>$now->now,'courier_id'=>$transaksi[0]->courier_id]);
         transaksis::where('transaksi_id',$request->transaksie)->update(['status'=>4]);
         // dd($pengiriman[0]);
         return redirect('/barangSaya');
     }
+    public function sendResiRetur(Request $request)
+    {
+        // dd($request->transaksie);
+        $request->validate([
+            'resi'=>["required"]
+        ],[
+            'required'=>"resi harus di isi"
+        ]);
+        // dd($request->courier);
+        // dd($request->retur_id);
+        // dd($now->now);
+        // dd($transaksi[0]->courier_id);
+        // dd($pengiriman[0]);
+        $retur_id = $request->retur_id;
+        $courier_id = Courier::where("code",$request->courier)->get();
+        $courier_id = $courier_id[0]->id;
+        $resi = $request->resi;
+        $now = DB::selectOne("SELECT NOW() AS now from dual");
+        $retur = returs::where('retur_id',$retur_id)->get();
+        $transaksi = transaksis::where('transaksi_id',$retur[0]->transaksi_id)->get();
+        pengajuans::where('PENGAJUAN_ID',$transaksi[0]->PENGAJUAN_ID)->update(['STATUS_BARANG'=>2]);
+        returs::where('retur_id',$retur_id)->update(['status'=>2,'resi'=>$resi,'courier_id'=>$courier_id]);
+        return redirect('/retur');
+    }
+
     public function konfirmasi(Request $request)
     {
         transaksis::where('transaksi_id',$request->transaksi)->update(['status'=>5]);

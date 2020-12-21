@@ -45,11 +45,14 @@
                     <form action="{{url('/membayar')}}" method="post">
                         @csrf
                         <input type="hidden" value="{{$barang->PENGAJUAN_ID}}" name="id">
+                        <input type="hidden" value="{{$courier_id}}" name="courier_id">
                         <br>
                         {{-- <img src="{{ url('/images/dummy1.png') }}" style="width:100px; height:100px;"> --}}
                         <h2>Harga Barang:</h2>
                             <h1 style='margin-left: 25%; color:red'><b>Rp.{{number_format($barang->HARGA_APPROVE)}}</b></h1>
                             <br>
+                        <h2>Dari - Ke:</h2>
+                        <h1 style='margin-left: 25%; color:red'>{{$asal}} - {{$ke}}</h1>
                         <h2>Ongkos Kirim:</h2>
                         <h1 style='margin-left: 25%; color:red'><b>Rp.{{number_format($costCourier)}}</b></h1>
                         <br>

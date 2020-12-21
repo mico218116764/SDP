@@ -56,6 +56,7 @@ Route::group(['middleware' => ['CekRole:user']], function () {
     Route::get('/retur', 'ControllerHalaman@retur');
     Route::get('/barangSaya','ControllerHalaman@barangSaya');
     Route::get('/statusbarang', 'ControllerHalaman@statusbarang');
+    Route::get('/returResi/{id}','ControllerHalaman@returResi');
 });
 
 
@@ -89,11 +90,13 @@ Route::post('/addMerk', 'ControllerHalaman@addMerk');
 Route::post('/post_checkout/{id}', 'ControllerHalaman@checkout');
 Route::post('/bayar', 'ControllerHalaman@bayar');
 Route::post('/sendResi', 'ControllerHalaman@sendResi');
+Route::post('/sendResiRetur', 'ControllerHalaman@sendResiRetur');
 Route::get('/con', 'ControllerHalaman@konfirmasi');
 
 Route::get('/toDetail/{id}', 'ControllerHalaman@toDetail');
 Route::get('/detailbarangreject/{id}', 'ControllerHalaman@detailbarangreject');
 Route::get('/detailbarangku/{id}', 'ControllerHalaman@detailbarangku');
+Route::get('/batalTransaksi', 'ControllerHalaman@batalTransaksi');
 Route::get('/doApprove', 'ControllerHalaman@doApprove');
 Route::get('/doDelete/{id}', 'ControllerHalaman@doDelete');
 Route::get('/changeProfile', 'ControllerHalaman@changeProfile');

@@ -36,16 +36,25 @@
         @foreach ($daftarKatalog as $item)
         <div class="row">
             <div class="col-md-3">
-                <a href="{{url('/detailbarangku/'.$item->PENGAJUAN_ID)}}">
+                @if ($item->STATUS_BARANG == 3)
+
+                @else
+                    <a href="{{url('/detailbarangku/'.$item->PENGAJUAN_ID)}}">
+                @endif
+
                 <div class="panel panel-primary" >
                     <div class="panel-heading">
                         {{$item->NAMA_BARANG}}
                         @if ($item->STATUS_BARANG == 0)
                             <h6><span class="label label-warning">Terdisplay</span></h6>
+                        @elseif($item->STATUS_BARANG == 2)
+                            <h6><span class="label label-danger">Retur</span></h6>
+                        @elseif($item->STATUS_BARANG == 3)
+                        <h6><span class="label label-default">Suspend</span></h6>
+                        <h6><span class="label label-default">Silahkan ajukan barang anda kembali</span></h6>
                         @else
                             <h6><span class="label label-success">Telah terbeli</span></h6>
                         @endif
-
                     </div>
                     <div class="panel-body" style="width: 100%; height: 100%; ">
                     <img src="{{asset('images/'.$item->FOTO_KIRI)}}" class="img-responsive"alt="Image">
@@ -55,7 +64,11 @@
                         echo substr($item->DESKRIPSI_BARANG, 0, 100) . (strlen($item->DESKRIPSI_BARANG) > 100 ? "..." : '');
                     ?> </div>
                 </div>
-                </a>
+                @if ($item->STATUS_BARANG == 3)
+
+                @else
+                    </a>
+                @endif
             </div>
         @endforeach
     </div>

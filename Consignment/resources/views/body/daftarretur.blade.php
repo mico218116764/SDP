@@ -53,6 +53,7 @@
                                 </tr>
                             </thead>
                             @foreach ($dataRetur as $retur)
+                                @if (60 - ((new \Carbon\Carbon($retur['created_at'], 'UTC'))->diffInDays()) > 0)
                                 <tbody>
                                     <th style="text-align:center">{{$retur->retur_id}}</th>
                                     <th style="text-align:center">{{$retur->transaksi_id}}</th>
@@ -68,8 +69,11 @@
                                     @endforeach
                                     <th style="text-align:center">{{$retur->deskripsi}}</th>
                                     <th style="text-align:center"><a href="{{$retur->link_video}}">{{$retur->link_video}}</a></th>
-                                    <th style="text-align:center"><button type="submit" name="butDel" value="{{$retur->retur_id}}">tolak</button> </th>
+                                    <th style="text-align:center"><button type="submit" name="butDel" value="{{$retur->retur_id}}">Tolak</button> </th>
+                                    <th style="text-align:center"><button type="submit" name="butAcc" value="{{$retur->retur_id}}">Terima</button> </th>
                                 </tbody>
+                                @endif
+
                             @endforeach
                         </table>
                     </div>

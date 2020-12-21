@@ -27,7 +27,7 @@
             @csrf
             <div class="container" style="padding: 1%;">
                 <h1>Pengajuan Keluhan</h1>
-                <h4 style="color: red">*maksimal pengembalian barang adalah 2 bulan setelah pembelian</h4>
+                <h4 style="color: red">*maksimal pengembalian barang adalah 2 hari setelah pembelian</h4>
                 <br>
                 <div class="form-group">
                     <label>Transaksi ID - Tanggal transaksi - Nama Barang</label>
@@ -36,9 +36,12 @@
                         @foreach ($dataTransaksi as $transaksi)
                             @foreach ($barang as $bar)
                                 @if ($transaksi->PENGAJUAN_ID == $bar->PENGAJUAN_ID)
+                                    @if (60 - ((new \Carbon\Carbon($transaksi['created_at'], 'UTC'))->diffInDays()) > 0)
                                     <option value="{{$transaksi->transaksi_id}}">
-                                    <p>{{$transaksi->transaksi_id}} || {{$transaksi->created_at}} || {{$bar->NAMA_BARANG}}</p>
-                                    </option>
+                                        <p>{{$transaksi->transaksi_id}} || {{$transaksi->created_at}} || {{$bar->NAMA_BARANG}}</p>
+                                        </option>
+                                    @endif
+
                                 @endif
                             @endforeach
 
@@ -79,6 +82,43 @@
             </div>
 
         </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="text-align:center">Retur ID</th>
+                    <th style="text-align:center">Transaksi ID</th>
+                    <th style="text-align:center">Tanggal Transaksi</th>
+                    <th style="text-align:center">Nama Pembeli</th>
+                    <th style="text-align:center">Deskripsi</th>
+                    <th style="text-align:center">Link Video</th>
+                    <th style="text-align:center">Status</th>
+                </tr>
+            </thead>
+            @foreach ($dataRetur as $retur)
+                @if (2 - ((new \Carbon\Carbon($retur['created_at'], 'UTC'))->diffInDays()) > 0)
+                <tbody>
+                    <th style="text-align:center">{{$retur->retur_id}}</th>
+                    <th style="text-align:center">{{$retur->transaksi_id}}</th>
+                    @foreach ($dataTransaksi as $trans)
+                        @if ($trans->transaksi_id == $retur->transaksi_id)
+                            <th style="text-align:center">{{$trans->created_at}}</th>
+                        @endif
+                    @endforeach
+                    <th style="text-align:center">{{$userNow->USERPB_NAME}}</th>
+                    <th style="text-align:center">{{$retur->deskripsi}}</th>
+                    <th style="text-align:center"><a href="{{$retur->link_video}}">{{$retur->link_video}}</a></th>
+                    @if ($retur->status == 0)
+                        <th style="text-align:center">Menunggu konfirmasi</th>
+                    @elseif($retur->status == 1)
+                        <th style="text-align:center"><a href="{{url('/returResi/'.$retur->retur_id)}}"><Button>Kirim resi</Button></a></th>
+                    @elseif($retur->status == 2)
+                        <th style="text-align:center">Barang terkirim</th>
+                    @endif
+                </tbody>
+                @endif
+
+            @endforeach
+        </table>
     </div>
     </div>
     @if (session('alert'))
