@@ -90,6 +90,37 @@
                 </div>
             </form>
         </div>
+    @elseif($transaksi[0]->status == 7)
+        <div class="card">
+            <form action="{{url('/back')}}" method="get">
+                @csrf
+                <input type="hidden" name="transaksi" value="{{$transaksi[0]->transaksi_id}}">
+                <img src="{{asset('images/verify.png')}}" alt="Avatar" style="width:100%">
+                <img src="{{asset('images/'.$transaksi[0]->bukti_transfer)}}" alt="">
+                <div class="container" >
+                    <h1><b>Uang telah terkirim</b></h1>
+                    <br>
+                    <div class="form-group centered">
+                        <label>Harga Barang :</label>
+                        <input type="text" class="form-control" style="width: 40%" name="resi" placeholder="No Resi" readonly="true" value="{{$transaksi[0]->harga_total}}">
+                    </div>
+                    <div class="form-group centered">
+                        <label>Harga Kurir :</label>
+                        <input type="text" class="form-control" style="width: 40%" name="resi" placeholder="No Resi" readonly="true" value="{{$transaksi[0]->harga_kurir}}">
+                    </div>
+                    <div class="form-group centered">
+                        <label>Harga jasa</label>
+                        <input type="text" class="form-control" style="width: 40%" name="resi" placeholder="No Resi" readonly="true" value="{{$transaksi[0]->harga_jasa}}">
+                    </div>
+                    <div class="form-group centered">
+                        <label>Total Transfer</label>
+                        <input type="text" class="form-control" style="width: 40%" name="resi" placeholder="No Resi" readonly="true" value="{{$transaksi[0]->harga_total - $transaksi[0]->harga_jasa}}">
+                    </div>
+                    <button class="btn btn-primary" type="submit">Back</button>
+                    {{-- <h6 style="color: red">*tekan konfirmasi bila barang anda sudah sampai</h6> --}}
+                </div>
+            </form>
+        </div>
     @else
         <div class="card">
             <img src="{{asset('images/sand-clock.jpg')}}" alt="Avatar" style="width:100%">

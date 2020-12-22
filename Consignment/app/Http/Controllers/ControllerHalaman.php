@@ -1006,6 +1006,54 @@ class ControllerHalaman extends Controller
             "daftarTransaksi"=>$daftarTransaksi
         ]);
     }
+    public function daftarPengirimanDana()
+    {
+        $daftarTransaksi = transaksis::all();
+        // dd($daftarTransaksi);
+        return view('page.daftarPengirimanDana',[
+            "daftarTransaksi"=>$daftarTransaksi
+        ]);
+    }
+    public function bayarPenjual($id)
+    {
+        $transaksi = transaksis::where('transaksi_id',$id)->get();
+        $pengajuan = pengajuans::where('PENGAJUAN_ID',$transaksi[0]->PENGAJUAN_ID)->get();
+        $bank = banks::where('bank_id',$pengajuan[0]->bank_id)->get();
+        $user = userpembelis::where('USERPB_EMAIL',$pengajuan[0]->email_penjual)->get();
+        // USERPB_NAME
+        // dd($user[0]->USERPB_NAME);
+        // dd($transaksi[0]);
+        // dd($bank[0]->nama_bank);
+        $no_rek = $pengajuan[0]->USERPB_NOREK;
+        $jumlah = $transaksi[0]->harga_total;
+        $bank = $bank[0]->nama_bank;
+        $namaUser = $user[0]->USERPB_NAME;
+        // dd($namaUser);
+        return view('page.bayarPenjual',[
+            'id'=>$id,
+            'transaksi'=>$transaksi,
+            'harga'=>$jumlah,
+            'no_rek'=>$no_rek,
+            'namaUser'=>$namaUser
+            ]
+        );
+    }
+    public function doPay(Request $request)
+    {
+        $request->validate([
+            'Foto_Transaksi'=>['required']
+        ]);
+        $id = $request->id;
+        // dd($request->id);
+        transaksis::where('transaksi_id',$id)->update(
+            [
+                'status'=>7,
+                'bukti_transaksi'=>$request->Foto_Transaksi,
+                'harga_jasa'=>$request->harga_jasa,
+                ]
+            );
+        return redirect('/daftarPengirimanDana');
+    }
     public function detailTransaksi($id)
     {
         $trans = transaksis::where('transaksi_id',$id)->get();
@@ -1014,10 +1062,6 @@ class ControllerHalaman extends Controller
         $id_pengajuan = $id_pengajuan[0]->PENGAJUAN_ID;
         $pengajuan = pengajuans::where('PENGAJUAN_ID',$id_pengajuan)->get();
         // $harga = $pengajuan[0]->HARGA_APPROVE;
-
-
-
-
         return view('page.transaksiDetail',[
             'transaksi'=>$trans,
             'harga'=>$harga,

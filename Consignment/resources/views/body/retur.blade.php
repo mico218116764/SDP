@@ -36,7 +36,7 @@
                         @foreach ($dataTransaksi as $transaksi)
                             @foreach ($barang as $bar)
                                 @if ($transaksi->PENGAJUAN_ID == $bar->PENGAJUAN_ID)
-                                    @if (60 - ((new \Carbon\Carbon($transaksi['created_at'], 'UTC'))->diffInDays()) > 0)
+                                    @if (2 - ((new \Carbon\Carbon($transaksi['created_at'], 'UTC'))->diffInDays()) > 0)
                                     <option value="{{$transaksi->transaksi_id}}">
                                         <p>{{$transaksi->transaksi_id}} || {{$transaksi->created_at}} || {{$bar->NAMA_BARANG}}</p>
                                         </option>

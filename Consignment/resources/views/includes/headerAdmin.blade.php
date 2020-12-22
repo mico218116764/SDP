@@ -16,6 +16,7 @@
                 <li><a href="{{url('/daftarjenis')}}">Daftar Jenis</a></li>
                 <li><a href="{{url('/daftarmerk')}}">Daftar Merk</a></li>
                 <li><a href="{{url('/daftarTransaksi')}}">Daftar Transaksi</a></li>
+                <li><a href="{{url('/daftarPengirimanDana')}}">Daftar Pengiriman Dana</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{url('/doLogout')}}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>

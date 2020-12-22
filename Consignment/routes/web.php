@@ -34,13 +34,13 @@ Route::group(['middleware' => ['CekRole:admin']], function () {//['CekRole:(para
     Route::get('/daftaradmin', 'ControllerHalaman@daftaradmin');
     Route::get('/daftarbank', 'ControllerHalaman@daftarbank');
     Route::get('/daftarTransaksi', 'ControllerHalaman@daftarTransaksi');
+    Route::get('/daftarPengirimanDana', 'ControllerHalaman@daftarPengirimanDana');
     Route::get('/daftarjenis', 'ControllerHalaman@daftarjenis');
     Route::get('/daftarmerk', 'ControllerHalaman@daftarmerk');
     Route::get('/daftarretur', 'ControllerHalaman@daftarretur');
     Route::get('/approved', 'ControllerHalaman@approved');
     Route::get('/notapproved', 'ControllerHalaman@notapproved');
-
-
+    Route::get('/bayarPenjual/{id}', 'ControllerHalaman@bayarPenjual');
 });
 Route::get('/register', 'ControllerHalaman@register');
 Route::get('/login', 'ControllerHalaman@login');
@@ -104,6 +104,7 @@ Route::post('/doRetur', 'ControllerHalaman@doRetur');
 
 Route::post('/membayar','ControllerHalaman@membayar');
 Route::post('/doSell','ControllerHalaman@doSell');
+Route::post('/doPay','ControllerHalaman@doPay');
 
 
 // Route::get('/doApprove/{id}', 'ControllerHalaman@doApprove');
