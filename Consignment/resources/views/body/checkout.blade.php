@@ -1,24 +1,26 @@
 <style>
+        .card {
+      box-shadow: -10px 10px 10px 10px rgba(0,0,0,0.3);
+      transition: 0.3s;
+      width: 95%;
+      padding: 2%;
+      border-radius: 1%;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: white;
+      margin-bottom: 5%;
+    }
     td {
         text-align: center;
     }
     .login-form{
         width: 100%;
-        height: 10%;
-        margin-top: -5%;
         background-repeat: no-repeat;
     }
-    .card {
-      box-shadow: -10px 10px 10px 10px rgba(0,0,0,0.3);
-      transition: 0.3s;
-      width: 95%;
-      padding: 2%;
-      /* border: 1px solid gray; */
-      border-radius: 1%;
-      margin-top: 8%;
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: 5%;
+    body{
+        background-image: url("{{asset('images/background1.jpg')}}");
+        background-size:cover;
+        background-repeat:no-repeat;
     }
 </style>
 <body>

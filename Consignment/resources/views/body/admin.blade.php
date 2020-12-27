@@ -4,7 +4,6 @@
       transition: 0.3s;
       width: 95%;
       padding: 2%;
-      /* border: 1px solid gray; */
       border-radius: 1%;
       margin-left: auto;
       margin-right: auto;
@@ -38,4 +37,4 @@
             <br><br><br><br>
     </div>
     </div>
-            </body>
+</body>
