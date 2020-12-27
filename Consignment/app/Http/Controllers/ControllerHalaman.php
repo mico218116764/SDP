@@ -773,6 +773,7 @@ class ControllerHalaman extends Controller
         $retur->status = 0;
         $userNow = userpembelis::where('USERPB_EMAIL',$userE)->get();
         $retur->USERPB_ID = $userNow[0]->USERPB_ID;
+        $retur->resi = 0;
         $retur->save();
         // dd($userNow[0]->USERPB_ID);
         return redirect()->back()->with('alert',"Keluhan telah diajukan");
