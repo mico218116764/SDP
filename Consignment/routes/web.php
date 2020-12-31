@@ -61,6 +61,8 @@ Route::group(['middleware' => ['CekRole:user']], function () {
 
 
 Route::get('/detailsbarang/{id}', 'ControllerHalaman@detailsbarang');
+// cek 2 hari setelah pengajuan
+Route::get('/gantiStatis/{id}', 'ControllerHalaman@gantiStatus');
 Route::get('/detailpengajuan', 'ControllerHalaman@detailpengajuan');
 Route::get('/detailTransaksi/{id}', 'ControllerHalaman@detailTransaksi');
 

@@ -49,6 +49,8 @@
                     <h1><strong>Status: Barang Telah Dikirim</strong></h1>
                     <input type="hidden" name="transaksi" value="{{$pengiriman[0]->transaksi_id}}">
                     <h1>Courier : {{$courier}}</h1>
+                    <h1><p>Nama Penerima : {{$dataPembeli->USERPB_NAME}}</p></h1>
+                    <h1><p>Alamat : {{$dataPembeli->USERPB_ADDRESS}}</p></h1>
                     <h2>Resi : {{$resi}}</h2>
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" aria-valuenow="75"

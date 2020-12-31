@@ -324,15 +324,20 @@ class ControllerHalaman extends Controller
             if ($user == "user") {
                 return redirect('/login');
             } else {
-                return view('page.admin', [
-                    "items" => pengajuans::all()
-                ]);
+                // return view('page.admin', [
+                //     "items" => pengajuans::all()
+                // ]);
+                return redirect('/approved');
             }
         }
     }
-    public function doDelete($id)
+    public function doDelete($id,Request $request)
     {
         // dd($id);
+        $request->validate([
+            'ALASAN_TOLAK'=>['required']
+        ]);
+        pengajuans::where('PENGAJUAN_ID', $id)->update(['alasan'=>$request->ALASAN_TOLAK]);
         $pengajuans = pengajuans::where('PENGAJUAN_ID', $id)->first();
         //sample $id => PNG#
         //example $id => PNG0
@@ -680,6 +685,14 @@ class ControllerHalaman extends Controller
         $dataRetur = returs::where('status',0 )->get();
         $dataUser = userpembelis::all();
         $dataTransaksi = transaksis::all();
+        foreach($dataRetur as $data){
+            // dd(2 - ((new \Carbon\Carbon($data['created_at'], 'UTC'))->diffInDays()));
+            if (2 - ((new \Carbon\Carbon($data['created_at'], 'UTC'))->diffInDays()) <= 0) {
+                // dd($data['retur_id']);
+                $delete = returs::where('retur_id',$data['retur_id'])->first();
+                $delete->delete();
+            }
+        }
         return view('page.daftarretur',[
             'dataRetur'=>$dataRetur,
             'dataUser'=>$dataUser,
@@ -717,11 +730,7 @@ class ControllerHalaman extends Controller
         // dd($userNow[0]->USERPB_ID);
         $retur = returs::where('USERPB_ID',$userNow[0]->USERPB_ID)->get();
         $barang = pengajuans::all();
-        // if (60 - ((new \Carbon\Carbon($dataTransaksi[0]['updated_at'], 'UTC'))->diffInDays()) < 0) {
-        //     // dd($dataTransaksi[0]['updated_at']);
-        // }
-        // dd($dataTransaksi[0]['updated_at']);
-        // dd(60 - ((new \Carbon\Carbon($dataTransaksi[0]['updated_at'], 'UTC'))->diffInDays()));
+
         return view('page.retur',[
             'dataTransaksi'=>$dataTransaksi,
             'userNow'=>$userNow[0],
@@ -735,11 +744,17 @@ class ControllerHalaman extends Controller
         $dataRetur = returs::where('retur_id',$id)->get();
         // dd($dataRetur[0]);
         $transaksi = transaksis::where('transaksi_id',$dataRetur[0]->transaksi_id)->get();
-        // dd($transaksi);
+        // dd($transaksi[0]->PENGAJUAN_ID);
         $couriers = Courier::pluck('title','code');
+        $pengajuan = pengajuans::where("PENGAJUAN_ID",$transaksi[0]->PENGAJUAN_ID)->get();
+        // dd($pengajuan[0]->email_penjual);
+        $dataPenjual = userpembelis::where('USERPB_EMAIL',$pengajuan[0]->email_penjual)->get();
+        // dd($dataPenjual[0]);
+        transaksis::where('transaksi_id',$dataRetur[0]->transaksi_id)->update(['status'=>6]);
         return view('page.returResi',compact('couriers'),[
             'transaksi'=>$transaksi,
-            'retur_id'=>$id
+            'retur_id'=>$id,
+            'dataPenjual'=>$dataPenjual[0]
         ]);
     }
     public function doRetur(Request $request)
@@ -885,6 +900,7 @@ class ControllerHalaman extends Controller
         $pengajuans = pengajuans::withTrashed()->where('PENGAJUAN_ID', $id)->first();
         // dd($pengajuans);
         // dd($pengajuans);
+
         return view('page.detailbarangreject',[
             'pengajuans'=>$pengajuans,
             'id'=>$id
@@ -920,6 +936,14 @@ class ControllerHalaman extends Controller
         }
         $daftarTransaksi = transaksis::where('email_pembeli',$userE)->get();
         $daftarPengajuan = pengajuans::all();
+        foreach($daftarTransaksi as $data){
+            if($data['status']==4){
+                if (2 - ((new \Carbon\Carbon($data['created_at'], 'UTC'))->diffInDays()) <= 0) {
+                    // dd($data['transaksi_id']);
+                    transaksis::where('transaksi_id',$data['transaksi_id'])->update(['status'=>5]);
+                }
+            }
+        }
         return view('page.statusbarang',[
             'daftarTransaksi'=>$daftarTransaksi,
             'daftarPengajuan'=>$daftarPengajuan
@@ -939,6 +963,23 @@ class ControllerHalaman extends Controller
         //status barang == 2 maka barang diretur
         $daftarKatalog = pengajuans::where('email_penjual', $userE)->get();
         // dd($daftarKatalog);
+        // asddasadsadsadsads
+        $dataTrans = transaksis::withTrashed()->get();
+        // dd($dataTrans);
+        foreach ($daftarKatalog as $data){
+            foreach($dataTrans as $data2){
+                if($data2["PENGAJUAN_ID"] == $data["PENGAJUAN_ID"]){
+                    if($data2['status'] == 6){
+                        if (2 - ((new \Carbon\Carbon($data['updated_at'], 'UTC'))->diffInDays()) <= 0) {
+                            $datae = transaksis::where('PENGAJUAN_ID',$data['PENGAJUAN_ID'])->get();
+                            // dd($datae['0']['PENGAJUAN_ID']);
+                            // dd(pengajuans::where("PENGAJUAN_ID",$datae['0']['PENGAJUAN_ID'])->get());
+                            pengajuans::where("PENGAJUAN_ID",$datae['0']['PENGAJUAN_ID'])->update(['STATUS_BARANG'=>3]);
+                        }
+                    }
+                }
+            }
+        }
         return view('page.barangSaya',[
             "daftarKatalog"=>$daftarKatalog,
         ]);
@@ -951,34 +992,62 @@ class ControllerHalaman extends Controller
         if(count($transaksi)>0){
             $courier = Courier::where('id',$transaksi[0]->courier_id)->get();
             // dd($courier[0]->title);
-            // dd($transaksi[0]);
+            // dd($transaksi[0]->PENGAJUAN_ID);
+            $idPeng = pengajuans::where("PENGAJUAN_ID",$transaksi[0]->PENGAJUAN_ID)->get();
+            $dataUser = userpembelis::where("USERPB_EMAIL",$idPeng[0]->email_penjual)->get();
+            // dd($dataUser[0]);
+
             if($transaksi[0]->status == 6){
                 $retur = returs::where('transaksi_id',$transaksi[0]->transaksi_id)->get();
                 $courier_retur = Courier::where('id',$retur[0]->courier_id)->get();
                 // dd($retur[0]->resi);
                 // dd($transaksi);
+                $ctr = 0;
+                foreach($transaksi as $data){
+                    if($data["PENGAJUAN_ID"] == $id){
+                        $dataBarang = $ctr;
+                    }
+                    $ctr++;
+                }
                 return view('page.detailBarangSaya',[
                     'transaksi'=>$transaksi,
                     'id'=>$id,
+                    'ctr'=>$dataBarang,
                     'nama_courier'=>$courier_retur[0]->title,
-                    'resi'=>$retur[0]->resi
+                    'resi'=>$retur[0]->resi,
+                    'dataUser'=>$dataUser[0]
                 ]);
             }else{
-                // dd($transaksi);
+
+                // dd($transaksi[0]->email_pembeli);
+                $dataPembeli = userpembelis::where('USERPB_EMAIL',$transaksi[0]->email_pembeli)->get();
+                // dd($dataPembeli[0]);
+                $dataBarang = 0;
+                $ctr = 0;
+                foreach($transaksi as $data){
+                    if($data["PENGAJUAN_ID"] == $id){
+                        $dataBarang = $ctr;
+                    }
+                    $ctr++;
+                }
+                // dd($dataBarang);
                 return view('page.detailBarangSaya',[
                     'transaksi'=>$transaksi,
                     'id'=>$id,
-                    'nama_courier'=>$courier[0]->title
+                    'ctr'=>$dataBarang,
+                    'nama_courier'=>$courier[0]->title,
+                    'dataPembeli'=>$dataPembeli[0]
                 ]);
             }
         }else{
-
             return view('page.detailBarangSaya',[
                 'transaksi'=>$transaksi,
             ]);
         }
-
-
+    }
+    public function gantiStatus($id)
+    {
+        # code...
     }
     public function batalTransaksi(Request $request)
     {
@@ -1003,6 +1072,18 @@ class ControllerHalaman extends Controller
     {
         $daftarTransaksi = transaksis::where('status','0')->get();
         // dd($daftarTransaksi);
+        foreach($daftarTransaksi as $data){
+            // dd(2 - ((new \Carbon\Carbon($data['updated_at'], 'UTC'))->diffInDays()));
+            // dd($data['status'] == 0);
+            if($data['status'] == 0){
+                if (2 - ((new \Carbon\Carbon($data['created_at'], 'UTC'))->diffInDays()) <= 0) {
+                    // dd($data['transaksi_id']);
+                    transaksis::where('transaksi_id',$data['transaksi_id'])->update(['status'=>2,'alasan'=>"Time out Silahkan hubungi admin"]);
+                }
+            }
+        }
+
+
         return view('page.daftarTransaksi',[
             "daftarTransaksi"=>$daftarTransaksi
         ]);
@@ -1115,13 +1196,22 @@ class ControllerHalaman extends Controller
         $pengiriman = pengirimans::where('transaksi_id',$id)->get();
         // dd($id);
         // dd($pengiriman[0]->resi);
+        $trans = transaksis::where('transaksi_id',$id)->get();
+        // dd($trans[0]->email_pembeli);
+        $dataPembeli = userpembelis::where('USERPB_EMAIL',$trans[0]->email_pembeli)->get();
+        // dd($dataPembeli[0]);
         $courier = Courier::where('id',$pengiriman[0]->courier_id)->get();
         $courier = $courier[0]->title;
         // dd($courier);
         if(count($pengiriman)<1 == true){
             // dd('true');
         };
-        return view('page.checkPengiriman',["pengiriman"=>$pengiriman,"courier"=>$courier,"resi"=>$pengiriman[0]->resi]);
+        return view('page.checkPengiriman',[
+            "pengiriman"=>$pengiriman,
+            "courier"=>$courier,
+            "resi"=>$pengiriman[0]->resi,
+            "dataPembeli"=>$dataPembeli[0]
+            ]);
     }
     public function index()
     {
@@ -1217,11 +1307,25 @@ class ControllerHalaman extends Controller
         if (Cookie::has('userNowT') == false) {
             return redirect('/login');
         } else {
+            // xxxxxx
             $user = $request->cookie('userNowT');
             // dd($request->cookie('userNowT'));
             if ($user == "user") {
                 return redirect('/login');
             } else {
+                $daftarPengajuan = pengajuans::all();
+                // dd($daftarPengajuan);
+                foreach($daftarPengajuan as $data){
+                    // dd($data["PENGAJUAN_ID"]);
+                    if($data["STATUS_PENGAJUAN"] == 0){
+                        if (2 - ((new \Carbon\Carbon($data['created_at'], 'UTC'))->diffInDays()) <= 0) {
+                            pengajuans::where('PENGAJUAN_ID', $data["PENGAJUAN_ID"])->update(['alasan'=>"time out silahkan ajukan lagi"]);
+                            $pengajuans = pengajuans::where('PENGAJUAN_ID', $data["PENGAJUAN_ID"])->first();
+                            $pengajuans->delete();
+                        }
+                    }
+
+                }
                 return view('page.notapproved', [
                     "items" => pengajuans::all()
                 ]);

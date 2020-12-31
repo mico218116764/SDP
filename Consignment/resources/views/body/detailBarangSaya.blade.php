@@ -49,15 +49,17 @@
             <a href="{{url('/back')}}"><button class="btn btn-primary" type="submit">back</button></a>
         </div>
         </div>
-    @elseif ($transaksi[0]->status == 1)
+    @elseif ($transaksi[$ctr]->status == 1)
     <div class="card">
         <form action="{{url('/sendResi')}}" method="post">
             @csrf
-            <input type="hidden" name="transaksie" value="{{$transaksi[0]->transaksi_id}}">
+            <input type="hidden" name="transaksie" value="{{$transaksi[$ctr]->transaksi_id}}">
             <img src="{{asset('images/verify.png')}}" alt="Avatar" style="width:100%">
             <div class="container" >
                 <h1><b>Telah disetujui admin</b></h1>
                 <h3><p>Courier : {{$nama_courier}}</p></h3>
+                <h3><p>Nama Penerima : {{$dataPembeli->USERPB_NAME}}</p></h3>
+                <h3><p>Alamat : {{$dataPembeli->USERPB_ADDRESS}}</p></h3>
                 <br>
                 <div class="form-group centered">
                     <label>Input Nomor Resi</label>
@@ -71,7 +73,7 @@
         </form>
 
     </div>
-    @elseif($transaksi[0]->status == 6)
+    @elseif($transaksi[$ctr]->status == 6)
         <div class="card">
             <form action="{{url('/batalTransaksi')}}" method="get">
                 @csrf
@@ -79,6 +81,8 @@
                 <img src="{{asset('images/verify.png')}}" alt="Avatar" style="width:100%">
                 <div class="container" >
                     <h1><b>Barang dalam pengembalian</b></h1>
+                    <h3><p>Nama Penerima : {{$dataUser->USERPB_NAME}}</p></h3>
+                    <h3><p>Alamat : {{$dataUser->USERPB_ADDRESS}}</p></h3>
                     <h3><p>Courier : {{$nama_courier}}</p></h3>
                     <br>
                     <div class="form-group centered">
@@ -90,7 +94,7 @@
                 </div>
             </form>
         </div>
-    @elseif($transaksi[0]->status == 7)
+    @elseif($transaksi[$ctr]->status == 7)
         <div class="card">
             <form action="{{url('/back')}}" method="get">
                 @csrf

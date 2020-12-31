@@ -43,6 +43,8 @@
             <h1><b>Telah disetujui admin</b></h1>
             <br>
             <div class="form-group centered">
+                <h1><p>Nama Penerima : {{$dataPenjual->USERPB_NAME}}</p></h1>
+                <h1><p>Alamat : {{$dataPenjual->USERPB_ADDRESS}}</p></h1>
                 <label>Input Nomor Resi</label>
                 <input type="text" class="form-control" style="width: auto" name="resi" placeholder="Masukkan No Resi">
             </div>

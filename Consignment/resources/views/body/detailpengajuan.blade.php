@@ -88,14 +88,18 @@
               <br><br><br>
               <input name="butApprove" style="width:100%;font-size:13pt;" class="btn btn-primary" type="submit" value="Approve">
               <br><br><br>
-              <div class="form-group">
-                  <label>Alasan:</label>
-                  <textarea id="w3review" class="form-control" name="ALASAN_TOLAK" placeholder="Alasan Penolakan Barang"
-                      rows="4" cols="50"></textarea>
-              </div>
+
           </form>
           <form action="{{url('/doDelete/'.$id)}}" method="get">
-              <input name="butReject" butRstyle="width:100%;font-size:13pt;" class="btn btn-danger" type="submit" value="Reject">
+                <div class="form-group">
+                    <label>Alasan:</label>
+                    <textarea id="w3review" class="form-control" name="ALASAN_TOLAK" placeholder="Alasan Penolakan Barang"
+                        rows="4" cols="50"></textarea>
+                </div>
+                @error('ALASAN_TOLAK')
+                    <div style="color:red; font-weight:bold"> {{$message}}</div><br>
+                @enderror
+                <input name="butReject" butRstyle="width:100%;font-size:13pt;" class="btn btn-danger" type="submit" value="Reject">
           </form>
       </div>
   </div>

@@ -38,32 +38,38 @@
         <div class="container">
             <div class="col">
               <div class="col-md-2" style='margin-right: 2%;'>
-                <img src="{{$pengajuans->FOTO_KIRI}}" width='200px' height='200px'>
+                <img src="{{asset('images/'.$pengajuans->FOTO_KIRI)}}" width='200px' height='200px'>
                 <h4>Tampak Kiri</h4>
               </div>
               <div class="col-md-2" style='margin-right: 2%;'>
-                <img src="{{$pengajuans->FOTO_KANAN}}" width='200px' height='200px'>
+                <img src="{{asset('images/'.$pengajuans->FOTO_KANAN)}}" width='200px' height='200px'>
                 <h4>Tampak Kanan</h4>
               </div>
               <div class="col-md-2" style='margin-right: 2%;'>
-                <img src="{{$pengajuans->FOTO_ATAS}}" width='200px' height='200px'>
+                <img src="{{asset('images/'.$pengajuans->FOTO_ATAS)}}" width='200px' height='200px'>
                 <h4>Tampak Atas</h4>
               </div>
               <div class="col-md-2" style='margin-right: 2%'>
-                <img src="{{$pengajuans->FOTO_BAWAH}}" width='200px' height='200px'>
+                <img src="{{asset('images/'.$pengajuans->FOTO_BAWAH)}}" width='200px' height='200px'>
                 <h4>Tampak Bawah</h4>
+              </div>
+              <div class="col-md-2" style='margin-right: 2%'>
+                <img src="{{asset('images/'.$pengajuans->FOTO_DEPAN)}}" width='200px' height='200px'>
+                <h4>Tampak Depan</h4>
+              </div>
+              <div class="col-md-2" style='margin-right: 2%'>
+                <img src="{{asset('images/'.$pengajuans->FOTO_BELAKANG)}}" width='200px' height='200px'>
+                <h4>Tampak Belakang</h4>
               </div>
             </div>
         </div>
       </div>
       <div class="row"style='margin-left: 1%;' >
         <div class="col-md-4" style='margin-right: 1%;'>
-          <img src="{{$pengajuans->FOTO_DEPAN}}" width='200px' height='200px'>
-          <h4>Tampak Depan</h4>
+
         </div>
         <div class="col-md-4" style='margin-left: -10%; margin-right: 1%;'>
-          <img src="{{$pengajuans->FOTO_BELAKANG}}" width='200px' height='200px'>
-          <h4>Tampak Belakang</h4>
+
           <br><br>
           <h3><b>Detail Pengajuan</b></h3>
           <br>
