@@ -964,6 +964,8 @@ class ControllerHalaman extends Controller
         $daftarKatalog = pengajuans::where('email_penjual', $userE)->get();
         // dd($daftarKatalog);
         // asddasadsadsadsads
+
+        // dd($daftarKatalog);
         $dataTrans = transaksis::withTrashed()->get();
         // dd($dataTrans);
         foreach ($daftarKatalog as $data){
@@ -972,9 +974,12 @@ class ControllerHalaman extends Controller
                     if($data2['status'] == 6){
                         if (2 - ((new \Carbon\Carbon($data['updated_at'], 'UTC'))->diffInDays()) <= 0) {
                             $datae = transaksis::where('PENGAJUAN_ID',$data['PENGAJUAN_ID'])->get();
-                            // dd($datae['0']['PENGAJUAN_ID']);
-                            // dd(pengajuans::where("PENGAJUAN_ID",$datae['0']['PENGAJUAN_ID'])->get());
-                            pengajuans::where("PENGAJUAN_ID",$datae['0']['PENGAJUAN_ID'])->update(['STATUS_BARANG'=>3]);
+                            if(count($datae) != 0){
+                                // dd($datae[0]['PENGAJUAN_ID']);
+                                // dd(pengajuans::where("PENGAJUAN_ID",$datae['0']['PENGAJUAN_ID'])->get());
+                                pengajuans::where("PENGAJUAN_ID",$datae[0]['PENGAJUAN_ID'])->update(['STATUS_BARANG'=>3]);
+                            }
+
                         }
                     }
                 }
