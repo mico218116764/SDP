@@ -30,7 +30,7 @@
     <div class="card">
     {{--<img src=" {{asset('images/background1.jpg')}}" alt="" >--}}
         <div style="margin-top:2%">
-            <h2>Barang yang belum di approve:</h2>
+            <h2>Barang yang di Reject:</h2>
             <table class="table">
                 <thead>
                     <tr>
